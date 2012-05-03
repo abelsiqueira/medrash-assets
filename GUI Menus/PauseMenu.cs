@@ -21,6 +21,7 @@ public class PauseMenu : MonoBehaviour {
 	public Color UnSelected;
 	public int optionSize;
 	private GUIStyle Style;
+	private float CallTime;
 	
 	void Start()
 	{
@@ -49,6 +50,7 @@ public class PauseMenu : MonoBehaviour {
 	{
 		if (death)
 		{
+			Camera.mainCamera.GetComponent<Sound>().isDead(false);
 			GameObject.FindGameObjectWithTag("Player").GetComponent<CheckPoint>().Load();
 		}
 		Time.timeScale = 1;
@@ -58,13 +60,22 @@ public class PauseMenu : MonoBehaviour {
 	public void CallMenu(string why)
 	{
 		if (why == "Death")
-			yield return new WaitForSeconds(7.0f);
+		{
 			death = true;
-		PauseGame();	
+			if (CallTime == 0.0f)
+				CallTime = Time.time + 1.0f;
+			Camera.mainCamera.GetComponent<Sound>().isDead(true);
+		}
+		
 	}
 	
 	void OnGUI()
 	{
+		if (Time.time >= CallTime && CallTime != 0.0f)
+		{
+			PauseGame();
+			CallTime = 0.0f;
+		}
 		if (active)
 		{
 			Color tmp = GUI.color;

@@ -6,6 +6,7 @@ public class Sound : MonoBehaviour {
 	// Use this for initialization
 	public AudioClip MainSound;
 	public AudioClip SecondarySound;
+	public AudioClip DeadAudio;
 	public float MainStartCut;
 	public float MainEndCut;
 	public float SecondaryStartCut;
@@ -20,19 +21,36 @@ public class Sound : MonoBehaviour {
 	public float fadeStart;
 	private float fadeVolumeStart;
 	
+	private bool dead = false;
+	
 	void Start () {
 		volume = audio.volume;	
 	}
 	
+	public void isDead(bool d)
+	{
+		dead = d;	
+	}
+	
 	// Update is called once per frame
 	void Update () {
+		if (dead)
+		{
+			audio.volume = volume;
+			if (!audio.isPlaying || audio.clip != DeadAudio)
+			{
+				audio.clip= DeadAudio;
+				audio.Play();
+			}
+			return;
+		}
 		if (!Fade()) return;
 		if (audio.isPlaying)
 		{
 			if (audio.time >= StopTime)
 				audio.Stop();
 		}
-		if (!audio.isPlaying)
+		if (!audio.isPlaying || audio.clip == DeadAudio)
 		{
 			if (Random.Range(0,100) < MainPercentual)
 			{

@@ -326,13 +326,14 @@ public class MainCharacterController : MonoBehaviour
 		canAttack = false;
 		while (true)
 		{
-			if (i == attackCooldownValue) 
+			if (i > 0) 
 			{
 				canAttack = true;
+				characterState = CharacterState.Idle;
 				break;			
 			}
 			else i++;
-			yield return new WaitForSeconds(1.0f);
+			yield return new WaitForSeconds(attackCooldownValue);
 		}
 	}
 	

@@ -23,7 +23,7 @@ public class MainCharacter : MonoBehaviour
 	public float lifeLossValue = 0.1f;
 	public float temperatureLossValue = 0.2f;
 	public float torchTimerValue = 10.0f;
-	private int delayAttackValue = 6;
+	public float delayAttackValue = 6.0f;
 	private bool canMove = true;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
@@ -244,8 +244,9 @@ public class MainCharacter : MonoBehaviour
 		{
 			lifeStatus = 0;
 			primaryBar.setHealth(100);
-			characterController.KillCharacter();
 			Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
+			characterController.KillCharacter();
+			
 		}
 	}
 	
