@@ -5,7 +5,7 @@ using System.Collections;
 public class Bee : Entity {
 	
 	private int damageInstant = 10, damageTimer = 0;
-	private int attackCooldown = 2, attackTimer = 0;
+	private int attackCooldown = 4, attackTimer = 0;
 	
 	bool needToAttack = false;
 	
@@ -23,11 +23,11 @@ public class Bee : Entity {
 		returnPlace.x = transform.position.x;
 		returnPlace.z = transform.position.z;
 		
-		life = 3;
+		life = 1;
 		damage = 1;
 		baseSpeed = 5.0f;
 		speed = baseSpeed;
-		attackRadius = 2.0f;
+		attackRadius = 2.5f;
 		closeRadius = 7.0f;
 		farRadius = 20.0f;
 		canReceiveDamage = false;

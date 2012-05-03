@@ -10,7 +10,6 @@ public class Bear : Entity {
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int defenseDuration = 30, defenseTimer = 0;
 	
-	//private float probabilityToDefend = 0.4f;
 	private float probabilityToDefend = 0.0f;
 	
 	bool needToAttack = false;

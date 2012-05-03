@@ -29,6 +29,8 @@ public class Patrol : State {
 			context.RotateBy(-rotateAngle);
 		direction = context.transform.forward;
 		direction.y = 0.0f;
+		if (Physics.Raycast(context.transform.position, direction, 1.0f));
+			direction = -direction;
 		context.SetDirection(direction);
 	}
 	
