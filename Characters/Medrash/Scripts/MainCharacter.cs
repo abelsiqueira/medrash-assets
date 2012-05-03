@@ -24,6 +24,7 @@ public class MainCharacter : MonoBehaviour
 	public float temperatureLossValue = 0.2f;
 	public float torchTimerValue = 10.0f;
 	private int delayAttackValue = 6;
+	private bool canMove = true;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
@@ -194,6 +195,7 @@ public class MainCharacter : MonoBehaviour
 	}
 	
 	public void TryToAttack () {
+		canMove = false;
 		float minDist = 1e10f;
 		Entity closestEntity = listOfEnemies[0];
 		
@@ -335,6 +337,7 @@ public class MainCharacter : MonoBehaviour
 	{
 		Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
 		Bounds medBounds = dmgBox.collider.bounds;
+		canMove = true;
 
 		if (bounds.Intersects(medBounds)) {
 			closestEntity.DamageLifeStatus(3);
@@ -365,5 +368,9 @@ public class MainCharacter : MonoBehaviour
 	void Defend()
 	{
 		//Debug.Log("didDefend");
+	}
+	
+	public bool CanMove () {
+		return canMove;
 	}
 }

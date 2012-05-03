@@ -65,6 +65,7 @@ public class MainCharacterController : MonoBehaviour
 	public bool canJump = true;
 	public bool canRun = true;
 	public bool canAttack = true;
+	public bool canMove = true;
 	
 	private float jumpRepeatTime = 0.05f;
 	private float jumpTimeout = 0.15f;
@@ -154,7 +155,7 @@ public class MainCharacterController : MonoBehaviour
 		forward = forward.normalized;
 	
 		Vector3 right= new Vector3(forward.z, 0, -forward.x);
-	
+		
 		float v = Input.GetAxisRaw("Vertical");
 	    float h = Input.GetAxisRaw("Horizontal");
 
@@ -165,8 +166,10 @@ public class MainCharacterController : MonoBehaviour
 		isMoving = Mathf.Abs (h) > 0.1f || Mathf.Abs (v) > 0.1f;
 		
     	Vector3 targetDirection = h * right + v * forward;
+		
+		canMove = mainCharacter.CanMove();
 	
-		if (grounded)
+		if (grounded && canMove)
 		{
 		
 			lockCameraTimer += Time.deltaTime;
@@ -255,8 +258,9 @@ public class MainCharacterController : MonoBehaviour
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);
 	
 			if (moveSpeed < walkSpeed * 0.3f) walkTimeStart = Time.time;
-		}
-		else
+		} else if (grounded && !canMove) {
+			moveSpeed = 0.0f;
+		} else
 		{
 			if (jumping) lockCameraTimer = 0.0f;
 		
