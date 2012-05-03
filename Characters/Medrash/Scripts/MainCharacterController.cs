@@ -44,6 +44,7 @@ public class MainCharacterController : MonoBehaviour
 		Dead
 	}
 
+	private MainCharacter mainCharacter;
 	private CharacterState characterState;
 
 	public float walkSpeed = 3.0f;
@@ -100,6 +101,7 @@ public class MainCharacterController : MonoBehaviour
 	void Awake()
 	{
 		moveDirection = transform.TransformDirection(Vector3.forward);
+		mainCharacter = GetComponent<MainCharacter>();
 		animation = GetComponent<Animation>();
 		
 		if(!animation) Debug.Log("The character you would like to control doesn't have animations. Moving her might look weird.");
@@ -227,6 +229,7 @@ public class MainCharacterController : MonoBehaviour
 					{
 						Input.ResetInputAxes();
 					}
+					mainCharacter.Attack();
 					DidAttack();
 				}
 			}

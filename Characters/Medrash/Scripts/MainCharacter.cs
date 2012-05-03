@@ -68,7 +68,7 @@ public class MainCharacter : MonoBehaviour
 	
 	void Update()
 	{
-		
+		/*
 		if (Input.GetButtonDown("Fire1"))
 		{
 			if (characterController.canAttack)
@@ -83,7 +83,7 @@ public class MainCharacter : MonoBehaviour
 		else if (Input.GetButtonDown("Fire3"))
 		{
 			//Defend();
-		}
+		}*/
 	}
 			
 	
@@ -201,7 +201,6 @@ public class MainCharacter : MonoBehaviour
 		{
 			if (i >= delayAttackValue) 
 			{
-				Debug.Log("Atacando");
 				entity.DamageLifeStatus(3);
 				break;			
 			}
@@ -310,7 +309,7 @@ public class MainCharacter : MonoBehaviour
 		StartCoroutine(TorchTimer());
 	}
 	
-	void Attack()
+	public void Attack()
 	{
 		Bounds bounds;
 		Bounds medBounds = dmgBox.collider.bounds;
@@ -328,8 +327,9 @@ public class MainCharacter : MonoBehaviour
 			}
 		}
 		
-		Debug.Log("In Attack()");
-		characterController.SetDirection(closestEntity.transform.position - transform.position);
+		Vector3 d = closestEntity.transform.position - transform.position;
+		d.y = 0;
+		characterController.SetDirection(d);
 		
 		bounds = closestEntity.GetComponent<CharacterController>().bounds;
 		if (bounds.Intersects(medBounds)) {

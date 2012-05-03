@@ -63,6 +63,7 @@ public class Bear : Entity {
 	}
 	
 	private void IdleVerifications () {
+		canReceiveDamage = true;
 		idlePatrolChangeTimer++;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
@@ -79,10 +80,10 @@ public class Bear : Entity {
 	}
 	
 	private void PatrolVerifications () {
+		canReceiveDamage = true;
 		idlePatrolChangeTimer++;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
-			canReceiveDamage = false;
 			fsm.ChangeState(Pursue.Instance());
 		} else if (idlePatrolChangeTimer >= idlePatrolChangeTime) {
 			fsm.ChangeState(Idle.Instance());
@@ -95,6 +96,7 @@ public class Bear : Entity {
 	}
 	
 	private void PursueVerifications () {
+		canReceiveDamage = true;
 		float dist = DistanceToMainCharacter();		
 		if (dist < attackRadius) {
 			float r = Random.value;
@@ -114,6 +116,7 @@ public class Bear : Entity {
 	}
 	
 	private void AttackVerifications () {
+		canReceiveDamage = true;
 		damageTimer++;
 		attackTimer++;
 		if (needToAttack && (damageTimer >= damageInstant)) {
@@ -141,9 +144,9 @@ public class Bear : Entity {
 	}
 	
 	private void DefenseVerifications () {
+		canReceiveDamage = false;
 		defenseTimer++;
 		if (defenseTimer >= defenseDuration) {
-			canReceiveDamage = true;
 			defenseTimer = 0;
 			fsm.ChangeState(Pursue.Instance());
 		}
