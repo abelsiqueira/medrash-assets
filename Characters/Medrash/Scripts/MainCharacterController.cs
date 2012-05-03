@@ -229,7 +229,7 @@ public class MainCharacterController : MonoBehaviour
 					{
 						Input.ResetInputAxes();
 					}
-					mainCharacter.Attack();
+					mainCharacter.TryToAttack();
 					DidAttack();
 				}
 			}

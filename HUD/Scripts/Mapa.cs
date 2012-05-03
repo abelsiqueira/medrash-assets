@@ -35,8 +35,6 @@ public class Mapa : MonoBehaviour {
 		
 		GUI.DrawTexture(new Rect(minimapPositionX,minimapPositionZ, minimapWidth, minimapHeight), terreno01);
 		GUI.color = Color.red;
-		GUI.Label (new Rect(positionX*scale + minimapPositionX, minimapHeight-positionZ*scale + minimapPositionZ, 10, 10), "");
-		
-		
+		GUI.Box (new Rect(positionX*scale + minimapPositionX, minimapHeight-positionZ*scale + minimapPositionZ, 10, 10), "");
 	}
 }

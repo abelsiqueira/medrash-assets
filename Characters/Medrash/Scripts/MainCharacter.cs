@@ -23,7 +23,7 @@ public class MainCharacter : MonoBehaviour
 	public float lifeLossValue = 0.1f;
 	public float temperatureLossValue = 0.2f;
 	public float torchTimerValue = 10.0f;
-	public int delayAttackValue = 1;
+	private int delayAttackValue = 6;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
@@ -193,19 +193,41 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
+	public void TryToAttack () {
+		float minDist = 1e10f;
+		Entity closestEntity = listOfEnemies[0];
+		
+		foreach (Entity entity in listOfEnemies) {
+			if (!entity)
+				continue;
+			float dist = (entity.transform.position - transform.position).sqrMagnitude;
+			if (dist < minDist) {
+				minDist = dist;
+				closestEntity = entity;
+			}
+		}
+		
+		Vector3 d = closestEntity.transform.position - transform.position;
+		d.y = 0;
+		characterController.SetDirection(d);
+		
+		StartCoroutine(DelayAttack(closestEntity));
+	}
+	
 	// delay entre a execução da animação de ataque e do dano causado
-	IEnumerator DelayAttack(Entity entity)
+	IEnumerator DelayAttack(Entity closestEntity)
 	{
 		int i = 0;
 		while (true)
 		{
+			Debug.Log(i);
 			if (i >= delayAttackValue) 
 			{
-				entity.DamageLifeStatus(3);
-				break;			
+				Attack(closestEntity);
+				break;
 			}
 			else i++;
-			yield return new WaitForSeconds(1.0f);
+			yield return new WaitForSeconds(0.1f);
 		}
 	}
 	
@@ -309,31 +331,13 @@ public class MainCharacter : MonoBehaviour
 		StartCoroutine(TorchTimer());
 	}
 	
-	public void Attack()
+	protected void Attack(Entity closestEntity)
 	{
-		Bounds bounds;
+		Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
 		Bounds medBounds = dmgBox.collider.bounds;
-		
-		float minDist = 1e10f;
-		Entity closestEntity = listOfEnemies[0];
-		
-		foreach (Entity entity in listOfEnemies) {
-			if (!entity)
-				continue;
-			float dist = (entity.transform.position - transform.position).sqrMagnitude;
-			if (dist < minDist) {
-				minDist = dist;
-				closestEntity = entity;
-			}
-		}
-		
-		Vector3 d = closestEntity.transform.position - transform.position;
-		d.y = 0;
-		characterController.SetDirection(d);
-		
-		bounds = closestEntity.GetComponent<CharacterController>().bounds;
+
 		if (bounds.Intersects(medBounds)) {
-			StartCoroutine(DelayAttack(closestEntity));
+			closestEntity.DamageLifeStatus(3);
 		}
 		
 		
