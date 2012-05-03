@@ -55,10 +55,12 @@ public abstract class Entity : MonoBehaviour {
 	protected void EntityStart () {
 		medrash = GameObject.FindGameObjectWithTag("Player");
 		dmgBox = transform.Find("dmgBox").gameObject;
-		reward.GetComponent<FoodController>().setValues(lifeValue, energyValue);
+		if (reward != null)
+			reward.GetComponent<FoodController>().setValues(lifeValue, energyValue);
 	}
 	
 	public void Update () {
+		
 		if (animation && currentAnimation)
 			animation.CrossFade(currentAnimation.name);
 		if (direction != Vector3.zero) {

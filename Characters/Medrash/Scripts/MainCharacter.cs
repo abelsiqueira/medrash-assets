@@ -91,6 +91,7 @@ public class MainCharacter : MonoBehaviour
 	// rotina para verificar a condição física de MainCharacter
 	IEnumerator CheckCharacterPhysicalCondition()
 	{
+		float originalSpeed = characterController.runSpeed;
 		float n = characterController.runSpeed - characterController.walkSpeed;
 		n /= 6;
 		int i = 0;
@@ -102,6 +103,9 @@ public class MainCharacter : MonoBehaviour
 			}
 			if (energyStatus > 50)
 			{
+				characterController.canJump = true;
+				characterController.canRun = true;
+				characterController.runSpeed = originalSpeed;
 				if (i != 0)
 				{
 					i = 0;
@@ -109,6 +113,8 @@ public class MainCharacter : MonoBehaviour
 			}
 			if (energyStatus >= 20 && energyStatus < 50)
 			{
+				characterController.canJump = true;
+				characterController.canRun = true;
 				if ((((int)energyStatus) == 45) && (i == 0))
 				{
 					i++;

@@ -14,12 +14,12 @@ public class Bee : Entity {
 	}
 	
 	void Start () {
-    EntityStart();
+		
+    	EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateGeneric());
-		
 		returnPlace.x = transform.position.x;
 		returnPlace.z = transform.position.z;
 		
