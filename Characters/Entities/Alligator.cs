@@ -18,7 +18,7 @@ public class Alligator : Entity {
 	}
 	
 	void Start () {
-    EntityStart();
+    	EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());

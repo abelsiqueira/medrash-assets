@@ -25,6 +25,8 @@ public abstract class Entity : MonoBehaviour {
 	protected GameObject medrash;
 	protected GameObject dmgBox;
 	public GameObject reward;
+	public float energyValue = 0.0f;
+	public float lifeValue = 0.0f;
 	public GameObject dieExplosion;
 	
 	protected CharacterController controller;
@@ -53,6 +55,7 @@ public abstract class Entity : MonoBehaviour {
 	protected void EntityStart () {
 		medrash = GameObject.FindGameObjectWithTag("Player");
 		dmgBox = transform.Find("dmgBox").gameObject;
+		reward.GetComponent<FoodController>().setValues(lifeValue, energyValue);
 	}
 	
 	public void Update () {
@@ -87,6 +90,7 @@ public abstract class Entity : MonoBehaviour {
 		if (canReceiveDamage) {
 			life -= dmg;
 			canReceiveDamage = false;
+			Debug.Log(name + " damaged. Life: " + life);
 		}
 		receivedDamage = true;
 	}

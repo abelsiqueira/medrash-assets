@@ -146,7 +146,7 @@ public class MainCharacter : MonoBehaviour
 				characterController.canRun = false;
 				characterController.runSpeed = characterController.walkSpeed;
 			}
-			else if (energyStatus == 0)
+			else if (energyStatus <= 0)
 			{
 				DamageLifeStatus(lifeLossValue);
 			}
@@ -222,13 +222,13 @@ public class MainCharacter : MonoBehaviour
 		int i = 0;
 		while (true)
 		{
-			if (i >= delayAttackValue) 
+			if (i > 0) 
 			{
 				Attack(closestEntity);
 				break;
 			}
-			else i++;
-			yield return new WaitForSeconds(0.1f);
+			i++;
+			yield return new WaitForSeconds(delayAttackValue);
 		}
 	}
 	
@@ -244,15 +244,15 @@ public class MainCharacter : MonoBehaviour
 		{
 			lifeStatus = 0;
 			primaryBar.setHealth(100);
-			//characterController.KillCharacter();
-			//PauseMenu menu = GetComponent<PauseMenu>();
-			//menu.CallMenu();
+			characterController.KillCharacter();
+			Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
 		}
 	}
 	
 	// infere dano sobre a energia de MainCharacter
 	void DamageEnergyStatus(float x)
 	{
+		if (!secondaryBar.HasBar) return;
 		if (energyStatus - x > 0)
 		{
 			energyStatus -= x;
@@ -367,6 +367,11 @@ public class MainCharacter : MonoBehaviour
 	void Defend()
 	{
 		//Debug.Log("didDefend");
+	}
+	
+	public void hasSecondaryBar(bool has)
+	{
+		secondaryBar.HasBar = has;	
 	}
 	
 	public bool CanMove () {

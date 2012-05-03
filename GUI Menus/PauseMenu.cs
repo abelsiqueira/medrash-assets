@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour {
 	private item selItem;
 	
 	private bool active;
-	
+	private bool death = false;
 	public Texture background;
 	public Font font;
 	public Color Selected;
@@ -47,12 +47,19 @@ public class PauseMenu : MonoBehaviour {
 	
 	void UnPauseGame()
 	{
+		if (death)
+		{
+			GameObject.FindGameObjectWithTag("Player").GetComponent<CheckPoint>().Load();
+		}
 		Time.timeScale = 1;
 		active = false;
 	}
 	
-	public void CallMenu()
+	public void CallMenu(string why)
 	{
+		if (why == "Death")
+			yield return new WaitForSeconds(7.0f);
+			death = true;
 		PauseGame();	
 	}
 	
@@ -130,7 +137,8 @@ public class PauseMenu : MonoBehaviour {
 			}
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
-				UnPauseGame();	
+				if (!death)
+					UnPauseGame();	
 			}
 		}
 		else if (Input.GetKeyDown(KeyCode.Escape))

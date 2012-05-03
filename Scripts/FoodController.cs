@@ -46,6 +46,12 @@ public class FoodController : MonoBehaviour
 		return dist.magnitude;
 	}
 	
+	public void setValues(float life, float energy)
+	{
+		lifeValue = life;
+		energyValue = energy;
+	}
+	
 	private void Dispose()
 	{
 		//Instantiate(dieExplosion, transform.position, transform.rotation);
