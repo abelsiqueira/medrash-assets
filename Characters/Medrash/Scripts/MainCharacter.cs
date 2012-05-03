@@ -222,7 +222,6 @@ public class MainCharacter : MonoBehaviour
 		int i = 0;
 		while (true)
 		{
-			Debug.Log(i);
 			if (i >= delayAttackValue) 
 			{
 				Attack(closestEntity);

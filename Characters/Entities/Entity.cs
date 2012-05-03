@@ -87,7 +87,6 @@ public abstract class Entity : MonoBehaviour {
 		if (canReceiveDamage) {
 			life -= dmg;
 			canReceiveDamage = false;
-			Debug.Log(name + " damaged. Life: " + life);
 		}
 		receivedDamage = true;
 	}
