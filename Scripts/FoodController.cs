@@ -6,7 +6,7 @@ public class FoodController : MonoBehaviour
 
 	//public ParticleSystem dieExplosion;
 	private GameObject medrash;	
-	public float minDist = 1.0f;
+	public float minDist = 2.0f;
 	public float lifeValue = 100.0f;
 	public float energyValue = 100.0f;
 	private int foodDuration = 200, foodTimer = 0;
@@ -42,7 +42,7 @@ public class FoodController : MonoBehaviour
 	
 	private float DistanceToMainCharacter()
 	{
-		Vector3 dist = medrash.transform.position - transform.position;
+		Vector2 dist = new Vector2(medrash.transform.position.x - transform.position.x, medrash.transform.position.z - transform.position.z);
 		return dist.magnitude;
 	}
 	

@@ -67,6 +67,13 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
+	public void addEnemy(Entity e)
+	{
+		e.SetMainCharacter(this.gameObject);
+		listOfEnemies.Add(e);
+		e.enabled = true;
+	}
+	
 	void Update()
 	{
 		/*
