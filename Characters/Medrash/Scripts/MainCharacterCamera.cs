@@ -43,7 +43,8 @@ public class MainCharacterCamera : MonoBehaviour
 
     void Awake()
     {
-        if (!cameraTransform && Camera.main) cameraTransform = Camera.main.transform;
+		
+        if (Camera.main) cameraTransform = Camera.main.transform;
 		
         if (!cameraTransform)
         {
@@ -114,16 +115,8 @@ public class MainCharacterCamera : MonoBehaviour
 
             currentAngle = Mathf.SmoothDampAngle(currentAngle, targetAngle, ref angleVelocity, angularSmoothLag, angularMaxSpeed);
         }
-
-        if (controller.IsJumping())
-        {
-            float newTargetHeight = targetCenter.y + height;
-            if (newTargetHeight < targetHeight || newTargetHeight - targetHeight > 5) targetHeight = targetCenter.y + height;
-        }
-        else
-        {
-            targetHeight = targetCenter.y + height;
-        }
+		
+		targetHeight = targetCenter.y + height;
 
         currentHeight = cameraTransform.position.y;
         currentHeight = Mathf.SmoothDamp(currentHeight, targetHeight, ref heightVelocity, heightSmoothLag);

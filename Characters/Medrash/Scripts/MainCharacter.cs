@@ -73,9 +73,9 @@ public class MainCharacter : MonoBehaviour
 		listOfEnemies.Add(e);
 		e.enabled = true;
 	}
-	
+
 	void Update()
-	{
+	{	
 		/*
 		if (Input.GetButtonDown("Fire1"))
 		{
@@ -110,17 +110,16 @@ public class MainCharacter : MonoBehaviour
 			}
 			if (energyStatus > 50)
 			{
-				characterController.canJump = true;
 				characterController.canRun = true;
 				characterController.runSpeed = originalSpeed;
 				if (i != 0)
 				{
 					i = 0;
+				
 				}
 			}
 			if (energyStatus >= 20 && energyStatus < 50)
 			{
-				characterController.canJump = true;
 				characterController.canRun = true;
 				if ((((int)energyStatus) == 45) && (i == 0))
 				{
@@ -155,7 +154,6 @@ public class MainCharacter : MonoBehaviour
 			}
 			else if (energyStatus > 0 && energyStatus < 20)
 			{
-				characterController.canJump = false;
 				characterController.canRun = false;
 				characterController.runSpeed = characterController.walkSpeed;
 			}
@@ -367,20 +365,6 @@ public class MainCharacter : MonoBehaviour
 				StartCoroutine(DelayAttack(entity));
 			}
 		}*/
-	}
-	
-	void Interact()
-	{
-		/*Debug.Log("didInteract");
-		if (scene.Equals(Scene.Scene02))
-		{
-			GrabTorch();
-		}*/
-	}
-	
-	void Defend()
-	{
-		//Debug.Log("didDefend");
 	}
 	
 	public void hasSecondaryBar(bool has)

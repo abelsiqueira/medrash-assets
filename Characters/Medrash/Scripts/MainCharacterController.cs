@@ -13,7 +13,6 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip idleAnimation;
 	public AnimationClip walkAnimation;
 	public AnimationClip runAnimation;
-	public AnimationClip jumpPoseAnimation;
 	public AnimationClip attackAnimation;
 	public AnimationClip deathAnimation;
 	//public AnimationClip defenseAnimation;
@@ -24,7 +23,6 @@ public class MainCharacterController : MonoBehaviour
 	public float walkMaxAnimationSpeed = 0.75f;
 	public float trotMaxAnimationSpeed = 1.0f;
 	public float runMaxAnimationSpeed = 1.0f;
-	public float jumpAnimationSpeed = 1.15f;
 	public float landAnimationSpeed = 1.0f;
 	public float attackAnimationSpeed = 1.0f;
 	public float deathAnimationSpeed = 1.0f;
@@ -37,7 +35,6 @@ public class MainCharacterController : MonoBehaviour
 		Walking,
 		Trotting,
 		Running,
-		Jumping,
 		Attacking,
 		Defending,
 		Interacting,
@@ -55,20 +52,17 @@ public class MainCharacterController : MonoBehaviour
 
 	public float inAirControlAcceleration = 3.0f;
 
-	public float jumpHeight = 0.5f;
-
 	public float gravity = 20.0f;
 	public float speedSmoothing = 10.0f;
 	public float rotateSpeed = 500.0f;
 	public float trotAfterSeconds = 3.0f;
 
-	public bool canJump = true;
 	public bool canRun = true;
 	public bool canAttack = true;
 	public bool canMove = true;
+	private bool canLightTorch = false;
+	private bool falling = false;
 	
-	private float jumpRepeatTime = 0.05f;
-	private float jumpTimeout = 0.15f;
 	private float groundedTimeout = 0.25f;
 
 	private float lockCameraTimer = 0.0f;
@@ -80,17 +74,9 @@ public class MainCharacterController : MonoBehaviour
 
 	private CollisionFlags collisionFlags; 
 
-	private bool jumping= false;
-	private bool jumpingReachedApex= false;
-
 	private bool movingBack= false;
 	private bool isMoving= false;
 	private float walkTimeStart = 0.0f;
-	private float lastJumpButtonTime = -10.0f;
-	private float lastJumpTime = -1.0f;
-
-	private float lastJumpStartHeight = 0.0f;
-
 	private Vector3 inAirVelocity= Vector3.zero;
 
 	private float lastGroundedTime = 0.0f;
@@ -122,11 +108,6 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No run animation found. Turning off animations.");
 		}
-		if(!jumpPoseAnimation && canJump) 
-		{
-			animation = null;
-			Debug.Log("No jump animation found and the character has canJump enabled. Turning off animations.");
-		}
 		if (!attackAnimation)
 		{
 			animation = null;
@@ -142,7 +123,7 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No defend animation found. Turning off animations.");
 		}*/	
-				
+		StartCoroutine(IsFalling());
 	}
 
 	void UpdateSmoothedMovementDirection()
@@ -223,97 +204,30 @@ public class MainCharacterController : MonoBehaviour
 				targetSpeed *= walkSpeed;
 				characterState = CharacterState.Walking;
 			}
-			
-			if (Input.GetButtonDown("Fire1"))
-			{
-				if (canAttack)
-				{
-					if (IsMoving())
-					{
-						Input.ResetInputAxes();
-					}
-					mainCharacter.TryToAttack();
-					DidAttack();
-				}
-			}
-			
-			/*if (Input.GetButtonDown("Fire2"))
-			{
-				if (IsMoving())
-				{
-					Input.ResetInputAxes();
-				}
-				DidInteract();
-			}
-			
-			if (Input.GetButtonDown("Fire3"))
-			{
-				if (IsMoving())
-				{
-					Input.ResetInputAxes();
-				}
-				DidDefend();
-			}*/
 		
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);
 	
 			if (moveSpeed < walkSpeed * 0.3f) walkTimeStart = Time.time;
-		} else if (grounded && !canMove) {
-			moveSpeed = 0.0f;
-		} else
+		} 
+		else if (grounded && !canMove)
 		{
-			if (jumping) lockCameraTimer = 0.0f;
-		
+			moveSpeed = 0.0f;
+		} 
+		else
+		{
 			if (isMoving) inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
 		}
 	}
-	
-	void ApplyJumping()
-	{
-		if (lastJumpTime + jumpRepeatTime > Time.time) return;
-	
-		if (IsGrounded()) 
-		{	
-			if (canJump && Time.time < lastJumpButtonTime + jumpTimeout) 
-			{
-				verticalSpeed = CalculateJumpVerticalSpeed (jumpHeight);
-				SendMessage("DidJump", SendMessageOptions.DontRequireReceiver);
-			}
-		}
-	}
-
 
 	void ApplyGravity()
 	{
 		if (isControllable)
 		{
-			bool jumpButton= Input.GetButton("Jump");
-			if (jumping && !jumpingReachedApex && verticalSpeed <= 0.0f)
-			{
-				jumpingReachedApex = true;
-				SendMessage("DidJumpReachApex", SendMessageOptions.DontRequireReceiver);
-			}
 			if (IsGrounded ()) verticalSpeed = 0.0f;
 			else verticalSpeed -= gravity * Time.deltaTime;
 		}
 	}
 
-	float CalculateJumpVerticalSpeed(float targetJumpHeight)
-	{
-		return Mathf.Sqrt(2 * targetJumpHeight * gravity);
-	}
-
-	void DidJump()
-	{
-		jumping = true;
-		jumpingReachedApex = false;
-		lastJumpTime = Time.time;
-		lastJumpStartHeight = transform.position.y;
-		lastJumpButtonTime = -10;
-		
-		characterState = CharacterState.Jumping;
-	}
-	
 	void DidAttack()
 	{
 		characterState = CharacterState.Attacking;
@@ -326,23 +240,23 @@ public class MainCharacterController : MonoBehaviour
 		canAttack = false;
 		while (true)
 		{
-			if (i > 0) 
+			if (i == attackCooldownValue) 
 			{
 				canAttack = true;
-				characterState = CharacterState.Idle;
 				break;			
 			}
 			else i++;
-			yield return new WaitForSeconds(attackCooldownValue);
+			yield return new WaitForSeconds(1.0f);
 		}
 	}
 	
-	/*void DidInteract()
+	void DidInteract()
 	{
 		characterState = CharacterState.Interacting;
+		mainCharacter.GrabTorch();
 	}
 	
-	void DidDefend()
+	/*void DidDefend()
 	{
 		characterState = CharacterState.Defending;
 	}*/
@@ -358,17 +272,44 @@ public class MainCharacterController : MonoBehaviour
 		{
 			Input.ResetInputAxes();
 		}
-
-		if (Input.GetButtonDown("Jump"))
+		
+		if (Input.GetButtonDown("Fire1"))
 		{
-			lastJumpButtonTime = Time.time;
+			if (canAttack)
+			{
+				if (IsMoving())
+				{
+					Input.ResetInputAxes();
+				}
+				mainCharacter.TryToAttack();
+				DidAttack();
+			}
 		}
 		
+		if (Input.GetButtonDown("Fire2"))
+		{
+			if (canLightTorch)
+			{
+				if (IsMoving())
+				{
+					Input.ResetInputAxes();
+				}
+				DidInteract();
+			}
+		}
+			
+		/*if (Input.GetButtonDown("Fire3"))
+		{
+			if (IsMoving())
+			{
+				Input.ResetInputAxes();
+			}
+			DidDefend();
+		}*/
+
 		UpdateSmoothedMovementDirection();
 	
 		ApplyGravity();
-
-		ApplyJumping();
 	
 		Vector3 movement = moveDirection * moveSpeed + new Vector3 (0, verticalSpeed, 0) + inAirVelocity;
 		movement *= Time.deltaTime;
@@ -377,34 +318,12 @@ public class MainCharacterController : MonoBehaviour
 		collisionFlags = controller.Move(movement);
 		if(animation) 
 		{
-			if(characterState == CharacterState.Jumping) 
-			{
-				if(!jumpingReachedApex) 
-				{
-					animation[jumpPoseAnimation.name].wrapMode = WrapMode.ClampForever;
-					animation[jumpPoseAnimation.name].speed = jumpAnimationSpeed;
-					animation.CrossFade(jumpPoseAnimation.name);
-				}
-				else 
-				{
-					animation[jumpPoseAnimation.name].wrapMode = WrapMode.ClampForever;
-					animation[jumpPoseAnimation.name].speed = -landAnimationSpeed;
-					animation.CrossFade(jumpPoseAnimation.name);				
-				}
-			}
-			else if (characterState == CharacterState.Attacking)
+			if (characterState == CharacterState.Attacking)
 			{
 				animation[attackAnimation.name].wrapMode = WrapMode.Once;
 				animation[attackAnimation.name].speed = attackAnimationSpeed;
 				animation[attackAnimation.name].layer = 1;
 				animation.CrossFade(attackAnimation.name);
-			}
-			else if (characterState == CharacterState.Dead)
-			{
-				animation[deathAnimation.name].wrapMode = WrapMode.Once;
-				animation[deathAnimation.name].speed = deathAnimationSpeed;
-				animation[deathAnimation.name].layer = 1;
-				animation.CrossFade(deathAnimation.name);
 			}
 			/*else if (characterState == CharacterState.Defending)
 			{
@@ -413,6 +332,20 @@ public class MainCharacterController : MonoBehaviour
 				animation[defenseAnimation.name].layer = 1;
 				animation.CrossFade(defenseAnimation.name);
 			}*/
+			/*else if (characterState == CharacterState.Interacting)
+			{
+				animation[interactAnimation.name].wrapMode = WrapMode.Once;
+				animation[interactAnimation.name].speed = interactAnimationSpeed;
+				animation[interactAnimation.name].layer = 1;
+				animation.CrossFade(interactAnimation.name);
+			}*/
+			if (characterState == CharacterState.Dead)
+			{
+				animation[deathAnimation.name].wrapMode = WrapMode.Once;
+				animation[deathAnimation.name].speed = deathAnimationSpeed;
+				animation[deathAnimation.name].layer = 1;
+				animation.CrossFade(deathAnimation.name);
+			}
 			else 
 			{
 				if(controller.velocity.sqrMagnitude < 0.1f) 
@@ -456,11 +389,6 @@ public class MainCharacterController : MonoBehaviour
 		{
 			lastGroundedTime = Time.time;
 			inAirVelocity = Vector3.zero;
-			if (jumping)
-			{
-				jumping = false;
-				SendMessage("DidLand", SendMessageOptions.DontRequireReceiver);
-			}
 		}
 	}
 
@@ -474,14 +402,30 @@ public class MainCharacterController : MonoBehaviour
 		return moveSpeed;
 	}
 
-	public bool IsJumping()
-	{
-		return jumping;
-	}
-
 	bool IsGrounded()
 	{
 		return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
+	}
+	
+	IEnumerator IsFalling()
+	{
+		Stack<Boolean> stack = new Stack<Boolean>();
+		while (true)
+		{
+			if (IsGrounded())
+			{
+				if (stack.Count >= 40)
+				{
+					mainCharacter.DamageLifeStatus(stack.Count/2);
+				}
+				stack = new Stack<bool>();
+			}
+			else
+			{
+				stack.Push(true);
+			}
+			yield return new WaitForSeconds(0.01f);
+		}
 	}
 
 	Vector3 GetDirection()	
@@ -491,8 +435,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	public void SetDirection(Vector3 d) {
 		moveDirection = d.normalized;
-	}
-		
+	}	
 
 	public bool IsMovingBackwards()
 	{
@@ -509,11 +452,6 @@ public class MainCharacterController : MonoBehaviour
 	 	return Mathf.Abs(Input.GetAxisRaw("Vertical")) + Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.5f;
 	}
 
-	bool HasJumpReachedApex()
-	{
-		return jumpingReachedApex;
-	}
-
 	bool  IsGroundedWithTimeout()
 	{
 		return lastGroundedTime + groundedTimeout > Time.time;
@@ -522,6 +460,11 @@ public class MainCharacterController : MonoBehaviour
 	void  Reset()
 	{
 		gameObject.tag = "Player";
+	}
+	
+	public void CanLightTorch(bool cond)
+	{
+		canLightTorch = cond;
 	}
 
 }
