@@ -1,21 +1,22 @@
-Solved 1- Música no Menu
-2- Triângulo no minimapa
-3- Enxame - Colméia faltando
+Solved 1- Mï¿½sica no Menu
+2- Triï¿½ngulo no minimapa
+3- Enxame - Colmï¿½ia faltando
 Solved 4- Resetar tudo da fase quando reiniciar o jogo (morrer ou menu)
 Solved 5- Fazer o Medrash parar de subir montanhas
-6- Arrumar checkpoints (não lembro o que era, só anotei isso :/)
-7- Colisor na Câmera
+6- Arrumar checkpoints (nï¿½o lembro o que era, sï¿½ anotei isso :/)
+7- Colisor na Cï¿½mera
 8- Arrumar o decaimento da energia
-9- Arrumar o Tigre (incluindo animação)
-10- Distância máxima no ataque (virar para o inimigo)
-11- Dano de cair
-Solved 12- Travamento na movimentação
-13- Coordenar a velocidade de animação
+9- Arrumar o Tigre (incluindo animaï¿½ï¿½o)
+10- Distï¿½ncia mï¿½xima no ataque (virar para o inimigo)
+Solved 11- Dano de cair
+Solved 12- Travamento na movimentaï¿½ï¿½o
+13- Coordenar a velocidade de animaï¿½ï¿½o
 14- Quadriculado no mapa
 Solved 15- Pulo tirar energia
 16- Prender o Medrash no Boss
-Solved 17- Tirar o pulo (Confirmado? Já resolve os de cima com isso)
-18- Câmera apontar para o inimigo próximo
+Solved 17- Tirar o pulo (Confirmado? Jï¿½ resolve os de cima com isso)
+18- Cï¿½mera apontar para o inimigo prï¿½ximo
 Solved 19- Atravessar a abelha
 20- Arrumar a volta do Menu
 21- Sincronizar os passos
+Solved 22 - Medrash virar para atacar somente inimigos que estiverem prÃ³ximos o suficiente dele
