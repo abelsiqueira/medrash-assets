@@ -223,7 +223,7 @@ public class MainCharacter : MonoBehaviour
 		
 		Vector3 d = closestEntity.transform.position - transform.position;
 		d.y = 0;
-		if (d.Magnitude < 5) characterController.SetDirection(d);
+		if (d.magnitude < 5) characterController.SetDirection(d);
 		StartCoroutine(DelayAttack(closestEntity));
 	}
 	
