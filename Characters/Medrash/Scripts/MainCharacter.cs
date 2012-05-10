@@ -37,6 +37,7 @@ public class MainCharacter : MonoBehaviour
 	
 	void Start ()
 	{
+		Time.timeScale = 1;
 		scene = Scene.Scene01;	
 		primaryBar = GetComponent<PrimaryBar>();
 		secondaryBar = GetComponent<SecondaryBar>();
