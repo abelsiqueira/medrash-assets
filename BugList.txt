@@ -17,5 +17,5 @@ Solved 15- Pulo tirar energia
 Solved 17- Tirar o pulo (Confirmado? Ja resolve os de cima com isso)
 18- Camera apontar para o inimigo proximo
 Solved 19- Atravessar a abelha
-20- Arrumar a volta do Menu
+Solved 20- Arrumar a volta do Menu
 21- Sincronizar os passos
