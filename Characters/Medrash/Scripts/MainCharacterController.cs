@@ -20,14 +20,17 @@ public class MainCharacterController : MonoBehaviour
 	
 	private Animation animation;
 	
-	public float walkMaxAnimationSpeed = 0.75f;
-	public float trotMaxAnimationSpeed = 1.0f;
-	public float runMaxAnimationSpeed = 1.0f;
-	public float landAnimationSpeed = 1.0f;
-	public float attackAnimationSpeed = 1.0f;
-	public float deathAnimationSpeed = 1.0f;
+	private float walkMaxAnimationSpeed = 0.75f;
+	private float trotMaxAnimationSpeed = 1.0f;
+	private float runMaxAnimationSpeed = 1.0f;
+	private float landAnimationSpeed = 1.0f;
+	private float attackAnimationSpeed = 2.0f;
+	private float deathAnimationSpeed = 1.0f;
 	//public float defenseAnimationSpeed = 1.0f;
 	//public float interactAnimationSpeed = 1.0f;
+	private float delayAttackValue = 0.6f;
+		
+	private float attackDuration = 0.6f;
 
 	enum CharacterState 
 	{
@@ -122,7 +125,10 @@ public class MainCharacterController : MonoBehaviour
 		{
 			animation = null;
 			Debug.Log("No defend animation found. Turning off animations.");
-		}*/	
+		}*/
+		
+		attackDuration = 0.6f/attackAnimationSpeed;
+		delayAttackValue = attackDuration;
 		StartCoroutine(IsFalling());
 	}
 
@@ -227,7 +233,45 @@ public class MainCharacterController : MonoBehaviour
 			else verticalSpeed -= gravity * Time.deltaTime;
 		}
 	}
-
+	
+	public void TryToAttack () {
+		canMove = false;
+		float minDist = 1e10f;
+		List<Entity> listOfEnemies = mainCharacter.GetListOfEnemies();
+		Entity closestEntity = listOfEnemies[0];
+		
+		foreach (Entity entity in listOfEnemies) {
+			if (!entity)
+				continue;
+			float dist = (entity.transform.position - transform.position).sqrMagnitude;
+			if (dist < minDist) {
+				minDist = dist;
+				closestEntity = entity;
+			}
+		}
+		
+		Vector3 d = closestEntity.transform.position - transform.position;
+		d.y = 0;
+		if (d.magnitude < 5) SetDirection(d);
+		StartCoroutine(DelayAttack(closestEntity));
+	}
+	
+	// delay entre a execução da animação de ataque e do dano causado
+	IEnumerator DelayAttack(Entity closestEntity)
+	{
+		int i = 0;
+		while (true)
+		{
+			if (i > 0) 
+			{
+				Attack(closestEntity);
+				break;
+			}
+			i++;
+			yield return new WaitForSeconds(delayAttackValue);
+		}
+	}
+	
 	void DidAttack()
 	{
 		characterState = CharacterState.Attacking;
@@ -248,6 +292,30 @@ public class MainCharacterController : MonoBehaviour
 			else i++;
 			yield return new WaitForSeconds(1.0f);
 		}
+	}
+	
+	protected void Attack(Entity closestEntity)
+	{
+		GameObject dmgBox = transform.Find("dmgBox").gameObject;
+		Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
+		Bounds medBounds = dmgBox.collider.bounds;
+		canMove = true;
+
+		if (bounds.Intersects(medBounds)) {
+			closestEntity.DamageLifeStatus(3);
+		}
+		
+		
+		/*foreach (Entity entity in listOfEnemies) {
+			if (!entity) {
+				//listOfEnemies.Remove(entity);
+				continue;
+			}
+			bounds = entity.GetComponent<CharacterController>().bounds;
+			if (bounds.Intersects(medBounds)) {
+				StartCoroutine(DelayAttack(entity));
+			}
+		}*/
 	}
 	
 	void DidInteract()
@@ -281,7 +349,7 @@ public class MainCharacterController : MonoBehaviour
 				{
 					Input.ResetInputAxes();
 				}
-				mainCharacter.TryToAttack();
+				TryToAttack();
 				DidAttack();
 			}
 		}
@@ -318,6 +386,7 @@ public class MainCharacterController : MonoBehaviour
 		collisionFlags = controller.Move(movement);
 		if(animation) 
 		{
+			
 			if (characterState == CharacterState.Attacking)
 			{
 				animation[attackAnimation.name].wrapMode = WrapMode.Once;
@@ -339,7 +408,7 @@ public class MainCharacterController : MonoBehaviour
 				animation[interactAnimation.name].layer = 1;
 				animation.CrossFade(interactAnimation.name);
 			}*/
-			if (characterState == CharacterState.Dead)
+			else if (characterState == CharacterState.Dead)
 			{
 				animation[deathAnimation.name].wrapMode = WrapMode.Once;
 				animation[deathAnimation.name].speed = deathAnimationSpeed;

@@ -219,43 +219,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	public void TryToAttack () {
-		canMove = false;
-		float minDist = 1e10f;
-		Entity closestEntity = listOfEnemies[0];
-		
-		foreach (Entity entity in listOfEnemies) {
-			if (!entity)
-				continue;
-			float dist = (entity.transform.position - transform.position).sqrMagnitude;
-			if (dist < minDist) {
-				minDist = dist;
-				closestEntity = entity;
-			}
-		}
-		
-		Vector3 d = closestEntity.transform.position - transform.position;
-		d.y = 0;
-		if (d.magnitude < 5) characterController.SetDirection(d);
-		StartCoroutine(DelayAttack(closestEntity));
-	}
-	
-	// delay entre a execução da animação de ataque e do dano causado
-	IEnumerator DelayAttack(Entity closestEntity)
-	{
-		int i = 0;
-		while (true)
-		{
-			if (i > 0) 
-			{
-				Attack(closestEntity);
-				break;
-			}
-			i++;
-			yield return new WaitForSeconds(delayAttackValue);
-		}
-	}
-	
 	// infere dano sobre a vida de MainCharacter
 	public void DamageLifeStatus(float x)
 	{
@@ -357,28 +320,7 @@ public class MainCharacter : MonoBehaviour
 		StartCoroutine(TorchTimer());
 	}
 	
-	protected void Attack(Entity closestEntity)
-	{
-		Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
-		Bounds medBounds = dmgBox.collider.bounds;
-		canMove = true;
-
-		if (bounds.Intersects(medBounds)) {
-			closestEntity.DamageLifeStatus(3);
-		}
-		
-		
-		/*foreach (Entity entity in listOfEnemies) {
-			if (!entity) {
-				//listOfEnemies.Remove(entity);
-				continue;
-			}
-			bounds = entity.GetComponent<CharacterController>().bounds;
-			if (bounds.Intersects(medBounds)) {
-				StartCoroutine(DelayAttack(entity));
-			}
-		}*/
-	}
+	
 	
 	public void hasSecondaryBar(bool has)
 	{
@@ -387,5 +329,9 @@ public class MainCharacter : MonoBehaviour
 	
 	public bool CanMove () {
 		return canMove;
+	}
+	
+	public List<Entity> GetListOfEnemies () {
+		return listOfEnemies;
 	}
 }
