@@ -64,8 +64,8 @@ public class MainCharacter : MonoBehaviour
 			Entity e = (Entity) o;
 			e.SetMainCharacter(this.gameObject);
 			listOfEnemies.Add(e);
-			e.enabled = true;
 		}
+		StartCoroutine(ActivateEnemies());
 	}
 	
 	public void addEnemy(Entity e)
@@ -94,7 +94,20 @@ public class MainCharacter : MonoBehaviour
 			//Defend();
 		}*/
 	}
-			
+	
+	IEnumerator ActivateEnemies ()
+	{
+		while(true)
+		{
+			foreach (Entity e in listOfEnemies) {
+				if (!e)
+					continue;
+				if (e.DistanceToMainCharacter() < 100.0f)
+					e.enabled = true;
+			}
+			yield return new WaitForSeconds(0.1f);
+		}
+	}
 	
 	// rotina para verificar a condição física de MainCharacter
 	IEnumerator CheckCharacterPhysicalCondition()

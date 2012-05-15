@@ -61,7 +61,7 @@ public abstract class Entity : MonoBehaviour {
 	}
 	
 	public void Update () {
-		
+		direction.y = 0;
 		if (animation && currentAnimation)
 			animation.CrossFade(currentAnimation.name);
 		if (direction != Vector3.zero) {
@@ -169,7 +169,7 @@ public abstract class Entity : MonoBehaviour {
 		return bounds.Intersects(medBounds);
 	}
 
-	protected float DistanceToMainCharacter () {
+	public float DistanceToMainCharacter () {
 		Vector3 d = medrash.transform.position - transform.position;
 		return d.magnitude;
 	}

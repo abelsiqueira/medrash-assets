@@ -29,9 +29,9 @@ public class TigerRunAround : State {
 		tangent.x = clockwise*direction.z;
 		tangent.z = -clockwise*direction.x;
 		tangent.y = 0.0f;
-		direction = tangent + (direction.magnitude - context.GetFarRadius()) * direction;
-		if (Physics.Raycast(transform.position, direction, context.GetCloseRadius()))
-			clockwise *= -1;
+		direction = tangent + 0.05f*(direction.magnitude - context.GetFarRadius()) * direction;
+		//if (Physics.Raycast(transform.position, direction, 0.1f))
+		//	clockwise *= -1;
 		context.SetDirection(direction);
 		context.SetRunAnimation();
 	}

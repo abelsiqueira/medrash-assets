@@ -33,15 +33,16 @@ public class Tiger : Entity {
 		
 		life = 30;
 		damage = 15;
-		baseSpeed = 8.0f;
-		speed = 8.0f;
-		attackRadius = 3.0f;
-		closeRadius = 6.0f;
-		farRadius = 13.0f;
+		baseSpeed = 15.0f;
+		speed = baseSpeed;
+		attackRadius = 5.0f;
+		closeRadius = 10.0f;
+		farRadius = 30.0f;
 	}
 	
 	public IEnumerator UpdateTiger() {
 		while (true) {
+			Debug.Log(fsm.GetCurrentState());
 			switch(fsm.GetCurrentState()) {
 			case State.states.enTigerRunAround:
 				RunAroundVerifications();

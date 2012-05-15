@@ -15,7 +15,7 @@ public class EnterFinalBoss : MonoBehaviour {
 		{	
 			Medrash.GetComponent<MainCharacter>().IncreaseEnergyStatus(1000);
 			Medrash.GetComponent<MainCharacter>().hasSecondaryBar(false);
-			this.gameObject.SetActiveRecursively(true);
+			//this.gameObject.SetActiveRecursively(true);
 		}
 	}
 }
