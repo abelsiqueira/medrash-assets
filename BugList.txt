@@ -21,5 +21,21 @@ Solved 20- Arrumar a volta do Menu
 21- Sincronizar os passos
 
 MORE:
-- Tigre dentro da caixa FinalBoss não dá certo porque o Tigre fica deformado ao se movimentar. Não sei arrumar isso.
-- Medrash se machuca ao cair muito facilmente.
+22- Tigre dentro da caixa FinalBoss não dá certo porque o Tigre fica deformado ao se movimentar. Não sei arrumar isso.
+23- Medrash se machuca ao cair muito facilmente.
+24- Colocar limites invisiveis ao redor do terreno
+
+02 - Harlei
+03 - Thiago
+06 - Tiago
+07 - Thiago
+08 - Tiago
+09 - Abel
+13 - Abel
+14 - Harlei
+16 - Thiago
+18 - Tiago
+21 - Thiago
+22 - Thiago
+23 - Tiago
+24-  Thiago
