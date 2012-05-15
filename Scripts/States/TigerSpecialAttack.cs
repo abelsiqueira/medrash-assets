@@ -20,7 +20,7 @@ public class TigerSpecialAttack : State {
 		transform = context.transform;
 		direction = context.GetMedrashPosition() - transform.position;
 		direction.y = 0.0f;
-		context.SetSpeed(15.0f);
+		context.SetSpeed(context.GetBaseSpeed()*1.5f);
 		context.SetDirection(direction);
 	}
 	

@@ -19,3 +19,7 @@ Solved 17- Tirar o pulo (Confirmado? Ja resolve os de cima com isso)
 Solved 19- Atravessar a abelha
 Solved 20- Arrumar a volta do Menu
 21- Sincronizar os passos
+
+MORE:
+- Tigre dentro da caixa FinalBoss não dá certo porque o Tigre fica deformado ao se movimentar. Não sei arrumar isso.
+- Medrash se machuca ao cair muito facilmente.

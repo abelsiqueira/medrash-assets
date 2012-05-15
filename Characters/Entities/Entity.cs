@@ -56,7 +56,7 @@ public abstract class Entity : MonoBehaviour {
 	protected void EntityStart () {
 		medrash = GameObject.FindGameObjectWithTag("Player");
 		dmgBox = transform.Find("dmgBox").gameObject;
-		if (reward != null)
+		if (reward != null && (lifeValue*energyValue > 0.0f))
 			reward.GetComponent<FoodController>().setValues(lifeValue, energyValue);
 	}
 	

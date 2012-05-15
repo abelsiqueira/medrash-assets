@@ -6,7 +6,7 @@ public class Tiger : Entity {
 	
 	private int attackTime = 50, pursueTime = 30;
 	private int tiredTime = 80, restTime = 50;
-	private int waitingTime = 120, enoughwaitingTime = 100;
+	private int waitingTime = 60, enoughwaitingTime = 80;
 	private int specialattackingTime = 6, attackingTime = 4;
 	private int damageTime = 0, dyingTime = 20;
 	
@@ -15,6 +15,8 @@ public class Tiger : Entity {
 	private int countdownWaiting = 0, countdownEnoughWaiting = 0;
 	private int countdownSpecialAttacking = 0, countdownAttacking = 0;
 	private int countdownDamage = 0, countdownDying = 0;
+	
+	private float criticalValue = 0;
 	
 	bool needToAttack = false;
 	
@@ -31,18 +33,19 @@ public class Tiger : Entity {
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateTiger());
 		
-		life = 30;
+		life = 9;
+		criticalValue = life/3.0f;
 		damage = 15;
-		baseSpeed = 15.0f;
+		baseSpeed = 18.0f;
+		animation[runAnimation.name].speed = baseSpeed*0.08f;
 		speed = baseSpeed;
 		attackRadius = 5.0f;
 		closeRadius = 10.0f;
-		farRadius = 30.0f;
+		farRadius = 35.0f;
 	}
 	
 	public IEnumerator UpdateTiger() {
 		while (true) {
-			Debug.Log(fsm.GetCurrentState());
 			switch(fsm.GetCurrentState()) {
 			case State.states.enTigerRunAround:
 				RunAroundVerifications();
@@ -73,7 +76,7 @@ public class Tiger : Entity {
 	private void RunAroundVerifications () {
 		countdownAttack++;
 		countdownTired++;
-		if (life <= 10)
+		if (life <= criticalValue)
 			countdownWaiting++;
 		if (countdownAttack >= attackTime) {
 			countdownAttack = 0;
