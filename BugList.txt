@@ -24,6 +24,7 @@ MORE:
 22- Tigre dentro da caixa FinalBoss não dá certo porque o Tigre fica deformado ao se movimentar. Não sei arrumar isso.
 23- Medrash se machuca ao cair muito facilmente.
 24- Colocar limites invisiveis ao redor do terreno
+25- Deixar o terreno bonito
 
 02 - Harlei
 03 - Thiago
@@ -39,3 +40,4 @@ MORE:
 22 - Thiago
 23 - Tiago
 24-  Thiago
+25 - Harlei
