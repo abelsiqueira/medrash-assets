@@ -24,7 +24,6 @@ public class MainCharacter : MonoBehaviour
 	private float temperatureLossValue = 0.2f;
 	private float torchTimerValue = 10.0f;
 	private float delayAttackValue = 0.6f;
-	private bool canMove = true;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
@@ -325,10 +324,6 @@ public class MainCharacter : MonoBehaviour
 	public void hasSecondaryBar(bool has)
 	{
 		secondaryBar.HasBar = has;	
-	}
-	
-	public bool CanMove () {
-		return canMove;
 	}
 	
 	public List<Entity> GetListOfEnemies () {

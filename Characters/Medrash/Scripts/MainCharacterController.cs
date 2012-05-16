@@ -24,7 +24,7 @@ public class MainCharacterController : MonoBehaviour
 	private float trotMaxAnimationSpeed = 1.0f;
 	private float runMaxAnimationSpeed = 1.0f;
 	private float landAnimationSpeed = 1.0f;
-	private float attackAnimationSpeed = 2.0f;
+	private float attackAnimationSpeed = 1.4f;
 	private float deathAnimationSpeed = 1.0f;
 	//public float defenseAnimationSpeed = 1.0f;
 	//public float interactAnimationSpeed = 1.0f;
@@ -86,7 +86,7 @@ public class MainCharacterController : MonoBehaviour
 
 	private bool isControllable = true;
 	
-	public float attackCooldownValue = 2.0f;
+	private float attackCooldownValue = 0.0f;
 
 	void Awake()
 	{
@@ -129,6 +129,8 @@ public class MainCharacterController : MonoBehaviour
 		
 		attackDuration = 0.6f/attackAnimationSpeed;
 		delayAttackValue = attackDuration;
+		attackCooldownValue = delayAttackValue*1.3f;
+		
 		StartCoroutine(IsFalling());
 	}
 
@@ -153,8 +155,6 @@ public class MainCharacterController : MonoBehaviour
 		isMoving = Mathf.Abs (h) > 0.1f || Mathf.Abs (v) > 0.1f;
 		
     	Vector3 targetDirection = h * right + v * forward;
-		
-		canMove = mainCharacter.CanMove();
 	
 		if (grounded && canMove)
 		{
@@ -284,13 +284,13 @@ public class MainCharacterController : MonoBehaviour
 		canAttack = false;
 		while (true)
 		{
-			if (i == attackCooldownValue) 
+			if (i > 0) 
 			{
 				canAttack = true;
 				break;			
 			}
 			else i++;
-			yield return new WaitForSeconds(1.0f);
+			yield return new WaitForSeconds(attackCooldownValue);
 		}
 	}
 	
