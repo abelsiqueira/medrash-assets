@@ -22,15 +22,13 @@ public class MainCharacterController : MonoBehaviour
 	
 	private float walkMaxAnimationSpeed = 0.75f;
 	private float trotMaxAnimationSpeed = 1.0f;
-	private float runMaxAnimationSpeed = 1.0f;
+	private float runMaxAnimationSpeed = 1.2f;
 	private float landAnimationSpeed = 1.0f;
 	private float attackAnimationSpeed = 1.4f;
 	private float deathAnimationSpeed = 1.0f;
 	//public float defenseAnimationSpeed = 1.0f;
-	//public float interactAnimationSpeed = 1.0f;
-	private float delayAttackValue = 0.6f;
-		
-	private float attackDuration = 0.6f;
+	//public float interactAnimationSpeed = 1.0f;	
+	private float baseAttackDuration = 0.8f;
 
 	enum CharacterState 
 	{
@@ -47,11 +45,13 @@ public class MainCharacterController : MonoBehaviour
 	private MainCharacter mainCharacter;
 	private CharacterState characterState;
 
-	public float walkSpeed = 3.0f;
+	public float walkSpeed = 4.0f;
+	private float delayAttackValue;
+	private float attackDuration;
 	
-	public float trotSpeed = 4.0f;
+	public float trotSpeed = 5.0f;
 	
-	public float runSpeed = 9.0f;
+	public float runSpeed = 8.0f;
 
 	public float inAirControlAcceleration = 3.0f;
 
@@ -87,6 +87,8 @@ public class MainCharacterController : MonoBehaviour
 	private bool isControllable = true;
 	
 	private float attackCooldownValue = 0.0f;
+	private float fallingDamageMultiplier = 0.2f;
+	private int fallingMaxStack = 80;
 
 	void Awake()
 	{
@@ -127,9 +129,12 @@ public class MainCharacterController : MonoBehaviour
 			Debug.Log("No defend animation found. Turning off animations.");
 		}*/
 		
-		attackDuration = 0.6f/attackAnimationSpeed;
+		attackDuration = baseAttackDuration/attackAnimationSpeed;
 		delayAttackValue = attackDuration;
 		attackCooldownValue = delayAttackValue*1.3f;
+		runSpeed = runSpeed*runMaxAnimationSpeed;
+		trotSpeed = trotSpeed*trotMaxAnimationSpeed;
+		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
 		
 		StartCoroutine(IsFalling());
 	}
@@ -483,9 +488,9 @@ public class MainCharacterController : MonoBehaviour
 		{
 			if (IsGrounded())
 			{
-				if (stack.Count >= 40)
+				if (stack.Count >= fallingMaxStack)
 				{
-					mainCharacter.DamageLifeStatus(stack.Count/2);
+					mainCharacter.DamageLifeStatus(stack.Count*fallingDamageMultiplier);
 				}
 				stack = new Stack<bool>();
 			}

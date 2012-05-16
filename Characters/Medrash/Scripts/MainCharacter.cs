@@ -19,11 +19,10 @@ public class MainCharacter : MonoBehaviour
 	private float positionX;
 	private float positionZ;
 	
-	private float energyLossValue = 0.05f;
+	private float energyLossValue = 0.1f;
 	private float lifeLossValue = 0.1f;
 	private float temperatureLossValue = 0.2f;
 	private float torchTimerValue = 10.0f;
-	private float delayAttackValue = 0.6f;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
