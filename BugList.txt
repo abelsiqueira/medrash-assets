@@ -5,12 +5,12 @@ Solved 4- Resetar tudo da fase quando reiniciar o jogo (morrer ou menu)
 Solved 5- Fazer o Medrash parar de subir montanhas (subir, sobe, mas a queda machuca agora hehehe)
 6- Arrumar checkpoints (nao lembro o que era, so anotei isso :/)
 7- Colisor na Camera
-8- Arrumar o decaimento da energia
+Solved 8- Arrumar o decaimento da energia
 9- Arrumar o Tigre (incluindo animacao)
 Solved 10- Distancia maxima no ataque (virar para o inimigo)
 Solved 11- Dano de cair
 Solved 12- Travamento na movimentacao
-13- Coordenar a velocidade de animacao
+Solved 13- Coordenar a velocidade de animacao
 14- Quadriculado no mapa
 Solved 15- Pulo tirar energia 
 16- Prender o Medrash no Boss (Medrash ainda consegue subir somente com os direcionais.. precisa elevar mais o terreno)
@@ -22,7 +22,7 @@ Solved 20- Arrumar a volta do Menu
 
 MORE:
 22- Tigre dentro da caixa FinalBoss não dá certo porque o Tigre fica deformado ao se movimentar. Não sei arrumar isso.
-23- Medrash se machuca ao cair muito facilmente.
+Solved 23- Medrash se machuca ao cair muito facilmente.
 24- Colocar limites invisiveis ao redor do terreno
 25- Deixar o terreno bonito
 
