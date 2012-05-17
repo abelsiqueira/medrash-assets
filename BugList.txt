@@ -33,7 +33,7 @@ MORE++:
 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
 Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
 Solved 28- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
-39- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
+Solved 39- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
 30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
 fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
 Solved 31- Há código replicado para procurar o inimigo mais próximo
