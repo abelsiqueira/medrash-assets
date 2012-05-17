@@ -137,6 +137,7 @@ public class MainCharacterController : MonoBehaviour
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
 		
 		StartCoroutine(IsFalling());
+		StartCoroutine(IsOnAnEntity());
 	}
 
 	void UpdateSmoothedMovementDirection()
@@ -539,6 +540,38 @@ public class MainCharacterController : MonoBehaviour
 	public void CanLightTorch(bool cond)
 	{
 		canLightTorch = cond;
+	}
+
+	IEnumerator IsOnAnEntity()
+	{
+		List<Entity> listOfEnemies;
+		Entity closestEntity;
+		float minDist = 1e10f;
+		while(true)
+		{
+			listOfEnemies = mainCharacter.GetListOfEnemies();
+			if (listOfEnemies.Count != 0)
+			{
+				closestEntity = listOfEnemies[0];
+				foreach (Entity entity in listOfEnemies) 
+				{
+					if (!entity) continue;
+					float dist = (entity.transform.position - transform.position).sqrMagnitude;
+					if (dist < minDist)
+					{
+						minDist = dist;
+						closestEntity = entity;
+					}
+				}
+				
+				Vector3 d = closestEntity.transform.position - transform.position;
+				d.y = 0;
+				Vector3 position = closestEntity.transform.position;
+				if (d.magnitude < 1.5f) closestEntity.transform.position = new Vector3(position.x + 8.0f, position.y + 4.0f, position.z);
+			}
+			yield return new WaitForSeconds(0.1f);
+		}
+			
 	}
 
 }
