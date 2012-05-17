@@ -4,11 +4,11 @@ using System.Collections;
 [RequireComponent (typeof (CharacterController))]
 public class Tiger : Entity {
 	
-	private int attackTime = 50, pursueTime = 30;
+	private int attackTime = 30, pursueTime = 30;
 	private int tiredTime = 80, restTime = 50;
 	private int waitingTime = 60, enoughwaitingTime = 80;
-	private int specialattackingTime = 6, attackingTime = 4;
-	private int damageTime = 0, dyingTime = 20;
+	private int specialattackingTime = 6, attackingTime = 8;
+	private int damageTime = 2, dyingTime = 20;
 	
 	private int countdownAttack = 0, countdownPursue = 0;
 	private int countdownTired = 0, countdownRest = 0;
@@ -36,12 +36,15 @@ public class Tiger : Entity {
 		life = 9;
 		criticalValue = life/3.0f;
 		damage = 15;
-		baseSpeed = 18.0f;
+		baseSpeed = 25.0f;
 		animation[runAnimation.name].speed = baseSpeed*0.08f;
 		speed = baseSpeed;
-		attackRadius = 5.0f;
-		closeRadius = 10.0f;
-		farRadius = 35.0f;
+		attackRadius = 6.0f;
+		closeRadius = 30.0f;
+		farRadius = 45.0f;
+		float atkSpeed = 2.0f;
+		animation[attackAnimation.name].speed = 2.0f;
+		attackingTime = (int) (attackAnimation.length*10.0f/atkSpeed);
 	}
 	
 	public IEnumerator UpdateTiger() {
