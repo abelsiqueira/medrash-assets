@@ -6,7 +6,7 @@ Solved 5- Fazer o Medrash parar de subir montanhas (subir, sobe, mas a queda mac
 6- Arrumar checkpoints (nao lembro o que era, so anotei isso :/)
 7- Colisor na Camera
 Solved 8- Arrumar o decaimento da energia
-9- Arrumar o Tigre (incluindo animacao)
+Solved 9- Arrumar o Tigre (incluindo animacao)
 Solved 10- Distancia maxima no ataque (virar para o inimigo)
 Solved 11- Dano de cair
 Solved 12- Travamento na movimentacao
