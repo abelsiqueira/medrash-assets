@@ -21,10 +21,19 @@ Solved 20- Arrumar a volta do Menu
 21- Sincronizar os passos
 
 MORE:
-22- Tigre dentro da caixa FinalBoss n�o d� certo porque o Tigre fica deformado ao se movimentar. N�o sei arrumar isso.
+22- Tigre dentro da caixa FinalBoss nao da certo porque o Tigre fica deformado ao se movimentar. Nao sei arrumar isso.
 Solved 23- Medrash se machuca ao cair muito facilmente.
 24- Colocar limites invisiveis ao redor do terreno
 25- Deixar o terreno bonito
+
+MORE++:
+26- Medrash está morrendo ao acaso ao caminhar pelo cenário
+Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
+28- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
+29- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
+30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
+fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
+31- Há código replicado para procurar o inimigo mais próximo
 
 02 - Harlei
 03 - Thiago
