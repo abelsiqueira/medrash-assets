@@ -11,7 +11,7 @@ Solved 10- Distancia maxima no ataque (virar para o inimigo)
 Solved 11- Dano de cair
 Solved 12- Travamento na movimentacao
 Solved 13- Coordenar a velocidade de animacao
-14- Quadriculado no mapa
+Solved 14- Quadriculado no mapa
 Solved 15- Pulo tirar energia 
 16- Prender o Medrash no Boss (Medrash ainda consegue subir somente com os direcionais.. precisa elevar mais o terreno)
 Solved 17- Tirar o pulo (Confirmado? Ja resolve os de cima com isso)
@@ -33,7 +33,8 @@ Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair e
 29- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
 30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
 fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
-31- Há código replicado para procurar o inimigo mais próximo
+Solved 31- Há código replicado para procurar o inimigo mais próximo
+Solved 32- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso não existisse inimigos no cenário
 
 02 - Harlei
 03 - Thiago
