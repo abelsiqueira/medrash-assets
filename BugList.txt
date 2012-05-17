@@ -39,6 +39,7 @@ fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
 Solved 31- Há código replicado para procurar o inimigo mais próximo
 Solved 32- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso não existisse inimigos no cenário
 33- Ocorrencia de ponteiro nulo para o urso algumas vezes após sua morte e Medrash tentando acessá-lo
+Solved 34- A beronha do Medrash considerava somente o tigre como entidade mais próxima
 
 02 - Harlei
 03 - Thiago
