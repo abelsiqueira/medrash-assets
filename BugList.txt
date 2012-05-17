@@ -24,7 +24,8 @@ MORE:
 22- Tigre dentro da caixa FinalBoss nao da certo porque o Tigre fica deformado ao se movimentar. Nao sei arrumar isso.
 Solved 23- Medrash se machuca ao cair muito facilmente.
 24- Colocar limites invisiveis ao redor do terreno
-25- Deixar o terreno bonito
+Solved 25- Deixar o terreno bonito
+25- Deixar a água realista
 
 MORE++:
 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
