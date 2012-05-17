@@ -241,25 +241,15 @@ public class MainCharacterController : MonoBehaviour
 	}
 	
 	public void TryToAttack () {
-		canMove = false;
-		float minDist = 1e10f;
-		List<Entity> listOfEnemies = mainCharacter.GetListOfEnemies();
-		Entity closestEntity = listOfEnemies[0];
-		
-		foreach (Entity entity in listOfEnemies) {
-			if (!entity)
-				continue;
-			float dist = (entity.transform.position - transform.position).sqrMagnitude;
-			if (dist < minDist) {
-				minDist = dist;
-				closestEntity = entity;
-			}
+		Entity closestEntity = GetClosestEntity();	
+		if (closestEntity)
+		{
+			canMove = false;
+			Vector3 d = closestEntity.transform.position - transform.position;
+			d.y = 0;
+			if (d.magnitude < 5) SetDirection(d);
+			StartCoroutine(DelayAttack(closestEntity));
 		}
-		
-		Vector3 d = closestEntity.transform.position - transform.position;
-		d.y = 0;
-		if (d.magnitude < 5) SetDirection(d);
-		StartCoroutine(DelayAttack(closestEntity));
 	}
 	
 	// delay entre a execução da animação de ataque e do dano causado
@@ -541,37 +531,49 @@ public class MainCharacterController : MonoBehaviour
 	{
 		canLightTorch = cond;
 	}
-
-	IEnumerator IsOnAnEntity()
+	
+	Entity GetClosestEntity()
 	{
 		List<Entity> listOfEnemies;
 		Entity closestEntity;
 		float minDist = 1e10f;
-		while(true)
+		listOfEnemies = mainCharacter.GetListOfEnemies();
+		if (listOfEnemies.Count != 0)
 		{
-			listOfEnemies = mainCharacter.GetListOfEnemies();
-			if (listOfEnemies.Count != 0)
+			closestEntity = listOfEnemies[0];
+			foreach (Entity entity in listOfEnemies) 
 			{
-				closestEntity = listOfEnemies[0];
-				foreach (Entity entity in listOfEnemies) 
+				if (!entity) continue;
+				float dist = (entity.transform.position - transform.position).sqrMagnitude;
+				if (dist < minDist)
 				{
-					if (!entity) continue;
-					float dist = (entity.transform.position - transform.position).sqrMagnitude;
-					if (dist < minDist)
-					{
-						minDist = dist;
-						closestEntity = entity;
-					}
+					minDist = dist;
+					closestEntity = entity;
+					return closestEntity;
 				}
-				
+			}
+			return null;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	IEnumerator IsOnAnEntity()
+	{
+		Entity closestEntity;
+		while(true)
+		{			
+			closestEntity = GetClosestEntity();
+			if (closestEntity)
+			{
 				Vector3 d = closestEntity.transform.position - transform.position;
-				d.y = 0;
-				Vector3 position = closestEntity.transform.position;
+				Vector3 position = closestEntity.transform.position;	
+				d.y = 0;				
 				if (d.magnitude < 1.5f) closestEntity.transform.position = new Vector3(position.x + 8.0f, position.y + 4.0f, position.z);
 			}
 			yield return new WaitForSeconds(0.1f);
 		}
-			
 	}
-
 }
