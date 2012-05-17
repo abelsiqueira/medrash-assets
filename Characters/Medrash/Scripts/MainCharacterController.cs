@@ -549,10 +549,9 @@ public class MainCharacterController : MonoBehaviour
 				{
 					minDist = dist;
 					closestEntity = entity;
-					return closestEntity;
 				}
 			}
-			return null;
+			return closestEntity;
 		}
 		else
 		{
