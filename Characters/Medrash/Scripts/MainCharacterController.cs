@@ -137,7 +137,7 @@ public class MainCharacterController : MonoBehaviour
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
 		
 		StartCoroutine(IsFalling());
-		StartCoroutine(IsOnAnEntity());
+		StartCoroutine(FixPositionRelativeToEntities());
 	}
 
 	void UpdateSmoothedMovementDirection()
@@ -559,7 +559,7 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 
-	IEnumerator IsOnAnEntity()
+	IEnumerator FixPositionRelativeToEntities()
 	{
 		Entity closestEntity;
 		while(true)
