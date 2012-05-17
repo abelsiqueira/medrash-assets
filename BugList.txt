@@ -25,18 +25,18 @@ MORE:
 Solved 23- Medrash se machuca ao cair muito facilmente.
 24- Colocar limites invisiveis ao redor do terreno
 Solved 25- Deixar o terreno bonito
-25- Deixar a água realista
+26- Deixar a água realista
 
 MORE++:
-26- Medrash está morrendo ao acaso ao caminhar pelo cenário
-Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
-28- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
-29- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
-30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
+27- Medrash está morrendo ao acaso ao caminhar pelo cenário
+Solved 28- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
+29- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
+30- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
+31- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
 fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
-Solved 31- Há código replicado para procurar o inimigo mais próximo
-Solved 32- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso não existisse inimigos no cenário
-33- Ocorrencia de ponteiro nulo para o urso algumas vezes após sua morte e Medrash tentando acessá-lo
+Solved 32- Há código replicado para procurar o inimigo mais próximo
+Solved 33- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso não existisse inimigos no cenário
+34- Ocorrencia de ponteiro nulo para o urso algumas vezes após sua morte e Medrash tentando acessá-lo
 
 02 - Harlei
 03 - Thiago
