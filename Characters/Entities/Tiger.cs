@@ -36,7 +36,7 @@ public class Tiger : Entity {
 		life = 9;
 		criticalValue = life/3.0f;
 		damage = 15;
-		baseSpeed = 25.0f;
+		baseSpeed = 23.0f;
 		animation[runAnimation.name].speed = baseSpeed*0.08f;
 		speed = baseSpeed;
 		attackRadius = 6.0f;
