@@ -87,8 +87,8 @@ public class MainCharacterController : MonoBehaviour
 	private bool isControllable = true;
 	
 	private float attackCooldownValue = 0.0f;
-	private float fallingDamageMultiplier = 0.2f;
-	private int fallingMaxStack = 80;
+	private float fallingDamageMultiplier = 0.3f;
+	private int fallingStackThreshold = 50;
 
 	void Awake()
 	{
@@ -474,20 +474,20 @@ public class MainCharacterController : MonoBehaviour
 	
 	IEnumerator IsFalling()
 	{
-		Stack<Boolean> stack = new Stack<Boolean>();
+		int i = 0;
 		while (true)
 		{
 			if (IsGrounded())
 			{
-				if (stack.Count >= fallingMaxStack)
+				if (i >= fallingStackThreshold)
 				{
-					mainCharacter.DamageLifeStatus(stack.Count*fallingDamageMultiplier);
+					mainCharacter.DamageLifeStatus(i * fallingDamageMultiplier);
 				}
-				stack = new Stack<bool>();
+				i = 0;
 			}
 			else
 			{
-				stack.Push(true);
+				i++;
 			}
 			yield return new WaitForSeconds(0.01f);
 		}
