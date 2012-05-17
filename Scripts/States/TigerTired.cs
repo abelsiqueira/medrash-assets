@@ -19,7 +19,7 @@ public class TigerTired : State {
 	}
 	
 	public override void Enter (Entity context) {
-		context.SetSpeed(1.0f);
+		context.SetSpeed(2.0f);
 	}
 		
 	public override void Execute (Entity context) {
