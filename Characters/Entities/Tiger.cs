@@ -5,11 +5,11 @@ using System.Collections;
 public class Tiger : Entity {
 	
 	private int attackTime = 30, pursueTime = 30;
-	private int tiredTime = 20, restTime = 150;
+	private int tiredTime = 80, restTime = 50;
 	private int waitingTime = 60, enoughwaitingTime = 80;
 	private int specialattackingTime = 6, attackingTime = 8;
 	private int damageTime = 2, dyingTime = 20;
-	private int attackedTime = 30;
+	private int attackedTime = 7;
 	
 	private int countdownAttack = 0, countdownPursue = 0;
 	private int countdownTired = 0, countdownRest = 0;
