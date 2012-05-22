@@ -88,7 +88,8 @@ public class MainCharacterController : MonoBehaviour
 	
 	private float attackCooldownValue = 0.0f;
 	private float fallingDamageMultiplier = 0.3f;
-	private int fallingStackThreshold = 80;
+	private float fallingDamageThreshold = 10.0f;
+	private float fallStartLevel;
 
 	void Awake()
 	{
@@ -136,7 +137,6 @@ public class MainCharacterController : MonoBehaviour
 		trotSpeed = trotSpeed*trotMaxAnimationSpeed;
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
 		
-		StartCoroutine(IsFalling());
 		StartCoroutine(FixPositionRelativeToEntities());
 	}
 
@@ -167,7 +167,13 @@ public class MainCharacterController : MonoBehaviour
 		
 			lockCameraTimer += Time.deltaTime;
 			if (isMoving != wasMoving) lockCameraTimer = 0.0f;
-
+			
+			if (falling) {
+				falling = false;
+				float fallLenght = fallStartLevel - fallingDamageThreshold;
+				if (transform.position.y < fallLenght)
+					mainCharacter.DamageLifeStatus(fallLenght*fallingDamageMultiplier);
+			}
 			if (targetDirection != Vector3.zero)
 			{
 				if (moveSpeed < walkSpeed * 0.9f && grounded)
@@ -227,6 +233,8 @@ public class MainCharacterController : MonoBehaviour
 		} 
 		else
 		{
+			falling = true;
+			fallStartLevel = transform.position.y;
 			if (isMoving) inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
 		}
 	}
@@ -470,27 +478,6 @@ public class MainCharacterController : MonoBehaviour
 	bool IsGrounded()
 	{
 		return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
-	}
-	
-	IEnumerator IsFalling()
-	{
-		int i = 0;
-		while (true)
-		{
-			if (IsGrounded())
-			{
-				if (i >= fallingStackThreshold)
-				{
-					mainCharacter.DamageLifeStatus(i * fallingDamageMultiplier);
-				}
-				i = 0;
-			}
-			else
-			{
-				i++;
-			}
-			yield return new WaitForSeconds(0.01f);
-		}
 	}
 
 	Vector3 GetDirection()	
