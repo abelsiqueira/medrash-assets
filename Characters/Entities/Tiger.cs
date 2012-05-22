@@ -5,16 +5,18 @@ using System.Collections;
 public class Tiger : Entity {
 	
 	private int attackTime = 30, pursueTime = 30;
-	private int tiredTime = 80, restTime = 50;
+	private int tiredTime = 20, restTime = 150;
 	private int waitingTime = 60, enoughwaitingTime = 80;
 	private int specialattackingTime = 6, attackingTime = 8;
 	private int damageTime = 2, dyingTime = 20;
+	private int attackedTime = 30;
 	
 	private int countdownAttack = 0, countdownPursue = 0;
 	private int countdownTired = 0, countdownRest = 0;
 	private int countdownWaiting = 0, countdownEnoughWaiting = 0;
 	private int countdownSpecialAttacking = 0, countdownAttacking = 0;
 	private int countdownDamage = 0, countdownDying = 0;
+	private int countdownAttacked = 0;
 	
 	private float criticalValue = 0;
 	
@@ -70,6 +72,9 @@ public class Tiger : Entity {
 				break;
 			case State.states.enDying:
 				DyingVerifications();
+				break;
+			case State.states.enAttacked:
+				AttackedVerifications();
 				break;
 			}
 			yield return new WaitForSeconds(0.1f);
@@ -132,7 +137,7 @@ public class Tiger : Entity {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
 			else
-				fsm.ChangeState(TigerRunAround.Instance());
+				fsm.ChangeState(Attacked.Instance());
 			canReceiveDamage = false;
 			receivedDamage = false;
 		}
@@ -164,6 +169,14 @@ public class Tiger : Entity {
 		countdownDying++;
 		if (countdownDying >= dyingTime) {
 			fsm.ChangeState(Idle.Instance());
+		}
+	}
+	
+	private void AttackedVerifications () {
+		countdownAttacked++;
+		if (countdownAttacked > attackedTime) {
+			fsm.ChangeState(TigerRunAround.Instance());
+			countdownAttacked = 0;
 		}
 	}
 }

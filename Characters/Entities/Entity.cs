@@ -46,6 +46,7 @@ public abstract class Entity : MonoBehaviour {
 	public AnimationClip waitAnimation;
 	public AnimationClip dyingAnimation;
 	public AnimationClip tigerSpecialAttackAnimation;
+	public AnimationClip attackedAnimation;
 	
 	protected AnimationClip currentAnimation;
 	
@@ -116,6 +117,10 @@ public abstract class Entity : MonoBehaviour {
 	
 	public void SetWaitAnimation () {
 		currentAnimation = waitAnimation;
+	}
+	
+	public void SetAttackedAnimation () {
+		currentAnimation = attackedAnimation;
 	}
 	
 	public void SetTigerSpecialAttackAnimation () {
