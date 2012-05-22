@@ -26,8 +26,10 @@ Solved 23- Medrash se machuca ao cair muito facilmente.
 Solved 24- Colocar limites invisiveis ao redor do terreno
 Solved 25 (parte 1)- Deixar o terreno bonito
 25 (parte 2)- Deixar a água realista
-25 (parte 3)- Colocar cabanas
+Solved 25 (parte 3)- Colocar cabanas
 25 (parte 4)- Colocar variedade de árvores
+Solved 25 (parte 5)- Colocar o Gardain
+25 (parte 6)- Espalahar soldados mortos
 
 MORE++:
 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
