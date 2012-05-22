@@ -167,10 +167,8 @@ public class MainCharacterController : MonoBehaviour
 		
     	Vector3 targetDirection = h * right + v * forward;
 	
-		if (grounded)
+		if (grounded && canMove)
 		{
-			if (!canMove)
-				moveSpeed = 0.0f;
 		
 			lockCameraTimer += Time.deltaTime;
 			if (isMoving != wasMoving) lockCameraTimer = 0.0f;
@@ -239,6 +237,9 @@ public class MainCharacterController : MonoBehaviour
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);
 	
 			if (moveSpeed < walkSpeed * 0.3f) walkTimeStart = Time.time;
+		} else if (grounded && !canMove) 
+		{
+			moveSpeed = 0.0f;
 		} 
 		else
 		{
