@@ -14,3 +14,7 @@ Materials
 *.wav
 *.asset
 Sounds/Music/explicacao audios fase 1.txt
+Characters/Medrash/Models/
+Objects/
+OnlyPlay.cs
+Panther/
