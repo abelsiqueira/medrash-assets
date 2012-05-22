@@ -1,5 +1,5 @@
 Solved 1- Musica no Menu
-2- Triangulo no minimapa
+Solved 2- Triangulo no minimapa
 3- Enxame - Colmeia faltando
 Solved 4- Resetar tudo da fase quando reiniciar o jogo (morrer ou menu)
 Solved 5- Fazer o Medrash parar de subir montanhas (subir, sobe, mas a queda machuca agora hehehe)
@@ -23,7 +23,7 @@ Solved 20- Arrumar a volta do Menu
 MORE:
 22- Tigre dentro da caixa FinalBoss nao da certo porque o Tigre fica deformado ao se movimentar. Nao sei arrumar isso.
 Solved 23- Medrash se machuca ao cair muito facilmente.
-24- Colocar limites invisiveis ao redor do terreno
+Solved 24- Colocar limites invisiveis ao redor do terreno
 Solved 25 (parte 1)- Deixar o terreno bonito
 25 (parte 2)- Deixar a água realista
 25 (parte 3)- Colocar cabanas
@@ -40,7 +40,7 @@ Solved 31- Há código replicado para procurar o inimigo mais próximo
 Solved 32- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso não existisse inimigos no cenário
 33- Ocorrencia de ponteiro nulo para o urso algumas vezes após sua morte e Medrash tentando acessá-lo
 Solved 34- A beronha do Medrash considerava somente o tigre como entidade mais próxima
-35- Arrumar a morte e respectiva animação
+Solved 35- Arrumar a morte e respectiva animação
 
 02 - Harlei
 03 - Thiago
