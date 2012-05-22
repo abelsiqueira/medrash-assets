@@ -87,8 +87,8 @@ public class MainCharacterController : MonoBehaviour
 	private bool isControllable = true;
 	
 	private float attackCooldownValue = 0.0f;
-	private float fallingDamageMultiplier = 0.3f;
-	private float fallingDamageThreshold = 10.0f;
+	private float fallingDamageMultiplier = 20f;
+	private float fallingHeightThreshold = 12.0f;
 	private float fallStartLevel;
 
 	void Awake()
@@ -136,8 +136,13 @@ public class MainCharacterController : MonoBehaviour
 		runSpeed = runSpeed*runMaxAnimationSpeed;
 		trotSpeed = trotSpeed*trotMaxAnimationSpeed;
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
+
 		
 		StartCoroutine(FixPositionRelativeToEntities());
+	}
+	
+	void Start () {
+		fallStartLevel = 0;
 	}
 
 	void UpdateSmoothedMovementDirection()
@@ -162,17 +167,25 @@ public class MainCharacterController : MonoBehaviour
 		
     	Vector3 targetDirection = h * right + v * forward;
 	
-		if (grounded && canMove)
+		if (grounded)
 		{
+			if (!canMove)
+				moveSpeed = 0.0f;
 		
 			lockCameraTimer += Time.deltaTime;
 			if (isMoving != wasMoving) lockCameraTimer = 0.0f;
 			
 			if (falling) {
 				falling = false;
-				float fallLenght = fallStartLevel - fallingDamageThreshold;
-				if (transform.position.y < fallLenght)
-					mainCharacter.DamageLifeStatus(fallLenght*fallingDamageMultiplier);
+				float fallLenght = fallStartLevel - transform.position.y;
+				if (fallLenght > fallingHeightThreshold) {
+					float fallDamage = fallLenght/fallingHeightThreshold;
+					fallDamage *= fallDamage;
+					fallDamage *= fallingDamageMultiplier;
+			
+					mainCharacter.DamageLifeStatus(fallDamage);
+				}
+				fallStartLevel = transform.position.y;
 			}
 			if (targetDirection != Vector3.zero)
 			{
@@ -227,14 +240,12 @@ public class MainCharacterController : MonoBehaviour
 	
 			if (moveSpeed < walkSpeed * 0.3f) walkTimeStart = Time.time;
 		} 
-		else if (grounded && !canMove)
-		{
-			moveSpeed = 0.0f;
-		} 
 		else
 		{
-			falling = true;
-			fallStartLevel = transform.position.y;
+			if (!falling) {
+				falling = true;
+				fallStartLevel = transform.position.y;
+			}
 			if (isMoving) inAirVelocity += targetDirection.normalized * Time.deltaTime * inAirControlAcceleration;
 		}
 	}
