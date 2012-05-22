@@ -88,7 +88,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	private float attackCooldownValue = 0.0f;
 	private float fallingDamageMultiplier = 0.3f;
-	private int fallingStackThreshold = 50;
+	private int fallingStackThreshold = 70;
 
 	void Awake()
 	{
@@ -325,9 +325,13 @@ public class MainCharacterController : MonoBehaviour
 		characterState = CharacterState.Defending;
 	}*/
 	
-	public void KillCharacter()
+	public void ForceDeath()
 	{
 		characterState = CharacterState.Dead;
+		animation[deathAnimation.name].wrapMode = WrapMode.Once;
+		animation[deathAnimation.name].speed = deathAnimationSpeed;
+		animation[deathAnimation.name].layer = 1;
+		animation.Play(deathAnimation.name);
 	}
 	
 	void Update()
@@ -350,7 +354,7 @@ public class MainCharacterController : MonoBehaviour
 			}
 		}
 		
-		if (Input.GetButtonDown("Fire2"))
+		/*if (Input.GetButtonDown("Fire2"))
 		{
 			if (canLightTorch)
 			{
@@ -360,7 +364,7 @@ public class MainCharacterController : MonoBehaviour
 				}
 				DidInteract();
 			}
-		}
+		}*/
 			
 		/*if (Input.GetButtonDown("Fire3"))
 		{
@@ -404,13 +408,6 @@ public class MainCharacterController : MonoBehaviour
 				animation[interactAnimation.name].layer = 1;
 				animation.CrossFade(interactAnimation.name);
 			}*/
-			else if (characterState == CharacterState.Dead)
-			{
-				animation[deathAnimation.name].wrapMode = WrapMode.Once;
-				animation[deathAnimation.name].speed = deathAnimationSpeed;
-				animation[deathAnimation.name].layer = 1;
-				animation.CrossFade(deathAnimation.name);
-			}
 			else 
 			{
 				if(controller.velocity.sqrMagnitude < 0.1f) 
