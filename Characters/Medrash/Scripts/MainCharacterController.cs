@@ -88,7 +88,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	private float attackCooldownValue = 0.0f;
 	private float fallingDamageMultiplier = 0.3f;
-	private int fallingStackThreshold = 50;
+	private int fallingStackThreshold = 80;
 
 	void Awake()
 	{
