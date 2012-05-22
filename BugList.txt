@@ -13,7 +13,7 @@ Solved 12- Travamento na movimentacao
 Solved 13- Coordenar a velocidade de animacao
 Solved 14- Quadriculado no mapa
 Solved 15- Pulo tirar energia 
-16- Prender o Medrash no Boss (Medrash ainda consegue subir somente com os direcionais.. precisa elevar mais o terreno)
+Solved 16- Prender o Medrash no Boss (Medrash ainda consegue subir somente com os direcionais.. precisa elevar mais o terreno)
 Solved 17- Tirar o pulo (Confirmado? Ja resolve os de cima com isso)
 18- Camera apontar para o inimigo proximo
 Solved 19- Atravessar a abelha
