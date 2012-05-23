@@ -30,6 +30,9 @@ Solved 25 (parte 3)- Colocar cabanas
 25 (parte 4)- Colocar variedade de árvores
 Solved 25 (parte 5)- Colocar o Gardain
 25 (parte 6)- Espalahar soldados mortos
+Solved 25 (parte 7)- Colocar fogo nas cabanas
+Solved 25 (parte 8)- Colocar marca de fogo no gramado da aldeia
+Solved 25 (parte 9)- Arrumar bifurcação do rio
 
 MORE++:
 Solved 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
