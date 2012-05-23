@@ -5,7 +5,8 @@ public class FlameController : MonoBehaviour
 {
 	private GameObject medrash;	
 	private MainCharacterController controller;
-	public float minDist = 1.0f;
+	private float minDist = 2.0f;
+	private float flameDamage = 0.5f;
 	
 	void Start ()
 	{
@@ -23,7 +24,7 @@ public class FlameController : MonoBehaviour
 			dist = DistanceToMainCharacter();
 			if (dist < minDist)
 			{
-				medrash.GetComponent<MainCharacter>().DamageLifeStatus(1);
+				medrash.GetComponent<MainCharacter>().DamageLifeStatus(flameDamage);
 			} 
 			yield return new WaitForSeconds(0.1f);
 		}
