@@ -1,4 +1,4 @@
-Solved 1- Musica no Menu
+﻿Solved 1- Musica no Menu
 Solved 2- Triangulo no minimapa
 3- Enxame - Colmeia faltando
 Solved 4- Resetar tudo da fase quando reiniciar o jogo (morrer ou menu)
@@ -32,7 +32,7 @@ Solved 25 (parte 5)- Colocar o Gardain
 25 (parte 6)- Espalahar soldados mortos
 
 MORE++:
-26- Medrash está morrendo ao acaso ao caminhar pelo cenário
+Solved 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
 Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
 Solved 28- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
 Solved 39- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
@@ -44,18 +44,19 @@ Solved 32- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso nã
 Solved 34- A beronha do Medrash considerava somente o tigre como entidade mais próxima
 Solved 35- Arrumar a morte e respectiva animação
 
-02 - Harlei
-03 - Thiago
-06 - Tiago
-07 - Thiago
-08 - Tiago
-09 - Abel
-13 - Abel
-14 - Harlei
-16 - Thiago
-18 - Tiago
-21 - Thiago
-22 - Thiago
-23 - Tiago
-24-  Thiago
-25 - Harlei
+MORE++ e 1/4:
+36- Receber dano (Tiago)
+37- Melhorar tigre (Harlei)
+38- Urso (Abel)
+39- Jacaré (Thiago)
+40- Trocar barreira de jogo (fazer por distância) (Thiago)
+41- Colocar sons novos (Thiago)
+42- Mudar controle do Medrash ao virar durante a corrida. (Abel)
+43- Aparecer checkpoint na tela. (Thiago)
+44- HUD dos inimigos (Harlei)
+45- Som dos passos (Abel)
+Solved 46- Travar animação de morte do Medrash. (Tiago)
+Solved 47- Morrer durante a corrida. (Tiago)
+Solved 48- Atacar ao morrer fode o Medrash (Tiago)
+Solved 49- Com menu subido, o Medrash fica pilhado ao atacar. (Desativar controles durante a pausa) (Thiago)
+50- Possibilidade de mover o corpo do Medrash morto pelo cenário antes do menu ser carregado
