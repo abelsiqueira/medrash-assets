@@ -240,7 +240,8 @@ public class MainCharacterController : MonoBehaviour
 			moveSpeed = Mathf.Lerp(moveSpeed, targetSpeed, curSmooth);
 	
 			if (moveSpeed < walkSpeed * 0.3f) walkTimeStart = Time.time;
-		} else if (grounded && !canMove) 
+		} 
+		else if (grounded && !canMove) 
 		{
 			moveSpeed = 0.0f;
 		} 
@@ -350,6 +351,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	public void ForceDeath()
 	{
+		canMove = false;
 		Input.ResetInputAxes();
 		characterState = CharacterState.Dead;
 		animation[deathAnimation.name].wrapMode = WrapMode.ClampForever;
@@ -360,6 +362,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	public void PutAlive()
 	{
+		canMove = true;
 		characterState = CharacterState.Idle;
 		animation[idleAnimation.name].layer = 1;
 		animation.Play(idleAnimation.name);
