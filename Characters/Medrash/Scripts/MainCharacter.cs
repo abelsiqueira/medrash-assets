@@ -317,6 +317,11 @@ public class MainCharacter : MonoBehaviour
 		StartCoroutine(TorchTimer());
 	}
 	
+	public bool IsAlive()
+	{
+		if (lifeStatus > 0) return true;
+		else return false;
+	}
 	
 	
 	public void hasSecondaryBar(bool has)

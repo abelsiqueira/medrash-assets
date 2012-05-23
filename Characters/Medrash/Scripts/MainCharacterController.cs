@@ -29,7 +29,7 @@ public class MainCharacterController : MonoBehaviour
 	//public float defenseAnimationSpeed = 1.0f;
 	//public float interactAnimationSpeed = 1.0f;	
 	private float baseAttackDuration = 0.8f;
-
+	
 	enum CharacterState 
 	{
 		Idle,
@@ -90,9 +90,12 @@ public class MainCharacterController : MonoBehaviour
 	private float fallingDamageMultiplier = 20f;
 	private float fallingHeightThreshold = 12.0f;
 	private float fallStartLevel;
+	
+	private PauseMenu pauseMenu;
 
 	void Awake()
 	{
+		pauseMenu = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseMenu>();
 		moveDirection = transform.TransformDirection(Vector3.forward);
 		mainCharacter = GetComponent<MainCharacter>();
 		animation = GetComponent<Animation>();
@@ -227,7 +230,7 @@ public class MainCharacterController : MonoBehaviour
 			{
 				targetSpeed *= trotSpeed;
 				characterState = CharacterState.Trotting;
-			}
+			}	
 			else
 			{
 				targetSpeed *= walkSpeed;
@@ -253,7 +256,7 @@ public class MainCharacterController : MonoBehaviour
 
 	void ApplyGravity()
 	{
-		if (isControllable)
+		if (isControllable && mainCharacter.IsAlive())
 		{
 			if (IsGrounded ()) verticalSpeed = 0.0f;
 			else verticalSpeed -= gravity * Time.deltaTime;
@@ -347,11 +350,21 @@ public class MainCharacterController : MonoBehaviour
 	
 	public void ForceDeath()
 	{
+		Input.ResetInputAxes();
 		characterState = CharacterState.Dead;
-		animation[deathAnimation.name].wrapMode = WrapMode.Once;
+		animation[deathAnimation.name].wrapMode = WrapMode.ClampForever;
 		animation[deathAnimation.name].speed = deathAnimationSpeed;
 		animation[deathAnimation.name].layer = 1;
 		animation.Play(deathAnimation.name);
+	}
+	
+	public void PutAlive()
+	{
+		characterState = CharacterState.Idle;
+		animation[idleAnimation.name].layer = 1;
+		animation.Play(idleAnimation.name);
+		animation[idleAnimation.name].layer = 0;
+		animation.Play(idleAnimation.name);
 	}
 	
 	void Update()
@@ -361,39 +374,41 @@ public class MainCharacterController : MonoBehaviour
 			Input.ResetInputAxes();
 		}
 		
-		if (Input.GetButtonDown("Fire1"))
+		if (mainCharacter.IsAlive() && !pauseMenu.IsPaused())
 		{
-			if (canAttack)
+			if (Input.GetButtonDown("Fire1"))
 			{
-				if (IsMoving())
+				if (canAttack)
 				{
-					Input.ResetInputAxes();
+					if (IsMoving())
+					{
+						Input.ResetInputAxes();
+					}
+					TryToAttack();
+					DidAttack();
 				}
-				TryToAttack();
-				DidAttack();
 			}
-		}
-		
-		/*if (Input.GetButtonDown("Fire2"))
-		{
-			if (canLightTorch)
+			/*if (Input.GetButtonDown("Fire2"))
 			{
-				if (IsMoving())
+				if (canLightTorch)
 				{
-					Input.ResetInputAxes();
-				}
-				DidInteract();
-			}
-		}*/
+					if (IsMoving())
+					{
+						Input.ResetInputAxes();
+					}
+					DidInteract();
+				}	
+			}*/	
 			
-		/*if (Input.GetButtonDown("Fire3"))
-		{
-			if (IsMoving())
+			/*if (Input.GetButtonDown("Fire3"))
 			{
-				Input.ResetInputAxes();
-			}
-			DidDefend();
-		}*/
+				if (IsMoving())
+				{
+					Input.ResetInputAxes();
+				}
+				DidDefend();
+			}*/
+		}
 
 		UpdateSmoothedMovementDirection();
 	
@@ -572,3 +587,4 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 }
+	
