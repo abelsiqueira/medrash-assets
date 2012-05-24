@@ -110,12 +110,16 @@ public class MainCharacter : MonoBehaviour
 	// rotina para verificar a condição física de MainCharacter
 	IEnumerator CheckCharacterPhysicalCondition()
 	{
-		float originalSpeed = characterController.runSpeed;
-		float n = characterController.runSpeed - characterController.walkSpeed;
+		float originalSpeed = characterController.GetRunSpeed();
+		float n = characterController.GetRunSpeed() - characterController.GetWalkSpeed();
+		float walkSpeed, runSpeed;
 		n /= 6;
 		int i = 0;
 		while(true)
 		{
+			walkSpeed = characterController.GetRunSpeed();
+			runSpeed = characterController.GetWalkSpeed();
+			
 			if(characterController.IsMoving())
 			{
 				DamageEnergyStatus(energyLossValue);
@@ -123,7 +127,7 @@ public class MainCharacter : MonoBehaviour
 			if (energyStatus > 50)
 			{
 				characterController.canRun = true;
-				characterController.runSpeed = originalSpeed;
+				characterController.SetRunSpeed(originalSpeed);
 				if (i != 0)
 				{
 					i = 0;
@@ -136,38 +140,38 @@ public class MainCharacter : MonoBehaviour
 				if ((((int)energyStatus) == 45) && (i == 0))
 				{
 					i++;
-					characterController.runSpeed -= n;
+					characterController.SetRunSpeed(runSpeed - n);
 				}
 				else if ((((int)energyStatus) == 40) && (i == 1))
 				{
 					i++;
-					characterController.runSpeed -= n;
+					characterController.SetRunSpeed(runSpeed - n);
 				}
 				else if ((((int)energyStatus) == 35) && (i == 2))
 				{
 					i++;
-					characterController.runSpeed -= n;
+					characterController.SetRunSpeed(runSpeed - n);
 				}
 				else if ((((int)energyStatus) == 30) && (i == 3))
 				{
 					i++;
-					characterController.runSpeed -= n;
+					characterController.SetRunSpeed(runSpeed - n);
 				}
 				else if ((((int)energyStatus) == 25) && (i == 4))
 				{
 					i++;
-					characterController.runSpeed -= n;
+					characterController.SetRunSpeed(runSpeed - n);
 				}
 				else if ((((int)energyStatus) == 20) && (i == 5))
 				{
 					i++;
-					characterController.runSpeed -= n;
+					characterController.SetRunSpeed(runSpeed - n);
 				}
 			}
 			else if (energyStatus > 0 && energyStatus < 20)
 			{
 				characterController.canRun = false;
-				characterController.runSpeed = characterController.walkSpeed;
+				characterController.SetRunSpeed(walkSpeed);
 			}
 			else if (energyStatus <= 0)
 			{

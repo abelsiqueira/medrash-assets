@@ -45,20 +45,21 @@ public class MainCharacterController : MonoBehaviour
 	private MainCharacter mainCharacter;
 	private CharacterState characterState;
 
-	public float walkSpeed = 4.0f;
+	
 	private float delayAttackValue;
 	private float attackDuration;
 	
-	public float trotSpeed = 5.0f;
-	
-	public float runSpeed = 8.0f;
-
-	public float inAirControlAcceleration = 3.0f;
-
-	public float gravity = 20.0f;
-	public float speedSmoothing = 10.0f;
-	public float rotateSpeed = 500.0f;
-	public float trotAfterSeconds = 3.0f;
+	// The following variables were made private to tweak easier and
+	// share the tweaking by git. These values were copied from the
+	// inspector at date May 23rd, 23h13.
+	private float walkSpeed = 5.0f;
+	private float trotSpeed = 4.0f;
+	private float runSpeed = 15.0f;
+	private float inAirControlAcceleration = 10.0f;
+	private float gravity = 20.0f;
+	private float speedSmoothing = 10.0f;
+	private float rotateSpeed = 500.0f;
+	private float trotAfterSeconds = 3.0f;
 
 	public bool canRun = true;
 	public bool canAttack = true;
@@ -90,6 +91,7 @@ public class MainCharacterController : MonoBehaviour
 	private float fallingDamageMultiplier = 20f;
 	private float fallingHeightThreshold = 12.0f;
 	private float fallStartLevel;
+	private float leapingHeight = 1.0f;
 	
 	private PauseMenu pauseMenu;
 
@@ -190,15 +192,7 @@ public class MainCharacterController : MonoBehaviour
 			}
 			if (targetDirection != Vector3.zero)
 			{
-				if (moveSpeed < walkSpeed * 0.9f && grounded)
-				{
-					moveDirection = targetDirection.normalized;
-				}
-				else
-				{
-					moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, rotateSpeed * Mathf.Deg2Rad * Time.deltaTime, 1000);
-					moveDirection = moveDirection.normalized;
-				}
+				moveDirection = targetDirection.normalized;
 			}
 		
 	        float curSmooth = speedSmoothing * Time.deltaTime;
@@ -259,7 +253,7 @@ public class MainCharacterController : MonoBehaviour
 	{
 		if (isControllable && mainCharacter.IsAlive())
 		{
-			if (IsGrounded ()) verticalSpeed = 0.0f;
+			if (IsGrounded ()) verticalSpeed = -2.0f; // Avoids (most) hopping
 			else verticalSpeed -= gravity * Time.deltaTime;
 		}
 	}
@@ -504,7 +498,11 @@ public class MainCharacterController : MonoBehaviour
 
 	bool IsGrounded()
 	{
-		return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
+		// Must take in account the fact that he is always leaping
+		bool isTouchingFloor = (collisionFlags & CollisionFlags.CollidedBelow) != 0;
+		bool isLeaping = Physics.Raycast(transform.position, -transform.up, leapingHeight);
+		
+		return (isTouchingFloor | isLeaping);
 	}
 
 	Vector3 GetDirection()	
@@ -588,6 +586,18 @@ public class MainCharacterController : MonoBehaviour
 			}
 			yield return new WaitForSeconds(0.1f);
 		}
+	}
+	
+	public float GetWalkSpeed () {
+		return walkSpeed;
+	}
+	
+	public float GetRunSpeed () {
+		return runSpeed;
+	}
+	
+	public void SetRunSpeed (float rs) {
+		runSpeed = rs;
 	}
 }
 	
