@@ -167,7 +167,7 @@ public class MainCharacterController : MonoBehaviour
 				stepTime = 0.5f/animation[walkAnimation.name].speed;
 			}
 			
-			if (isMoving)
+			if (isMoving && IsGrounded())
 				audio.Play();
 			
 			yield return new WaitForSeconds(stepTime);
