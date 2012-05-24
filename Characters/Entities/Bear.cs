@@ -5,10 +5,11 @@ using System.Collections;
 public class Bear : Entity {
 	
 	private int dyingDuration = 4, dyingTimer = 0;
-	private int damageInstant = 10, damageTimer = 0;
-	private int attackCooldown = 20, attackTimer = 0;
+	private int damageInstant = 7, damageTimer = 0;
+	private int attackCooldown = 10, attackTimer = 0;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int defenseDuration = 30, defenseTimer = 0;
+	private int countdownAttacked = 0, attackedTime = 7;
 	
 	private float probabilityToDefend = 0.0f;
 	
@@ -27,11 +28,11 @@ public class Bear : Entity {
 		
 		life = 9;
 		damage = 15;
-		baseSpeed = 3.0f;
+		baseSpeed = 9.0f;
 		speed = baseSpeed;
-		attackRadius = 3.0f;
-		closeRadius = 5.0f;
-		farRadius = 10.0f;
+		attackRadius = 5.0f;
+		closeRadius = 20.0f;
+		farRadius = 40.0f;
 		canReceiveDamage = true;
 	}
 	
@@ -56,6 +57,9 @@ public class Bear : Entity {
 			case State.states.enDefense:
 				DefenseVerifications();
 				break;
+			case State.states.enAttacked:
+				AttackedVerifications();
+				break;
 			}
 			yield return new WaitForSeconds(0.1f);
 		}
@@ -73,6 +77,8 @@ public class Bear : Entity {
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
 			receivedDamage = false;
 		}
 
@@ -90,6 +96,8 @@ public class Bear : Entity {
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
 			receivedDamage = false;
 		}
 	}
@@ -110,6 +118,8 @@ public class Bear : Entity {
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
 			receivedDamage = false;
 		}
 	}
@@ -122,15 +132,18 @@ public class Bear : Entity {
 			fsm.ChangeState(Damage.Instance());
 			fsm.RevertState();
 			needToAttack = false;
+			damageTimer = 0;
 		} else if (attackTimer >= attackCooldown) {
 			attackTimer = 0;
+			damageTimer = 0;
 			fsm.ChangeState(Pursue.Instance());
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
 			damageTimer = 0;
 			attackTimer = 0;
-			fsm.ChangeState(Pursue.Instance());
 			receivedDamage = false;
 		}
 	}
@@ -148,6 +161,14 @@ public class Bear : Entity {
 		if (defenseTimer >= defenseDuration) {
 			defenseTimer = 0;
 			fsm.ChangeState(Pursue.Instance());
+		}
+	}
+	
+	private void AttackedVerifications () {
+		countdownAttacked++;
+		if (countdownAttacked > attackedTime) {
+			fsm.RevertState();
+			countdownAttacked = 0;
 		}
 	}
 }

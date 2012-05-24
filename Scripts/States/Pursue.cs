@@ -26,6 +26,7 @@ public class Pursue : State {
 		direction = context.GetMedrashPosition() - transform.position;
 		direction.y = 0.0f;
 		context.SetDirection(direction);
+		context.SetRunAnimation();
 	}
 	
 	public override void Exit (Entity context) {
