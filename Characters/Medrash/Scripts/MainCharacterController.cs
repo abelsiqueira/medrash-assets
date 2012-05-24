@@ -94,7 +94,6 @@ public class MainCharacterController : MonoBehaviour
 	private float leapingHeight = 1.0f;
 	
 	private float stepTime = 0.0f;
-	private float stepBaseTime = 7.0f;
 	
 	private PauseMenu pauseMenu;
 
@@ -158,9 +157,19 @@ public class MainCharacterController : MonoBehaviour
 	{
 		while(true)
 		{
+			
+			if (characterState == CharacterState.Running) {
+				audio.volume = 0.5f;
+				stepTime = 0.44f/animation[runAnimation.name].speed;
+			}
+			else {
+				audio.volume = 0.2f;
+				stepTime = 0.5f/animation[walkAnimation.name].speed;
+			}
+			
 			if (isMoving)
 				audio.Play();
-			stepTime = stepBaseTime/runSpeed;
+			
 			yield return new WaitForSeconds(stepTime);
 		}
 	}
@@ -466,7 +475,8 @@ public class MainCharacterController : MonoBehaviour
 					if(characterState == CharacterState.Running)
 					{
 						animation[runAnimation.name].wrapMode = WrapMode.Loop;
-						animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, runMaxAnimationSpeed);
+						//animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, runMaxAnimationSpeed);
+						animation[runAnimation.name].speed = runSpeed/15.0f;
 						animation.CrossFade(runAnimation.name);	
 					}
 					else if(characterState == CharacterState.Trotting) 

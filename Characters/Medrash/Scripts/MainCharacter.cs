@@ -117,8 +117,8 @@ public class MainCharacter : MonoBehaviour
 		int i = 0;
 		while(true)
 		{
-			walkSpeed = characterController.GetRunSpeed();
-			runSpeed = characterController.GetWalkSpeed();
+			walkSpeed = characterController.GetWalkSpeed();
+			runSpeed  = characterController.GetRunSpeed();
 			
 			if(characterController.IsMoving())
 			{
