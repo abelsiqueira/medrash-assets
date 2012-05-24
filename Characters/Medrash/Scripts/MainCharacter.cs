@@ -228,6 +228,7 @@ public class MainCharacter : MonoBehaviour
 		{
 			lifeStatus -= x;
 			primaryBar.setHealth(100 - lifeStatus);
+			characterController.ReceiveAttack();
 		}
 		else
 		{

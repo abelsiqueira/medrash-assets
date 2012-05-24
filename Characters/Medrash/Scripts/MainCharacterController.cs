@@ -15,6 +15,7 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip runAnimation;
 	public AnimationClip attackAnimation;
 	public AnimationClip deathAnimation;
+	public AnimationClip receiveAttackAnimation;
 	//public AnimationClip defenseAnimation;
 	//public AnimationClip interactAnimation;
 	
@@ -26,6 +27,7 @@ public class MainCharacterController : MonoBehaviour
 	private float landAnimationSpeed = 1.0f;
 	private float attackAnimationSpeed = 1.4f;
 	private float deathAnimationSpeed = 1.0f;
+	private float receiveAttackAnimationSpeed = 0.75f;
 	//public float defenseAnimationSpeed = 1.0f;
 	//public float interactAnimationSpeed = 1.0f;	
 	private float baseAttackDuration = 0.8f;
@@ -39,13 +41,13 @@ public class MainCharacterController : MonoBehaviour
 		Attacking,
 		Defending,
 		Interacting,
-		Dead
+		Dead,
+		ReceivingAttack
 	}
 
 	private MainCharacter mainCharacter;
 	private CharacterState characterState;
 
-	
 	private float delayAttackValue;
 	private float attackDuration;
 	
@@ -130,6 +132,11 @@ public class MainCharacterController : MonoBehaviour
 		{
 			animation = null;
 			Debug.Log("No death animation found. Turning off animations.");
+		}
+		if (!receiveAttackAnimation)
+		{
+			animation = null;
+			Debug.Log("No receive attack animation found. Turning off animations.");
 		}
 		/*if (!defenseAnimation)
 		{
@@ -310,12 +317,6 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 	
-	void DidAttack()
-	{
-		characterState = CharacterState.Attacking;
-		StartCoroutine(AttackCooldown());
-	}
-	
 	IEnumerator AttackCooldown()
 	{
 		int i = 0;
@@ -356,16 +357,46 @@ public class MainCharacterController : MonoBehaviour
 		}*/
 	}
 	
-	void DidInteract()
+	/*void DidInteract()
 	{
 		characterState = CharacterState.Interacting;
+		animation[interactAnimation.name].wrapMode = WrapMode.Once;
+		animation[interactAnimation.name].speed = interactAnimationSpeed;
+		animation[interactAnimation.name].layer = 1;
+		animation.CrossFade(interactAnimation.name);
 		mainCharacter.GrabTorch();
+	}*/
+	
+	void DidAttack()
+	{
+		characterState = CharacterState.Attacking;
+		animation[attackAnimation.name].wrapMode = WrapMode.Once;
+		animation[attackAnimation.name].speed = attackAnimationSpeed;
+		animation[attackAnimation.name].layer = 1;
+		animation.CrossFade(attackAnimation.name);
+		StartCoroutine(AttackCooldown());
 	}
 	
-	/*void DidDefend()
+	void DidDefend()
 	{
-		characterState = CharacterState.Defending;
-	}*/
+	  /*characterState = CharacterState.Defending;
+		animation[defenseAnimation.name].wrapMode = WrapMode.Once;
+		animation[defenseAnimation.name].speed = defenseAnimationSpeed;
+		animation[defenseAnimation.name].layer = 1;
+		animation.CrossFade(defenseAnimation.name);*/
+	}
+	
+	public void ReceiveAttack()
+	{
+		canMove = false;
+		Input.ResetInputAxes();
+		characterState = CharacterState.ReceivingAttack;
+		animation[receiveAttackAnimation.name].wrapMode = WrapMode.Clamp;
+		animation[receiveAttackAnimation.name].speed = receiveAttackAnimationSpeed;
+		animation[receiveAttackAnimation.name].layer = 1;
+		animation.Play(receiveAttackAnimation.name);
+		canMove = true;
+	}
 	
 	public void ForceDeath()
 	{
@@ -421,14 +452,14 @@ public class MainCharacterController : MonoBehaviour
 				}	
 			}*/	
 			
-			/*if (Input.GetButtonDown("Fire3"))
+			if (Input.GetButtonDown("Fire3"))
 			{
 				if (IsMoving())
 				{
 					Input.ResetInputAxes();
 				}
 				DidDefend();
-			}*/
+			}
 		}
 
 		UpdateSmoothedMovementDirection();
@@ -442,55 +473,30 @@ public class MainCharacterController : MonoBehaviour
 		collisionFlags = controller.Move(movement);
 		if(animation) 
 		{
-			
-			if (characterState == CharacterState.Attacking)
+			if(controller.velocity.sqrMagnitude < 0.25f) 
 			{
-				animation[attackAnimation.name].wrapMode = WrapMode.Once;
-				animation[attackAnimation.name].speed = attackAnimationSpeed;
-				animation[attackAnimation.name].layer = 1;
-				animation.CrossFade(attackAnimation.name);
+				animation.CrossFade(idleAnimation.name);
 			}
-			/*else if (characterState == CharacterState.Defending)
-			{
-				animation[defenseAnimation.name].wrapMode = WrapMode.Once;
-				animation[defenseAnimation.name].speed = defenseAnimationSpeed;
-				animation[defenseAnimation.name].layer = 1;
-				animation.CrossFade(defenseAnimation.name);
-			}*/
-			/*else if (characterState == CharacterState.Interacting)
-			{
-				animation[interactAnimation.name].wrapMode = WrapMode.Once;
-				animation[interactAnimation.name].speed = interactAnimationSpeed;
-				animation[interactAnimation.name].layer = 1;
-				animation.CrossFade(interactAnimation.name);
-			}*/
 			else 
 			{
-				if(controller.velocity.sqrMagnitude < 0.25f) 
+				if(characterState == CharacterState.Running)
 				{
-					animation.CrossFade(idleAnimation.name);
+					animation[runAnimation.name].wrapMode = WrapMode.Loop;
+					//animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, runMaxAnimationSpeed);
+					animation[runAnimation.name].speed = runSpeed/15.0f;
+					animation.CrossFade(runAnimation.name);	
 				}
-				else 
+				else if(characterState == CharacterState.Trotting) 
 				{
-					if(characterState == CharacterState.Running)
-					{
-						animation[runAnimation.name].wrapMode = WrapMode.Loop;
-						//animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, runMaxAnimationSpeed);
-						animation[runAnimation.name].speed = runSpeed/15.0f;
-						animation.CrossFade(runAnimation.name);	
-					}
-					else if(characterState == CharacterState.Trotting) 
-					{
-						animation[walkAnimation.name].wrapMode = WrapMode.Loop;
-						animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, trotMaxAnimationSpeed);
-						animation.CrossFade(walkAnimation.name);	
-					}
-					else if(characterState == CharacterState.Walking) 
-					{
-						animation[walkAnimation.name].wrapMode = WrapMode.Loop;
-						animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, walkMaxAnimationSpeed);
-						animation.CrossFade(walkAnimation.name);	
-					}
+					animation[walkAnimation.name].wrapMode = WrapMode.Loop;
+					animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, trotMaxAnimationSpeed);
+					animation.CrossFade(walkAnimation.name);	
+				}
+				else if(characterState == CharacterState.Walking) 
+				{
+					animation[walkAnimation.name].wrapMode = WrapMode.Loop;
+					animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, walkMaxAnimationSpeed);
+					animation.CrossFade(walkAnimation.name);	
 				}
 			}
 		}
