@@ -57,7 +57,7 @@ MORE++ e 1/4:
 Solved 42- Mudar controle do Medrash ao virar durante a corrida. (Abel)
 43- Aparecer checkpoint na tela. (Thiago)
 44- HUD dos inimigos (Harlei)
-45- Som dos passos (Abel)
+Solved 45- Som dos passos (Abel)
 Solved 46- Travar animação de morte do Medrash. (Tiago)
 Solved 47- Morrer durante a corrida. (Tiago)
 Solved 48- Atacar ao morrer fode o Medrash (Tiago)
