@@ -93,6 +93,9 @@ public class MainCharacterController : MonoBehaviour
 	private float fallStartLevel;
 	private float leapingHeight = 1.0f;
 	
+	private float stepTime = 0.0f;
+	private float stepBaseTime = 7.0f;
+	
 	private PauseMenu pauseMenu;
 
 	void Awake()
@@ -141,13 +144,25 @@ public class MainCharacterController : MonoBehaviour
 		runSpeed = runSpeed*runMaxAnimationSpeed;
 		trotSpeed = trotSpeed*trotMaxAnimationSpeed;
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
-
 		
 		StartCoroutine(FixPositionRelativeToEntities());
+		
 	}
 	
 	void Start () {
 		fallStartLevel = 0;
+		StartCoroutine(StepSound());
+	}
+	
+	IEnumerator StepSound()
+	{
+		while(true)
+		{
+			if (isMoving)
+				audio.Play();
+			stepTime = stepBaseTime/runSpeed;
+			yield return new WaitForSeconds(stepTime);
+		}
 	}
 
 	void UpdateSmoothedMovementDirection()
@@ -253,7 +268,7 @@ public class MainCharacterController : MonoBehaviour
 	{
 		if (isControllable && mainCharacter.IsAlive())
 		{
-			if (IsGrounded ()) verticalSpeed = -2.0f; // Avoids (most) hopping
+			if (IsGrounded ()) verticalSpeed = -10.0f; // Avoids (most) hopping
 			else verticalSpeed -= gravity * Time.deltaTime;
 		}
 	}
@@ -442,7 +457,7 @@ public class MainCharacterController : MonoBehaviour
 			}*/
 			else 
 			{
-				if(controller.velocity.sqrMagnitude < 0.1f) 
+				if(controller.velocity.sqrMagnitude < 0.25f) 
 				{
 					animation.CrossFade(idleAnimation.name);
 				}
