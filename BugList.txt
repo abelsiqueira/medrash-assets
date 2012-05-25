@@ -63,3 +63,4 @@ Solved 47- Morrer durante a corrida. (Tiago)
 Solved 48- Atacar ao morrer fode o Medrash (Tiago)
 Solved 49- Com menu subido, o Medrash fica pilhado ao atacar. (Desativar controles durante a pausa) (Thiago)
 Solved 50- Possibilidade de mover o corpo do Medrash morto pelo cenário antes do menu ser carregado
+Solved 51- Defesa do Medrash
