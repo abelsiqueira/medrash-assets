@@ -477,26 +477,24 @@ public class MainCharacterController : MonoBehaviour
 					DidInteract();
 				}	
 			}*/	
-						
-			if (Input.GetButtonDown("Fire3")) 
-			{
-				if (keyDown == false)				
-				{
-					DidDefend();
-					Defend();
-					keyDown = true;
-				}
-			}
-			
-			if (Input.GetButtonUp("Fire3")) 
-			{
-				if (keyDown == true)
-				{
-					DeactivateDefense();
-					keyDown = false;
-				}
-			}
+				
+			isDefending = Input.GetButton("Fire3");
+			Debug.Log(isDefending);
 
+		}
+		
+		if (isDefending) {
+			Defend();
+			Input.ResetInputAxes();
+			canMove = false;
+			keyDown = true;
+			characterState = CharacterState.Defending;
+			animation[defendAnimation.name].layer = 1;
+		} else {
+			characterState = CharacterState.Idle;
+			canMove = true;
+			keyDown = false;
+			animation[defendAnimation.name].layer = 0;
 		}
 			
 		UpdateSmoothedMovementDirection();
@@ -510,7 +508,13 @@ public class MainCharacterController : MonoBehaviour
 		collisionFlags = controller.Move(movement);
 		if(animation) 
 		{
-			if(controller.velocity.sqrMagnitude < 0.25f) 
+			if (characterState == CharacterState.Defending)
+			{
+				animation[defendAnimation.name].wrapMode = WrapMode.ClampForever;
+				animation[defendAnimation.name].speed = defendAnimationSpeed;
+				animation.Play(defendAnimation.name);
+			}
+			else if(controller.velocity.sqrMagnitude < 0.25f) 
 			{
 				animation.CrossFade(idleAnimation.name);
 			}
