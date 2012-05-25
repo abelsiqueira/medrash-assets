@@ -16,7 +16,7 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip attackAnimation;
 	public AnimationClip deathAnimation;
 	public AnimationClip receiveAttackAnimation;
-	//public AnimationClip defenseAnimation;
+	public AnimationClip defendAnimation;
 	//public AnimationClip interactAnimation;
 	
 	private Animation animation;
@@ -28,8 +28,8 @@ public class MainCharacterController : MonoBehaviour
 	private float attackAnimationSpeed = 1.4f;
 	private float deathAnimationSpeed = 1.0f;
 	private float receiveAttackAnimationSpeed = 0.75f;
-	//public float defenseAnimationSpeed = 1.0f;
-	//public float interactAnimationSpeed = 1.0f;	
+	private float defendAnimationSpeed = 0.75f;
+	//private float interactAnimationSpeed = 1.0f;	
 	private float baseAttackDuration = 0.8f;
 	
 	enum CharacterState 
@@ -88,6 +88,7 @@ public class MainCharacterController : MonoBehaviour
 	private float lastGroundedTime = 0.0f;
 
 	private bool isControllable = true;
+	private bool isDefending = false;
 	
 	private float attackCooldownValue = 0.0f;
 	private float fallingDamageMultiplier = 20f;
@@ -138,11 +139,11 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No receive attack animation found. Turning off animations.");
 		}
-		/*if (!defenseAnimation)
+		if (!defendAnimation)
 		{
 			animation = null;
 			Debug.Log("No defend animation found. Turning off animations.");
-		}*/
+		}
 		
 		attackDuration = baseAttackDuration/attackAnimationSpeed;
 		delayAttackValue = attackDuration;
@@ -357,6 +358,17 @@ public class MainCharacterController : MonoBehaviour
 		}*/
 	}
 	
+	private void Defend()
+	{
+		Entity closestEntity = GetClosestEntity();	
+		if (closestEntity)
+		{
+			Vector3 d = closestEntity.transform.position - transform.position;
+			d.y = 0;
+			if (d.magnitude < 5) SetDirection(d);
+		}
+	}
+	
 	/*void DidInteract()
 	{
 		characterState = CharacterState.Interacting;
@@ -369,6 +381,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	void DidAttack()
 	{
+		Input.ResetInputAxes();
 		characterState = CharacterState.Attacking;
 		animation[attackAnimation.name].wrapMode = WrapMode.Once;
 		animation[attackAnimation.name].speed = attackAnimationSpeed;
@@ -379,12 +392,27 @@ public class MainCharacterController : MonoBehaviour
 	
 	void DidDefend()
 	{
-	  /*characterState = CharacterState.Defending;
-		animation[defenseAnimation.name].wrapMode = WrapMode.Once;
-		animation[defenseAnimation.name].speed = defenseAnimationSpeed;
-		animation[defenseAnimation.name].layer = 1;
-		animation.CrossFade(defenseAnimation.name);*/
+		Input.ResetInputAxes();
+		isDefending = true;
+		canMove = false;
+	    characterState = CharacterState.Defending;
+		animation[defendAnimation.name].wrapMode = WrapMode.ClampForever;
+		animation[defendAnimation.name].speed = defendAnimationSpeed;
+		animation[defendAnimation.name].layer = 1;
+		animation.Play(defendAnimation.name);
 	}
+	
+	void DeactivateDefense()
+	{
+		isDefending = false;
+		canMove = true;
+	    characterState = CharacterState.Idle;
+		animation[idleAnimation.name].layer = 1;
+		animation.Play(idleAnimation.name);
+		animation[idleAnimation.name].layer = 0;
+		animation.Play(idleAnimation.name);
+	}
+	
 	
 	public void ReceiveAttack()
 	{
@@ -419,6 +447,8 @@ public class MainCharacterController : MonoBehaviour
 		animation.Play(idleAnimation.name);
 	}
 	
+	private bool keyDown = false;
+	
 	void Update()
 	{	
 		if (!isControllable)
@@ -432,10 +462,6 @@ public class MainCharacterController : MonoBehaviour
 			{
 				if (canAttack)
 				{
-					if (IsMoving())
-					{
-						Input.ResetInputAxes();
-					}
 					TryToAttack();
 					DidAttack();
 				}
@@ -451,17 +477,28 @@ public class MainCharacterController : MonoBehaviour
 					DidInteract();
 				}	
 			}*/	
-			
-			if (Input.GetButtonDown("Fire3"))
+						
+			if (Input.GetButtonDown("Fire3")) 
 			{
-				if (IsMoving())
+				if (keyDown == false)				
 				{
-					Input.ResetInputAxes();
+					DidDefend();
+					Defend();
+					keyDown = true;
 				}
-				DidDefend();
 			}
-		}
+			
+			if (Input.GetButtonUp("Fire3")) 
+			{
+				if (keyDown == true)
+				{
+					DeactivateDefense();
+					keyDown = false;
+				}
+			}
 
+		}
+			
 		UpdateSmoothedMovementDirection();
 	
 		ApplyGravity();
@@ -629,6 +666,11 @@ public class MainCharacterController : MonoBehaviour
 	
 	public void SetRunSpeed (float rs) {
 		runSpeed = rs;
+	}
+	
+	public bool IsDefending()
+	{
+		return isDefending;
 	}
 }
 	
