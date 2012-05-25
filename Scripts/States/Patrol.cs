@@ -20,7 +20,7 @@ public class Patrol : State {
 	}
 	
 	public override void Enter (Entity context) {
-		context.SetSpeed(context.GetBaseSpeed());
+		context.SetSpeed(context.GetBaseSpeed()/4);
 		float r = Random.value;
 		rotateAngle = 120.0f*(2*r - 1)*Mathf.PI/180.0f;
 		if (r < 0.4)
@@ -35,7 +35,7 @@ public class Patrol : State {
 	}
 	
 	public override void Execute (Entity context) {
-		
+		context.SetWalkAnimation();
 	}
 	
 	public override void Exit (Entity context) {

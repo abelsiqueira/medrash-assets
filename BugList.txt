@@ -50,7 +50,7 @@ Solved 35- Arrumar a morte e respectiva animação
 MORE++ e 1/4:
 Solved 36- Receber dano (Tiago)
 37- Melhorar tigre (Harlei)
-38- Urso (Abel)
+Solved 38- Urso (Abel)
 39- Jacaré (Thiago)
 40- Trocar barreira de jogo (fazer por distância) (Thiago)
 41- Colocar sons novos (Thiago)
