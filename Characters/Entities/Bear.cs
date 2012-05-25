@@ -4,9 +4,10 @@ using System.Collections;
 [RequireComponent (typeof (CharacterController))]
 public class Bear : Entity {
 	
-	private int dyingDuration = 4, dyingTimer = 0;
+	private int dyingDuration = 10, dyingTimer = 0;
 	private int damageInstant = 7, damageTimer = 0;
-	private int attackCooldown = 10, attackTimer = 0;
+	private int attackCooldown = 15, attackTimer = 0;
+	private int countdownAttack = 0, attackDuration = 6;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int defenseDuration = 30, defenseTimer = 0;
 	private int countdownAttacked = 0, attackedTime = 7;
@@ -20,13 +21,16 @@ public class Bear : Entity {
 	}
 	
 	void Start () {
-    EntityStart();
+	    EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateBear());
 		
-		life = 9;
+		
+		animation[attackAnimation.name].speed = 1.3f;
+		
+		life = 6;
 		damage = 15;
 		baseSpeed = 9.0f;
 		speed = baseSpeed;
@@ -60,6 +64,9 @@ public class Bear : Entity {
 			case State.states.enAttacked:
 				AttackedVerifications();
 				break;
+			case State.states.enWait:
+				WaitVerifications();
+				break;
 			}
 			yield return new WaitForSeconds(0.1f);
 		}
@@ -68,6 +75,8 @@ public class Bear : Entity {
 	private void IdleVerifications () {
 		canReceiveDamage = true;
 		idlePatrolChangeTimer++;
+		if (countdownAttack > 0)
+			countdownAttack--;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
 			fsm.ChangeState(Pursue.Instance());
@@ -87,6 +96,8 @@ public class Bear : Entity {
 	private void PatrolVerifications () {
 		canReceiveDamage = true;
 		idlePatrolChangeTimer++;
+		if (countdownAttack > 0)
+			countdownAttack--;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
 			fsm.ChangeState(Pursue.Instance());
@@ -104,17 +115,44 @@ public class Bear : Entity {
 	
 	private void PursueVerifications () {
 		canReceiveDamage = true;
+		if (countdownAttack > 0)
+			countdownAttack--;
 		float dist = DistanceToMainCharacter();		
 		if (dist < attackRadius) {
-			float r = Random.value;
-			if (r < probabilityToDefend) {
-				fsm.ChangeState(Defense.Instance());
+			if (countdownAttack == 0) {
+				float r = Random.value;
+				if (r < probabilityToDefend) {
+					fsm.ChangeState(Defense.Instance());
+				} else {
+					needToAttack = true;
+					countdownAttack = attackCooldown;
+					fsm.ChangeState(Attack.Instance());
+				}
 			} else {
-				needToAttack = true;
-				fsm.ChangeState(Attack.Instance());
+				fsm.ChangeState(Wait.Instance());
 			}
 		} else if (dist > farRadius) {
 			fsm.ChangeState(Patrol.Instance());
+		} else if (receivedDamage) {
+			if (life <= 0)
+				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
+			receivedDamage = false;
+		}
+	}
+	
+	private void WaitVerifications () {
+		canReceiveDamage = true;
+		if (countdownAttack > 0)
+			countdownAttack--;
+		float dist = DistanceToMainCharacter();
+		if (countdownAttack == 0) {
+			needToAttack = true;
+			countdownAttack = attackCooldown;
+			fsm.ChangeState(Attack.Instance());
+		} else if (dist > attackRadius) {
+			fsm.ChangeState(Pursue.Instance());
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
@@ -128,15 +166,16 @@ public class Bear : Entity {
 		canReceiveDamage = true;
 		damageTimer++;
 		attackTimer++;
+		countdownAttack--;
 		if (needToAttack && (damageTimer >= damageInstant)) {
 			fsm.ChangeState(Damage.Instance());
 			fsm.RevertState();
 			needToAttack = false;
 			damageTimer = 0;
-		} else if (attackTimer >= attackCooldown) {
+		} else if (attackTimer >= attackDuration) {
 			attackTimer = 0;
 			damageTimer = 0;
-			fsm.ChangeState(Pursue.Instance());
+			fsm.ChangeState(Wait.Instance());
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
