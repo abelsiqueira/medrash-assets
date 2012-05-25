@@ -7,7 +7,7 @@ public class Bear : Entity {
 	private int dyingDuration = 10, dyingTimer = 0;
 	private int damageInstant = 7, damageTimer = 0;
 	private int attackCooldown = 15, attackTimer = 0;
-	private int countdownAttack = 0, attackDuration = 6;
+	private int countdownAttack = 0, attackDuration = 8;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int defenseDuration = 30, defenseTimer = 0;
 	private int countdownAttacked = 0, attackedTime = 7;
@@ -27,8 +27,11 @@ public class Bear : Entity {
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateBear());
 		
-		
-		animation[attackAnimation.name].speed = 1.3f;
+		float aux = 1.3f;
+		animation[attackAnimation.name].speed = aux;
+		damageInstant = (int) (damageInstant/aux);
+		attackDuration = (int) (attackDuration/aux);
+		attackCooldown = (int) (attackCooldown/aux);
 		
 		life = 6;
 		damage = 15;
@@ -181,7 +184,7 @@ public class Bear : Entity {
 				fsm.ChangeState(Dying.Instance());
 			else {
 				fsm.ChangeState(Attacked.Instance());
-				fsm.RevertState();
+				//fsm.RevertState();
 			}
 			damageTimer = 0;
 			attackTimer = 0;
