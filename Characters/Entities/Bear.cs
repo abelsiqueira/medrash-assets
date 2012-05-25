@@ -140,8 +140,10 @@ public class Bear : Entity {
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
-			else
+			else {
 				fsm.ChangeState(Attacked.Instance());
+				fsm.RevertState();
+			}
 			damageTimer = 0;
 			attackTimer = 0;
 			receivedDamage = false;
@@ -167,7 +169,7 @@ public class Bear : Entity {
 	private void AttackedVerifications () {
 		countdownAttacked++;
 		if (countdownAttacked > attackedTime) {
-			fsm.RevertState();
+			fsm.ChangeState(Pursue.Instance());
 			countdownAttacked = 0;
 		}
 	}
