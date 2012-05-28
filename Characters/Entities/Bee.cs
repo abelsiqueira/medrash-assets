@@ -6,8 +6,10 @@ public class Bee : Entity {
 	
 	private int damageInstant = 10, damageTimer = 0;
 	private int attackCooldown = 4, attackTimer = 0;
-	
+	public GameObject colmeia;
+	private GameObject colmeiaInstance;
 	bool needToAttack = false;
+	
 	
 	public void Awake () {
 		fsm = new FSM(this);
@@ -22,7 +24,9 @@ public class Bee : Entity {
 		StartCoroutine(UpdateGeneric());
 		returnPlace.x = transform.position.x;
 		returnPlace.z = transform.position.z;
-		
+		GameObject colmeiaInstance = (GameObject)Instantiate(colmeia);
+		colmeiaInstance.transform.position = this.transform.position;
+			
 		life = 1;
 		damage = 1;
 		baseSpeed = 5.0f;
@@ -33,6 +37,11 @@ public class Bee : Entity {
 		canReceiveDamage = false;
 		
 		Physics.IgnoreCollision(this.gameObject.collider, medrash.collider);
+	}
+	
+	void OnDisable()
+	{
+		GameObject.Destroy(colmeiaInstance);
 	}
 	
 	public IEnumerator UpdateGeneric() {

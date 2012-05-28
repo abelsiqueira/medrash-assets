@@ -14,6 +14,7 @@ public class RegionBox : MonoBehaviour {
 	private int length;
 	private bool first = false;
 	private bool canUpdate = false;
+	private bool saved = true;
 	
 	void Start () {
 		length = enemy.Length;
@@ -48,8 +49,11 @@ public class RegionBox : MonoBehaviour {
 	{
 		if (!Active) return;
 		Active = false;
-		if (save)
+		if (save && saved)
+		{
+			saved = false;
 			medrash.GetComponent<CheckPoint>().Save();
+		}
 		for (int i = 0; i < length; i++)
 			if (copy[i] != null)
 				GameObject.Destroy(copy[i]);
