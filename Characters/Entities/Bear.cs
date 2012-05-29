@@ -20,13 +20,13 @@ public class Bear : Entity {
 	}
 	
 	void Start () {
-    EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateBear());
 		
 		life = 9;
+		maxLife = 9;
 		damage = 15;
 		baseSpeed = 9.0f;
 		speed = baseSpeed;
@@ -34,6 +34,8 @@ public class Bear : Entity {
 		closeRadius = 20.0f;
 		farRadius = 40.0f;
 		canReceiveDamage = true;
+		
+		EntityStart();
 	}
 	
 	public IEnumerator UpdateBear() {

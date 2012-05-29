@@ -29,7 +29,6 @@ public class Tiger : Entity {
 	//medrash.GetComponent<MainCharacter>().DamageLifeStatus(float);
 	
 	void Start () {
-		EntityStart();
 		fsm.SetCurrentState (TigerRunAround.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
@@ -47,6 +46,8 @@ public class Tiger : Entity {
 		float atkSpeed = 2.0f;
 		animation[attackAnimation.name].speed = 2.0f;
 		attackingTime = (int) (attackAnimation.length*10.0f/atkSpeed);
+		
+		EntityStart();
 	}
 	
 	public IEnumerator UpdateTiger() {

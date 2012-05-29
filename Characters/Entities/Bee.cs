@@ -14,8 +14,6 @@ public class Bee : Entity {
 	}
 	
 	void Start () {
-		
-    	EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
@@ -32,6 +30,7 @@ public class Bee : Entity {
 		farRadius = 20.0f;
 		canReceiveDamage = false;
 		
+		EntityStart();
 		Physics.IgnoreCollision(this.gameObject.collider, medrash.collider);
 	}
 	

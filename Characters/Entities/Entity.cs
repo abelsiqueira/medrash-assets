@@ -37,7 +37,7 @@ public abstract class Entity : MonoBehaviour {
 	protected FSM fsm;
 	protected bool canReceiveDamage = false, receivedDamage = false;
 	
-	protected float life, damage, speed, baseSpeed;
+	protected float life, maxLife, damage, speed, baseSpeed;
 	
 	public AnimationClip idleAnimation;
 	public AnimationClip walkAnimation;
@@ -50,15 +50,35 @@ public abstract class Entity : MonoBehaviour {
 	
 	protected AnimationClip currentAnimation;
 	
+	private Vector3 position;
+	private Vector3 lifeBarPos;
+	private Vector3 screenPos;
+	
+	private Texture2D background;
+    private Texture2D foreground;
+	
 	public void SetMainCharacter(GameObject obj) {
 		medrash = obj;
 	}
 	
 	protected void EntityStart () {
 		medrash = GameObject.FindGameObjectWithTag("Player");
-		dmgBox = transform.Find("dmgBox").gameObject;
+		Transform dBox = transform.Find("dmgBox");
+		if (dBox)
+			dmgBox = dBox.gameObject;
 		if (reward != null && (lifeValue*energyValue > 0.0f))
 			reward.GetComponent<FoodController>().setValues(lifeValue, energyValue);
+		
+		background = new Texture2D(1, 1, TextureFormat.RGB24, false);
+        foreground = new Texture2D(1, 1, TextureFormat.RGB24, false);
+		
+		maxLife = life;
+		
+        background.SetPixel(0, 0, Color.white);
+        foreground.SetPixel(0, 0, Color.green);
+		
+		background.Apply();
+        foreground.Apply();
 	}
 	
 	public void Update () {
@@ -185,5 +205,23 @@ public abstract class Entity : MonoBehaviour {
 	
 	public Vector3 GetMedrashPosition () {
 		return medrash.transform.position;
+	}
+	
+	void OnGUI(){
+		position = this.transform.position;
+		float dist = DistanceToMainCharacter();
+		if (dist < 20){
+			float scaling = 2*(2 - dist/10);
+			float barHeight = 2.5f*scaling;
+			float barWidth = 15.0f*scaling;
+			lifeBarPos = this.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
+			//Debug.Log(lifeBarPos);
+			screenPos = Camera.main.WorldToScreenPoint(lifeBarPos);
+			//Debug.Log(screenPos);
+			//Debug.Log(background);
+			GUI.DrawTexture(new Rect(screenPos.x, screenPos.z + 100, barWidth, barHeight), background, ScaleMode.StretchToFill);
+			GUI.DrawTexture(new Rect(screenPos.x, screenPos.z + 100, barWidth*(life/maxLife), barHeight), foreground, ScaleMode.StretchToFill);
+			//GUI.Box(new Rect(screenPos.x, screenPos.y - 300, 30, 30), "");
+		}
 	}
 }

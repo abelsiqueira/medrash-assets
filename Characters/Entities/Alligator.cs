@@ -18,7 +18,6 @@ public class Alligator : Entity {
 	}
 	
 	void Start () {
-    	EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
@@ -37,6 +36,8 @@ public class Alligator : Entity {
 		closeRadius = 3.0f;
 		farRadius = 6.0f;
 		canReceiveDamage = true;
+		
+		EntityStart();
 	}
 	
 	public IEnumerator UpdateGeneric() {

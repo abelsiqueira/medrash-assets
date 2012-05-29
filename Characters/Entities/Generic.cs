@@ -16,7 +16,6 @@ public class Generic : Entity {
 	}
 	
 	void Start () {
-    EntityStart();
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		StartCoroutine(fsm.UpdateFSM());
@@ -24,12 +23,13 @@ public class Generic : Entity {
 		
 		life = 3;
 		damage = 1;
-		baseSpeed = 3.0f;
+		baseSpeed = 1.0f;
 		speed = baseSpeed;
 		attackRadius = 1.0f;
 		closeRadius = 3.0f;
 		farRadius = 6.0f;
 		canReceiveDamage = true;
+		EntityStart();
 	}
 	
 	public IEnumerator UpdateGeneric() {
@@ -56,6 +56,7 @@ public class Generic : Entity {
 	}
 	
 	private void IdleVerifications () {
+		return;
 		idlePatrolChangeTimer++;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
