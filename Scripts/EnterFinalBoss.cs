@@ -16,6 +16,8 @@ public class EnterFinalBoss : MonoBehaviour {
 			Medrash.GetComponent<MainCharacter>().IncreaseEnergyStatus(1000);
 			Medrash.GetComponent<MainCharacter>().hasSecondaryBar(false);
 			//this.gameObject.SetActiveRecursively(true);
+			Camera.mainCamera.GetComponent<Sound>().enterFinalBoss();
+			Medrash.GetComponent<CheckPoint>().Save();
 			this.enabled = false;
 		}
 	}
