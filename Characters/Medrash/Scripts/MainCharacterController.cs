@@ -336,26 +336,17 @@ public class MainCharacterController : MonoBehaviour
 	
 	protected void Attack(Entity closestEntity)
 	{
-		GameObject dmgBox = transform.Find("dmgBox").gameObject;
-		Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
-		Bounds medBounds = dmgBox.collider.bounds;
-		canMove = true;
-
-		if (bounds.Intersects(medBounds)) {
-			closestEntity.DamageLifeStatus(3);
-		}
-		
-		
-		/*foreach (Entity entity in listOfEnemies) {
-			if (!entity) {
-				//listOfEnemies.Remove(entity);
-				continue;
-			}
-			bounds = entity.GetComponent<CharacterController>().bounds;
+		if (closestEntity != null)
+		{
+			GameObject dmgBox = transform.Find("dmgBox").gameObject;
+			Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
+			Bounds medBounds = dmgBox.collider.bounds;
+	
 			if (bounds.Intersects(medBounds)) {
-				StartCoroutine(DelayAttack(entity));
+				closestEntity.DamageLifeStatus(3);
 			}
-		}*/
+		}
+		canMove = true;
 	}
 	
 	private void Defend()
