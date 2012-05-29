@@ -121,14 +121,17 @@ public abstract class Entity : MonoBehaviour {
 	
 	public void SetIdleAnimation () {
 		currentAnimation = idleAnimation;
+		animation.wrapMode = WrapMode.Loop;
 	}
 	
 	public void SetRunAnimation () {
 		currentAnimation = runAnimation;
+		animation.wrapMode = WrapMode.Loop;
 	}
 	
 	public void SetWalkAnimation () {
 		currentAnimation = walkAnimation;
+		animation.wrapMode = WrapMode.Loop;
 	}
 	
 	public void SetAttackAnimation () {
@@ -137,14 +140,17 @@ public abstract class Entity : MonoBehaviour {
 	
 	public void SetWaitAnimation () {
 		currentAnimation = waitAnimation;
+		animation.wrapMode = WrapMode.Loop;
 	}
 	
 	public void SetAttackedAnimation () {
 		currentAnimation = attackedAnimation;
+		animation.wrapMode = WrapMode.Once;
 	}
 	
 	public void SetTigerSpecialAttackAnimation () {
 		currentAnimation = tigerSpecialAttackAnimation;
+		animation.wrapMode = WrapMode.Once;
 	}
 	
 	public void SetDyingAnimation () {

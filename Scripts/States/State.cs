@@ -7,7 +7,7 @@ public abstract class State {
 		enAttack, enDefense, enDamage, enTigerRunAround, 
 		enTigerTired, enTigerWaiting, enTigerSpecialAttack, 
 		enDying, enBeeReturnToHive, enAlligatorReturnToPlace,
-		enReturnToHome, enAttacked};
+		enReturnToHome, enAttacked, enWait};
 	
 	protected states state;
 	

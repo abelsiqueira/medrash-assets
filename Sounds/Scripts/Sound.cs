@@ -5,8 +5,9 @@ public class Sound : MonoBehaviour {
 
 	// Use this for initialization
 	public AudioClip MainSound;
-	public AudioClip SecondarySound;
+	public AudioClip FinalBossSound;
 	public AudioClip DeadAudio;
+	public AudioClip Wind;
 	public float MainStartCut;
 	public float MainEndCut;
 	public float SecondaryStartCut;
@@ -16,11 +17,10 @@ public class Sound : MonoBehaviour {
 	private float StopTime;
 	private float volume;
 	private bool first = true;
-	private bool fadeOut = false;
-	public float fadeTime = 5.0f;
-	public float fadeStart;
-	private float fadeVolumeStart;
-	
+	private bool fade = false;
+	private bool finalBoss = false;
+	public float fadeDistance;
+	private Vector3 fadeReference;	
 	private bool dead = false;
 	
 	void Start () {
@@ -30,6 +30,12 @@ public class Sound : MonoBehaviour {
 	public void isDead(bool d)
 	{
 		dead = d;	
+	}
+	
+	public void enterFinalBoss()
+	{
+		finalBoss = true;
+		audio.volume = volume;
 	}
 	
 	// Update is called once per frame
@@ -44,76 +50,59 @@ public class Sound : MonoBehaviour {
 			}
 			return;
 		}
-		if (!Fade()) return;
+		if (finalBoss)
+		{
+			audio.volume = volume;
+			if (!audio.isPlaying || audio.clip != FinalBossSound)
+			{
+				audio.clip= FinalBossSound;
+				audio.Play();
+			}
+			return;
+		}
+		
+		Fade();
 		if (audio.isPlaying)
 		{
 			if (audio.time >= StopTime)
 				audio.Stop();
 		}
-		if (!audio.isPlaying || audio.clip == DeadAudio)
+		if (!audio.isPlaying || audio.clip != MainSound)
 		{
-			if (Random.Range(0,100) < MainPercentual)
-			{
 				audio.clip = MainSound;
 				StartTime = MainStartCut;
 				StopTime = MainSound.length - MainEndCut;
-			}
-			else
-			{
-				audio.clip = SecondarySound;
-				StartTime = SecondaryStartCut;
-				StopTime = SecondarySound.length - SecondaryEndCut;
-			}
-			audio.time = StartTime;
-			/*if (first)
-			{
-				first = false;
-				audio.time =StopTime - 2;
-			}*/
-			audio.Play();
+				audio.time = StartTime;
+				audio.Play();
 		}
 		
 	}
 	
-	private bool Fade()
+	private void Fade()
 	{
-		if (fadeOut)
-			if (audio.volume != 0.0f)
-				FadeOut();
-			else 
-				return false;
-		else if (audio.volume < volume)
-			FadeIn();
-		return true;
+		if (fade)
+		{
+			float v = volume*((fadeDistance - Vector3.Distance(this.transform.position, 
+				fadeReference))/fadeDistance);
+			Debug.Log(v);
+			if (v < 0.0f)
+				audio.volume = 0.0f;
+			else
+				audio.volume = v;
+		}
 	}
 	
 	public void FadeOn()
 	{
-		if (fadeOut) return; 
-		fadeVolumeStart = audio.volume;
-		fadeStart = Time.time;
-		fadeOut = true;
+		Debug.Log("Fade ON");
+		fade = true;
+		fadeReference = this.transform.position;
 	}
 	
 	public void FadeOff()
 	{
-		if (!fadeOut) return;
-		fadeStart = Time.time;
-		fadeVolumeStart = audio.volume;
-		fadeOut = false;
+		fade = false;
+		audio.volume = volume;
 	}
 	
-	void FadeOut()
-	{
-		audio.volume = fadeVolumeStart - volume * (Time.time - fadeStart)/fadeTime;
-		if (audio.volume < 0.0f)
-			audio.volume = 0.0f;
-	}
-	
-	void FadeIn()
-	{
-		audio.volume = fadeVolumeStart + volume * (Time.time - fadeStart)/fadeTime;
-		if (audio.volume >= volume)
-			audio.volume = volume;
-	}
 }

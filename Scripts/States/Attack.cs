@@ -17,12 +17,16 @@ public class Attack : State {
 	
 	public override void Enter (Entity context) {
 		context.SetSpeed(0.0f);
-	}
-	
-	public override void Execute (Entity context) {
 		context.SetAttackAnimation();
 	}
 	
+	public override void Execute (Entity context) {
+		Transform transform = context.transform;
+		direction = context.GetMedrashPosition() - transform.position;
+		direction.y = 0.0f;
+		context.SetDirection(direction);
+	}
+
 	public override void Exit (Entity context) {
 	}
 }
