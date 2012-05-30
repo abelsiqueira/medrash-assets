@@ -7,7 +7,6 @@
 39- Jacaré (Thiago)
 40- Trocar barreira de jogo (fazer por distância) (Thiago)
 43- Aparecer checkpoint na tela. (Thiago)
-52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rapidamente o de defesa. Agora ele anda e defende.
 53 - Medrash consegue atravessar o checkpoint subindo as montanhas no começo.
 
 
@@ -64,4 +63,4 @@ Solved 48- Atacar ao morrer fode o Medrash (Tiago)
 Solved 49- Com menu subido, o Medrash fica pilhado ao atacar. (Desativar controles durante a pausa) (Thiago)
 Solved 50- Possibilidade de mover o corpo do Medrash morto pelo cenário antes do menu ser carregado
 Solved 51- Defesa do Medrash
-
+Solved 52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rapidamente o de defesa. Agora ele anda e defende.
