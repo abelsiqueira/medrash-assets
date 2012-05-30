@@ -2,14 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof (CharacterController))]
-public class Bear : Entity {
+public class Snake : Entity {
 	
 	private int dyingDuration = 10, dyingTimer = 0;
 	private int damageInstant = 7, damageTimer = 0;
 	private int attackCooldown = 15, attackTimer = 0;
 	private int countdownAttack = 0, attackDuration = 8;
-	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
-	private int defenseDuration = 30, defenseTimer = 0;
+	private int idlePatrolChangeTime = 20, idlePatrolChangeTimer = 0;
 	private int countdownAttacked = 0, attackedTime = 7;
 	
 	private float probabilityToDefend = 0.0f;
@@ -25,7 +24,6 @@ public class Bear : Entity {
 		controller = GetComponent<CharacterController>();
 		
 		float aux = 1.3f;
-		animation[attackAnimation.name].speed = aux;
 		damageInstant = (int) (damageInstant/aux);
 		attackDuration = (int) (attackDuration/aux);
 		attackCooldown = (int) (attackCooldown/aux);
@@ -42,10 +40,10 @@ public class Bear : Entity {
 		EntityStart();
 		
 		StartCoroutine(fsm.UpdateFSM());
-		StartCoroutine(UpdateBear());
+		StartCoroutine(UpdateSnake());
 	}
 	
-	public IEnumerator UpdateBear() {
+	public IEnumerator UpdateSnake() {
 		while (true) {
 			switch(fsm.GetCurrentState()) {
 			case State.states.enIdle:
@@ -54,17 +52,11 @@ public class Bear : Entity {
 			case State.states.enPatrol:
 				PatrolVerifications();
 				break;
-			case State.states.enPursue:
-				PursueVerifications();
-				break;
 			case State.states.enAttack:
 				AttackVerifications();
 				break;
 			case State.states.enDying:
 				DyingVerifications();
-				break;
-			case State.states.enDefense:
-				DefenseVerifications();
 				break;
 			case State.states.enAttacked:
 				AttackedVerifications();
@@ -84,7 +76,7 @@ public class Bear : Entity {
 			countdownAttack--;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
-			fsm.ChangeState(Pursue.Instance());
+			fsm.ChangeState(Wait.Instance());
 		} else if (idlePatrolChangeTimer >= idlePatrolChangeTime) {
 			fsm.ChangeState(Patrol.Instance());
 			idlePatrolChangeTimer = 0;
@@ -105,39 +97,10 @@ public class Bear : Entity {
 			countdownAttack--;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
-			fsm.ChangeState(Pursue.Instance());
+			fsm.ChangeState(Wait.Instance());
 		} else if (idlePatrolChangeTimer >= idlePatrolChangeTime) {
 			fsm.ChangeState(Idle.Instance());
 			idlePatrolChangeTimer = 0;
-		} else if (receivedDamage) {
-			if (life <= 0)
-				fsm.ChangeState(Dying.Instance());
-			else
-				fsm.ChangeState(Attacked.Instance());
-			receivedDamage = false;
-		}
-	}
-	
-	private void PursueVerifications () {
-		canReceiveDamage = true;
-		if (countdownAttack > 0)
-			countdownAttack--;
-		float dist = DistanceToMainCharacter();		
-		if (dist < attackRadius) {
-			if (countdownAttack == 0) {
-				float r = Random.value;
-				if (r < probabilityToDefend) {
-					fsm.ChangeState(Defense.Instance());
-				} else {
-					needToAttack = true;
-					countdownAttack = attackCooldown;
-					fsm.ChangeState(Attack.Instance());
-				}
-			} else {
-				fsm.ChangeState(Wait.Instance());
-			}
-		} else if (dist > farRadius) {
-			fsm.ChangeState(Patrol.Instance());
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
@@ -156,8 +119,8 @@ public class Bear : Entity {
 			needToAttack = true;
 			countdownAttack = attackCooldown;
 			fsm.ChangeState(Attack.Instance());
-		} else if (dist > attackRadius) {
-			fsm.ChangeState(Pursue.Instance());
+		} else if (dist > closeRadius) {
+			fsm.ChangeState(Patrol.Instance());
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
@@ -201,19 +164,10 @@ public class Bear : Entity {
 		}
 	}
 	
-	private void DefenseVerifications () {
-		canReceiveDamage = false;
-		defenseTimer++;
-		if (defenseTimer >= defenseDuration) {
-			defenseTimer = 0;
-			fsm.ChangeState(Pursue.Instance());
-		}
-	}
-	
 	private void AttackedVerifications () {
 		countdownAttacked++;
 		if (countdownAttacked > attackedTime) {
-			fsm.ChangeState(Pursue.Instance());
+			fsm.ChangeState(Wait.Instance());
 			countdownAttacked = 0;
 		}
 	}
