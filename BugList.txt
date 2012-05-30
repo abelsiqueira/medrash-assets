@@ -1,10 +1,23 @@
-﻿Solved 1- Musica no Menu
+﻿Unsolved: 
+7- Colisor na Camera
+18- Camera apontar para o inimigo proximo
+25 (parte 2)- Deixar a água realista
+30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
+37- Melhorar tigre (Harlei)
+39- Jacaré (Thiago)
+40- Trocar barreira de jogo (fazer por distância) (Thiago)
+43- Aparecer checkpoint na tela. (Thiago)
+52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rapidamente o de defesa. Agora ele anda e defende.
+53 - Medrash consegue atravessar o checkpoint subindo as montanhas no começo.
+
+
+Solved:
+Solved 1- Musica no Menu
 Solved 2- Triangulo no minimapa
 Solved 3- Enxame - Colmeia faltando
 Solved 4- Resetar tudo da fase quando reiniciar o jogo (morrer ou menu)
 Solved 5- Fazer o Medrash parar de subir montanhas (subir, sobe, mas a queda machuca agora hehehe)
 Solved 6- Arrumar checkpoints (nao lembro o que era, so anotei isso :/)
-7- Colisor na Camera
 Solved 8- Arrumar o decaimento da energia
 Solved 9- Arrumar o Tigre (incluindo animacao)
 Solved 10- Distancia maxima no ataque (virar para o inimigo)
@@ -15,17 +28,13 @@ Solved 14- Quadriculado no mapa
 Solved 15- Pulo tirar energia 
 Solved 16- Prender o Medrash no Boss (Medrash ainda consegue subir somente com os direcionais.. precisa elevar mais o terreno)
 Solved 17- Tirar o pulo (Confirmado? Ja resolve os de cima com isso)
-18- Camera apontar para o inimigo proximo
 Solved 19- Atravessar a abelha
 Solved 20- Arrumar a volta do Menu
 Solved 21- Sincronizar os passos
-
-MORE:
-22- Tigre dentro da caixa FinalBoss nao da certo porque o Tigre fica deformado ao se movimentar. Nao sei arrumar isso.
+Solved 22- Tigre dentro da caixa FinalBoss nao da certo porque o Tigre fica deformado ao se movimentar. Nao sei arrumar isso. (Foi resolvido retirando o Tigre da caixa).
 Solved 23- Medrash se machuca ao cair muito facilmente.
 Solved 24- Colocar limites invisiveis ao redor do terreno
 Solved 25 (parte 1)- Deixar o terreno bonito
-25 (parte 2)- Deixar a água realista
 Solved 25 (parte 3)- Colocar cabanas
 Solved 25 (parte 4)- Colocar variedade de árvores
 Solved 25 (parte 5)- Colocar o Gardain
@@ -33,29 +42,20 @@ Solved 25 (parte 6)- Espalahar soldados mortos
 Solved 25 (parte 7)- Colocar fogo nas cabanas
 Solved 25 (parte 8)- Colocar marca de fogo no gramado da aldeia
 Solved 25 (parte 9)- Arrumar bifurcação do rio
-
-MORE++:
 Solved 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
 Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
 Solved 28- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
 Solved 39- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
-30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
 fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
 Solved 31- Há código replicado para procurar o inimigo mais próximo
 Solved 32- Possibilidade do ataque ocasionar algumas vezes poteiro nulo caso não existisse inimigos no cenário
 Solved 33- Ocorrencia de ponteiro nulo para o urso algumas vezes após sua morte e Medrash tentando acessá-lo
 Solved 34- A beronha do Medrash considerava somente o tigre como entidade mais próxima
 Solved 35- Arrumar a morte e respectiva animação
-
-MORE++ e 1/4:
 Solved 36- Receber dano (Tiago)
-37- Melhorar tigre (Harlei)
 Solved 38- Urso (Abel)
-39- Jacaré (Thiago)
-40- Trocar barreira de jogo (fazer por distância) (Thiago)
 Solved 41- Colocar sons novos (Thiago)
 Solved 42- Mudar controle do Medrash ao virar durante a corrida. (Abel)
-43- Aparecer checkpoint na tela. (Thiago)
 Solved 44- HUD dos inimigos (Harlei)
 Solved 45- Som dos passos (Abel)
 Solved 46- Travar animação de morte do Medrash. (Tiago)
@@ -64,5 +64,4 @@ Solved 48- Atacar ao morrer fode o Medrash (Tiago)
 Solved 49- Com menu subido, o Medrash fica pilhado ao atacar. (Desativar controles durante a pausa) (Thiago)
 Solved 50- Possibilidade de mover o corpo do Medrash morto pelo cenário antes do menu ser carregado
 Solved 51- Defesa do Medrash
-52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rapidamente o de defesa. Agora ele anda e defende.
-53 - Medrash consegue atravessar o checkpoint subindo as montanhas no começo.
+
