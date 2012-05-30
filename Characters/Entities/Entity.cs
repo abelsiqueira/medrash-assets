@@ -221,13 +221,11 @@ public abstract class Entity : MonoBehaviour {
 			float barHeight = 2.5f*scaling;
 			float barWidth = 15.0f*scaling;
 			lifeBarPos = this.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
-			//Debug.Log(lifeBarPos);
 			screenPos = Camera.main.WorldToScreenPoint(lifeBarPos);
-			//Debug.Log(screenPos);
-			//Debug.Log(background);
+			if (screenPos.z < 0)
+				return;
 			GUI.DrawTexture(new Rect(screenPos.x, screenPos.z + 100, barWidth, barHeight), background, ScaleMode.StretchToFill);
 			GUI.DrawTexture(new Rect(screenPos.x, screenPos.z + 100, barWidth*(life/maxLife), barHeight), foreground, ScaleMode.StretchToFill);
-			//GUI.Box(new Rect(screenPos.x, screenPos.y - 300, 30, 30), "");
 		}
 	}
 }
