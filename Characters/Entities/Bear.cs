@@ -23,11 +23,7 @@ public class Bear : Entity {
 	void Start () {
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
-		StartCoroutine(fsm.UpdateFSM());
-		StartCoroutine(UpdateBear());
 		
-		life = 9;
-		maxLife = 9;
 		float aux = 1.3f;
 		animation[attackAnimation.name].speed = aux;
 		damageInstant = (int) (damageInstant/aux);
@@ -44,6 +40,9 @@ public class Bear : Entity {
 		canReceiveDamage = true;
 		
 		EntityStart();
+		
+		StartCoroutine(fsm.UpdateFSM());
+		StartCoroutine(UpdateBear());
 	}
 	
 	public IEnumerator UpdateBear() {
