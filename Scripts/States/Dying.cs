@@ -18,12 +18,13 @@ public class Dying : State {
 	
 	public override void Enter (Entity context) {
 		context.SetSpeed(0.0f);
+		context.MakeInvunerable();
 		context.SetDyingAnimation();
-		context.CannotBeAttacked();
+		Debug.Log(context.CanBeAttacked());
 	}
 	
 	public override void Execute (Entity context) {
-		
+			
 	}
 	
 	public override void Exit (Entity context) {

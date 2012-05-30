@@ -215,12 +215,11 @@ public abstract class Entity : MonoBehaviour {
 		return medrash.transform.position;
 	}
 	
-	public void CanBeAttacked() {
-		canBeAttacked = true;
-		canReceiveDamage = true;
+	public bool CanBeAttacked() {
+		return canBeAttacked;
 	}
 	
-	public void CannotBeAttacked() {
+	public void MakeInvunerable() {
 		canBeAttacked = false;
 		canReceiveDamage = false;
 	}
