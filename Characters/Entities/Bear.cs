@@ -195,6 +195,7 @@ public class Bear : Entity {
 	}
 		
 	private void DyingVerifications () {
+		canBeAttacked = false;
 		dyingTimer++;
 		if (dyingTimer >= dyingDuration) {
 			fsm.ChangeState(Idle.Instance());

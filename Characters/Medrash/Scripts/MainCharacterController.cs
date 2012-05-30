@@ -626,6 +626,8 @@ public class MainCharacterController : MonoBehaviour
 			foreach (Entity entity in listOfEnemies) 
 			{
 				if (!entity) continue;
+				if (!entity.CanBeAttacked())
+					continue;
 				float dist = (entity.transform.position - transform.position).sqrMagnitude;
 				if (dist < minDist)
 				{
