@@ -682,5 +682,13 @@ public class MainCharacterController : MonoBehaviour
 	public bool FollowEnemy() {
 		return followEnemy;
 	}
+	
+	public void StartFollowingEnemy() {
+		followEnemy = true;
+	}
+	
+	public void StopFollowingEnemy() {
+		followEnemy = false;
+	}
 }
 	

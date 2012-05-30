@@ -170,7 +170,7 @@ public class MainCharacterCamera : MonoBehaviour
 		
 		if (controller.FollowEnemy()) {
 			entity = controller.GetClosestEntity();
-			if (entity.DistanceToMainCharacter() < 10)
+			if (entity.DistanceToMainCharacter() < 120.0f)
 				offsetToCenter = entity.transform.position - cameraPos;
 		}
         yRotation = Quaternion.LookRotation(new Vector3(offsetToCenter.x, 0, offsetToCenter.z));
