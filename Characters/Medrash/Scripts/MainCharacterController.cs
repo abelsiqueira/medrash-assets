@@ -614,7 +614,7 @@ public class MainCharacterController : MonoBehaviour
 		canLightTorch = cond;
 	}
 	
-	Entity GetClosestEntity()
+	public Entity GetClosestEntity()
 	{
 		List<Entity> listOfEnemies;
 		Entity closestEntity;

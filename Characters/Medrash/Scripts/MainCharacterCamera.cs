@@ -165,8 +165,12 @@ public class MainCharacterCamera : MonoBehaviour
     {
 		Vector3 cameraPos = cameraTransform.position;
         Vector3 offsetToCenter = centerPos - cameraPos;
-
-        Quaternion yRotation = Quaternion.LookRotation(new Vector3(offsetToCenter.x, 0, offsetToCenter.z));
+		Entity entity = controller.GetClosestEntity();
+		Quaternion yRotation;
+		
+		if (entity.DistanceToMainCharacter() < 10)
+			offsetToCenter = entity.transform.position - cameraPos;
+        yRotation = Quaternion.LookRotation(new Vector3(offsetToCenter.x, 0, offsetToCenter.z));
 
         Vector3 relativeOffset = Vector3.forward * distance + Vector3.down * height;
         cameraTransform.rotation = yRotation * Quaternion.LookRotation(relativeOffset);
