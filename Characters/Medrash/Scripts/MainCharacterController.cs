@@ -479,11 +479,14 @@ public class MainCharacterController : MonoBehaviour
 						
 			if (Input.GetButtonDown("Fire3")) 
 			{
-				if (keyDown == false)				
+				if (canAttack)
 				{
-					DidDefend();
-					Defend();
-					keyDown = true;
+					if (keyDown == false)				
+					{
+						DidDefend();
+						Defend();
+						keyDown = true;
+					}
 				}
 			}
 			
