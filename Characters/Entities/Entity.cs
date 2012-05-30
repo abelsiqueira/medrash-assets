@@ -62,6 +62,7 @@ public abstract class Entity : MonoBehaviour {
 	}
 	
 	protected void EntityStart () {
+		controller = GetComponent<CharacterController>();
 		medrash = GameObject.FindGameObjectWithTag("Player");
 		Transform dBox = transform.Find("dmgBox");
 		if (dBox)
@@ -220,7 +221,7 @@ public abstract class Entity : MonoBehaviour {
 			float scaling = 2*(2 - dist/10);
 			float barHeight = 2.5f*scaling;
 			float barWidth = 15.0f*scaling;
-			lifeBarPos = this.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
+			lifeBarPos = position;
 			screenPos = Camera.main.WorldToScreenPoint(lifeBarPos);
 			if (screenPos.z < 0)
 				return;
