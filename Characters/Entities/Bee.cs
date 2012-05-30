@@ -33,6 +33,7 @@ public class Bee : Entity {
 		closeRadius = 7.0f;
 		farRadius = 20.0f;
 		canReceiveDamage = false;
+		canBeAttacked = false;
 		
 		EntityStart();
 		Physics.IgnoreCollision(this.gameObject.collider, medrash.collider);

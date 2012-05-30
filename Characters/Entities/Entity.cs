@@ -36,6 +36,7 @@ public abstract class Entity : MonoBehaviour {
 	protected float attackRadius = 3.0f, closeRadius = 7.0f, farRadius = 15.0f;
 	protected FSM fsm;
 	protected bool canReceiveDamage = false, receivedDamage = false;
+	protected bool canBeAttacked = true;
 	
 	protected float life, maxLife, damage, speed, baseSpeed;
 	
@@ -214,7 +215,19 @@ public abstract class Entity : MonoBehaviour {
 		return medrash.transform.position;
 	}
 	
+	public void CanBeAttacked() {
+		canBeAttacked = true;
+		canReceiveDamage = true;
+	}
+	
+	public void CannotBeAttacked() {
+		canBeAttacked = false;
+		canReceiveDamage = false;
+	}
+	
 	void OnGUI(){
+		if (!canBeAttacked)
+			return;
 		position = this.transform.position;
 		float dist = DistanceToMainCharacter();
 		if (dist < 20){

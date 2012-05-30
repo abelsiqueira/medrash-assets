@@ -19,6 +19,7 @@ public class Dying : State {
 	public override void Enter (Entity context) {
 		context.SetSpeed(0.0f);
 		context.SetDyingAnimation();
+		context.CannotBeAttacked();
 	}
 	
 	public override void Execute (Entity context) {
