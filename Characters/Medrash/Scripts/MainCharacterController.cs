@@ -48,6 +48,8 @@ public class MainCharacterController : MonoBehaviour
 	private MainCharacter mainCharacter;
 	private CharacterState characterState;
 
+	private bool followEnemy = false;
+	
 	private float delayAttackValue;
 	private float attackDuration;
 	
@@ -675,6 +677,10 @@ public class MainCharacterController : MonoBehaviour
 	public bool IsDefending()
 	{
 		return isDefending;
+	}
+	
+	public bool FollowEnemy() {
+		return followEnemy;
 	}
 }
 	
