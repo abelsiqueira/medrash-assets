@@ -73,26 +73,6 @@ public class MainCharacter : MonoBehaviour
 		listOfEnemies.Add(e);
 		e.enabled = true;
 	}
-
-	void Update()
-	{	
-		/*
-		if (Input.GetButtonDown("Fire1"))
-		{
-			if (characterController.canAttack)
-			{
-				Attack();
-			}
-		}
-		else if (Input.GetButtonDown("Fire2"))
-		{
-			//Interact();
-		}
-		else if (Input.GetButtonDown("Fire3"))
-		{
-			//Defend();
-		}*/
-	}
 	
 	IEnumerator ActivateEnemies ()
 	{
@@ -108,7 +88,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// rotina para verificar a condição física de MainCharacter
 	IEnumerator CheckCharacterPhysicalCondition()
 	{
 		float originalSpeed = characterController.GetRunSpeed();
@@ -181,8 +160,7 @@ public class MainCharacter : MonoBehaviour
 			yield return new WaitForSeconds(0.1f);
 		}
 	}
-	
-	// rotina para verificar a temperatura corporal de MainCharacter
+
 	IEnumerator CheckCharacterBodyTemperature()
 	{
 		while(true)
@@ -199,7 +177,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// timer para o tempo da tocha
 	IEnumerator TorchTimer()
 	{
 		int i = 0;
@@ -222,7 +199,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// infere dano sobre a vida de MainCharacter
 	public void DamageLifeStatus(float x)
 	{
 		if (lifeStatus - x > 0)
@@ -247,7 +223,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// infere dano sobre a energia de MainCharacter
 	void DamageEnergyStatus(float x)
 	{
 		if (!secondaryBar.HasBar) return;
@@ -263,7 +238,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// infere dano sobre a temperatura de MainCharacter
 	void DamageTemperatureStatus(float x)
 	{
 		if (temperatureStatus - x > 0)
@@ -278,7 +252,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// aumenta a vida de MainCharacter
 	public void IncreaseLifeStatus(float x)
 	{
 		if (lifeStatus + x > 100)
@@ -293,7 +266,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// aumenta a energia de MainCharacter
 	public void IncreaseEnergyStatus(float x)
 	{
 		if (energyStatus + x > 100)
@@ -308,7 +280,6 @@ public class MainCharacter : MonoBehaviour
 		}	
 	}
 	
-	// aumenta a temperatura de MainCharacter
 	void IncreaseTemperatureStatus(float x)
 	{
 		if (temperatureStatus + x > 100)
@@ -323,7 +294,6 @@ public class MainCharacter : MonoBehaviour
 		}
 	}
 	
-	// MainCharacter pega a tocha e o timer é disparado
 	public void GrabTorch()
 	{
 		hasTorch = true;

@@ -99,9 +99,12 @@ public class MainCharacterController : MonoBehaviour
 	private float stepTime = 0.0f;
 	
 	private PauseMenu pauseMenu;
+	
+	private MedrashSounds sounds;
 
 	void Awake()
 	{
+		sounds = GetComponent<MedrashSounds>();
 		pauseMenu = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseMenu>();
 		moveDirection = transform.TransformDirection(Vector3.forward);
 		mainCharacter = GetComponent<MainCharacter>();
@@ -163,20 +166,21 @@ public class MainCharacterController : MonoBehaviour
 	
 	IEnumerator StepSound()
 	{
+		float volume;
 		while(true)
 		{
 			
 			if (characterState == CharacterState.Running) {
-				audio.volume = 0.5f;
+				volume = 0.5f;
 				stepTime = 0.44f/animation[runAnimation.name].speed;
 			}
 			else {
-				audio.volume = 0.2f;
+				volume = 0.2f;
 				stepTime = 0.5f/animation[walkAnimation.name].speed;
 			}
 			
 			if (isMoving && IsGrounded())
-				audio.Play();
+				sounds.PlayStepAudio(volume);
 			
 			yield return new WaitForSeconds(stepTime);
 		}
@@ -343,6 +347,7 @@ public class MainCharacterController : MonoBehaviour
 			Bounds medBounds = dmgBox.collider.bounds;
 	
 			if (bounds.Intersects(medBounds)) {
+				sounds.PlayAttackAudio(1.0f);
 				closestEntity.DamageLifeStatus(3);
 			}
 		}
@@ -414,6 +419,7 @@ public class MainCharacterController : MonoBehaviour
 		animation[receiveAttackAnimation.name].speed = receiveAttackAnimationSpeed;
 		animation[receiveAttackAnimation.name].layer = 1;
 		animation.Play(receiveAttackAnimation.name);
+		sounds.PlayReceiveDamageAudio(1.0f);
 		canMove = true;
 	}
 	
@@ -457,8 +463,10 @@ public class MainCharacterController : MonoBehaviour
 					DidAttack();
 				}
 			}
+			
 			/*if (Input.GetButtonDown("Fire2"))
 			{
+				DidInteract();
 				if (canLightTorch)
 				{
 					if (IsMoving())
@@ -467,7 +475,7 @@ public class MainCharacterController : MonoBehaviour
 					}
 					DidInteract();
 				}	
-			}*/	
+			}*/
 						
 			if (Input.GetButtonDown("Fire3")) 
 			{
