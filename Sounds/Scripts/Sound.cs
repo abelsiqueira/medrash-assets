@@ -22,9 +22,20 @@ public class Sound : MonoBehaviour {
 	public float fadeDistance;
 	private Vector3 fadeReference;	
 	private bool dead = false;
+	private bool started = false;
 	
 	void Start () {
 		volume = audio.volume;	
+	}
+	
+	public void SoundOn()
+	{
+		started = true;	
+	}
+	
+	public void SoundOff()
+	{
+		started = false;	
 	}
 	
 	public void isDead(bool d)
@@ -40,6 +51,8 @@ public class Sound : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!started)
+			return;
 		if (dead)
 		{
 			audio.volume = volume;

@@ -14,9 +14,10 @@ public class RegionBox : MonoBehaviour {
 	private int length;
 	private bool first = false;
 	private bool canUpdate = false;
-	private bool saved = true;
+	private bool saved;
 	
 	void Start () {
+		saved = false;
 		length = enemy.Length;
 		position = new Vector3[length];
 		for (int i = 0; i < length; i++)
@@ -42,6 +43,12 @@ public class RegionBox : MonoBehaviour {
 			copy[i].transform.position = position[i];
 			medrash.GetComponent<MainCharacter>().addEnemy(copy[i].GetComponent<Entity>());
 		}
+		Debug.Log(saved);
+		if (!saved)
+		{
+			saved = true;
+			medrash.GetComponent<CheckPoint>().Save();
+		}
 		
 	}
 
@@ -49,11 +56,6 @@ public class RegionBox : MonoBehaviour {
 	{
 		if (!Active) return;
 		Active = false;
-		if (save && saved)
-		{
-			saved = false;
-			medrash.GetComponent<CheckPoint>().Save();
-		}
 		for (int i = 0; i < length; i++)
 			if (copy[i] != null)
 				GameObject.Destroy(copy[i]);

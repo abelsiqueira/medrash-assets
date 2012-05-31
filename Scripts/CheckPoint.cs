@@ -8,6 +8,8 @@ public class CheckPoint : MonoBehaviour {
 	private Vector3 camPosition;
 	public GameObject[] regions;
 	private Quaternion rotation;
+	public Texture image;
+	private float startTime = -5.0f;
 	
 	void Start()
 	{
@@ -19,6 +21,7 @@ public class CheckPoint : MonoBehaviour {
 		position = this.transform.position;
 		//rotation = this.transform.rotation;
 		camPosition = Camera.mainCamera.transform.position;
+		startTime = Time.time;
 		
 	}
 	
@@ -33,7 +36,13 @@ public class CheckPoint : MonoBehaviour {
 		medrash.transform.position = position;
 		//medrash.transform.rotation = rotation;
 		Camera.mainCamera.transform.position = camPosition;
-		
+	}
+	
+	void OnGUI()
+	{
+		if (Time.time - startTime >= 5.0)
+				return;
+		GUI.Label(new Rect(Screen.width - image.width, 0, image.width, image.height), image);
 		
 	}
 }
