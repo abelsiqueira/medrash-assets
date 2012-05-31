@@ -97,7 +97,7 @@ public class Sound : MonoBehaviour {
 		{
 			float v = volume*((fadeDistance - Vector3.Distance(this.transform.position, 
 				fadeReference))/fadeDistance);
-			Debug.Log(v);
+
 			if (v < 0.0f)
 				audio.volume = 0.0f;
 			else
@@ -107,7 +107,7 @@ public class Sound : MonoBehaviour {
 	
 	public void FadeOn()
 	{
-		Debug.Log("Fade ON");
+
 		fade = true;
 		fadeReference = this.transform.position;
 	}

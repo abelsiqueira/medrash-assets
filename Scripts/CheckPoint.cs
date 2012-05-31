@@ -34,8 +34,8 @@ public class CheckPoint : MonoBehaviour {
 		medrash.GetComponent<MainCharacter>().IncreaseLifeStatus(1000);
 		medrash.GetComponent<MainCharacter>().IncreaseEnergyStatus(1000);
 		medrash.transform.position = position;
-		//medrash.transform.rotation = rotation;
 		Camera.mainCamera.transform.position = camPosition;
+		//medrash.transform.rotation = rotation;
 	}
 	
 	void OnGUI()

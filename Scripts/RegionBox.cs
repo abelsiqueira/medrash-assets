@@ -43,7 +43,7 @@ public class RegionBox : MonoBehaviour {
 			copy[i].transform.position = position[i];
 			medrash.GetComponent<MainCharacter>().addEnemy(copy[i].GetComponent<Entity>());
 		}
-		Debug.Log(saved);
+
 		if (!saved)
 		{
 			saved = true;

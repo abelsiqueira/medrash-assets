@@ -5,7 +5,8 @@
 39- Jacaré (Thiago)
 55 - Altura da camera (somente) na batalha final.
 56 - Atacar o tigre enquanto não pode ser atacado e cancelar o próximo momento de descanso
-
+57 - Deletar os rewards quando morrer
+58 - Resetar o life do boss ao morrer
 
 In discussion:
 In Discussion 18- Camera apontar para o inimigo proximo

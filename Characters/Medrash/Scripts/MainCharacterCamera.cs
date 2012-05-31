@@ -119,7 +119,8 @@ public class MainCharacterCamera : MonoBehaviour
 		targetHeight = targetCenter.y + height;
 
         currentHeight = cameraTransform.position.y;
-        currentHeight = Mathf.SmoothDamp(currentHeight, targetHeight, ref heightVelocity, heightSmoothLag);
+
+		currentHeight = Mathf.SmoothDamp(currentHeight, targetHeight, ref heightVelocity, heightSmoothLag);
 
         currentRotation = Quaternion.Euler(0, currentAngle, 0);
 

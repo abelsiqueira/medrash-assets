@@ -49,7 +49,6 @@ public class MedrashSounds : MonoBehaviour {
 	{
 		if (canPlayReceiveDamageAudio)
 		{
-			Debug.Log("passei");
 			this.volume = volume;
 			audio.volume = volume;
 			audio.clip = receiveDamageAudio;
