@@ -203,16 +203,19 @@ public class MainCharacter : MonoBehaviour
 	{
 		if (lifeStatus - x > 0)
 		{
-			if (!characterController.IsDefending())
+			if (!characterController.IsEvading())
 			{
-				lifeStatus -= x;
-				characterController.ReceiveAttack();
+				if (!characterController.IsDefending())
+				{	
+					lifeStatus -= x;
+					characterController.ReceiveAttack();
+				}
+				else
+				{
+					lifeStatus -= x * defenseThreshold;
+				}
+				primaryBar.setHealth(100 - lifeStatus);
 			}
-			else
-			{
-				lifeStatus -= x * defenseThreshold;
-			}
-			primaryBar.setHealth(100 - lifeStatus);
 		}
 		else
 		{
