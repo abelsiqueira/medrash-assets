@@ -29,6 +29,7 @@ public abstract class Entity : MonoBehaviour {
 	public float lifeValue = 0.0f;
 	public GameObject dieExplosion;
 	public GameObject Prefab;
+	protected int scoreValue;
 	
 	protected CharacterController controller;
 	protected Vector3 direction;
@@ -63,6 +64,7 @@ public abstract class Entity : MonoBehaviour {
 	}
 	
 	protected void EntityStart () {
+		scoreValue = 10;
 		controller = GetComponent<CharacterController>();
 		medrash = GameObject.FindGameObjectWithTag("Player");
 		Transform dBox = transform.Find("dmgBox");
@@ -110,6 +112,14 @@ public abstract class Entity : MonoBehaviour {
 	
 	public void SetDirection (Vector3 v) {
 		direction = v;
+	}
+	
+	public void AddScoreToMedrash () {
+		medrash.GetComponent<MainCharacter>().AddToScore(scoreValue);
+	}
+	
+	public int GetScoreValue () {
+		return scoreValue;
 	}
 	
 	public void DamageLifeStatus (float dmg) {

@@ -7,6 +7,7 @@ public class MainCharacter : MonoBehaviour
 {
 	public Terrain terrain;
 	public GameObject dmgBox;
+	private Score myScore;
 	private bool hasTorch;
 	private Scene scene;
 	private PrimaryBar primaryBar;
@@ -64,6 +65,8 @@ public class MainCharacter : MonoBehaviour
 			e.SetMainCharacter(this.gameObject);
 			listOfEnemies.Add(e);
 		}
+		myScore = GetComponent<Score>();
+		myScore.SetScore(0);
 		StartCoroutine(ActivateEnemies());
 	}
 	
@@ -312,10 +315,14 @@ public class MainCharacter : MonoBehaviour
 	
 	public void hasSecondaryBar(bool has)
 	{
-		secondaryBar.HasBar = has;	
+		secondaryBar.HasBar = has;
 	}
 	
 	public List<Entity> GetListOfEnemies () {
 		return listOfEnemies;
+	}
+	
+	public void AddToScore (int points) {
+		myScore.AddToScore (points);
 	}
 }

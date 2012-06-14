@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Points : MonoBehaviour {
+public class Score : MonoBehaviour {
 	
-	private int point_value = 255;
+	private int scoreValue = 0;
 	private float top, left;
 	
 	// Use this for initialization
@@ -17,9 +17,13 @@ public class Points : MonoBehaviour {
 	
 	}
 	
-	public void set_point(int point_value)
+	public void SetScore(int scoreValue)
 	{
-		this.point_value = point_value;
+		this.scoreValue = scoreValue;
+	}
+	
+	public void AddToScore(int points) {
+		this.scoreValue += points;
 	}
 	
 	void OnGUI()
@@ -32,6 +36,6 @@ public class Points : MonoBehaviour {
 		
 		myStyle.normal.textColor = Color.white;
 		
-		GUI.TextField(new Rect(left, top, 150, 60),"" + point_value, myStyle);
+		GUI.TextField(new Rect(left, top, 150, 60),"" + scoreValue, myStyle);
 	}
 }

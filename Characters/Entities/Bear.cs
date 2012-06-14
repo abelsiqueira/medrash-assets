@@ -40,6 +40,7 @@ public class Bear : Entity {
 		canReceiveDamage = true;
 		
 		EntityStart();
+		scoreValue = 50;
 		
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateBear());
