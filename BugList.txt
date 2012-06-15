@@ -7,6 +7,25 @@
 56 - Atacar o tigre enquanto não pode ser atacado e cancelar o próximo momento de descanso
 57 - Deletar os rewards quando morrer
 58 - Resetar o life do boss ao morrer
+59 - Fazer a setinha do hud indicar a direção corretamente (um triangulo tem 3 pontas e não uma só)
+60 - Background do menu principal
+61 - Ensinar o usuário a jogar
+62 - Eliminar o "montain walk" onde o medrash sai escalando montanhas menos ingremes
+63 - Som dos inimigos
+64 - Mudar o som do medrash na agua
+65 - Colocar todos os Input.Get em um só lugar
+66 - Urso subindo no medrash
+67 - Medrash e urso atacam ao mesmo tempo
+68 - Rodar o triangulo pelo centro
+69 - Randomizar o tempo de parar do urso
+70 - Spawn do bacon no centro do character controler
+71 - Jogo trava depois de certo tempo aberto
+72 - Lixo de audio no inicio da fase
+73 - Pontuação
+74 - Mudar a fonte do checkpoint
+75 - Dano de energia faz aparecer a animação de dano
+76 - Botão para mudar a camera
+ 
 
 In discussion:
 In Discussion 18- Camera apontar para o inimigo proximo
