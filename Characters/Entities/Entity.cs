@@ -127,8 +127,8 @@ public abstract class Entity : MonoBehaviour {
 			life -= dmg;
 			canReceiveDamage = false;
 			Debug.Log(name + " damaged. Life: " + life);
+			receivedDamage = true;
 		}
-		receivedDamage = true;
 	}
 	
 	public void SetIdleAnimation () {

@@ -4,7 +4,6 @@
 37- Melhorar tigre (Harlei)
 39- Jacaré (Thiago)
 55 - Altura da camera (somente) na batalha final.
-56 - Atacar o tigre enquanto não pode ser atacado e cancelar o próximo momento de descanso
 57 - Deletar os rewards quando morrer
 58 - Resetar o life do boss ao morrer
 59 - Fazer a setinha do hud indicar a direção corretamente (um triangulo tem 3 pontas e não uma só)
@@ -90,3 +89,4 @@ Solved 51- Defesa do Medrash
 Solved 52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rapidamente o de defesa. Agora ele anda e defende.
 Solved 53 - Medrash consegue atravessar o checkpoint subindo as montanhas no começo.
 Solved 54 - Musica some ao entrar na batalha final.
+Solved 56 - Atacar o tigre enquanto não pode ser atacado e cancelar o próximo momento de descanso
