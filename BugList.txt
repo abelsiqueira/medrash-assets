@@ -1,35 +1,48 @@
-﻿Unsolved: 
-25 (parte 2)- Deixar a água realista
-30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
-37- Melhorar tigre (Harlei)
-39- Jacaré (Thiago)
+﻿* = Urgente para 21/06
+
+TODO LIST
+77*- IA do lobo (Abel)
+78*- IA do inimigo humano generico (Abel)
+79 - Som da cachoeira deve estar somente nos arredores dela
+80 - Na agua Medrash nao pode correr, somente andar
+81 - Movimentacao do Medrash na agua com particulas
+82 - IA do jacare
+83 - IA do Balazar
+84 - Pedra e Tora (Thiago)
+85*- A rota dos inimigos (Thiago e Tiago)
+86 - Colocar paredes invisivel no cenario
+87 - Batalha do Tigre
+ 87.1- Fechar as passagens ao comecar
+ 87.2- Abrir as passagens ao acabar
+ 87.3- Um ou dois tigres?
+88 - Mudar a posicao do Checkpoint (canto inferior direito)
+89 - Tirar ataque especial (ou mudar pra outra tecla)
+90 - Colocar um combo
+91 - Mudar ataque de A+up de volta para apenas A
+
+Unsolved: 
+37 - Melhorar tigre (Harlei)
+39 - Jacaré (Thiago)
 55 - Altura da camera (somente) na batalha final.
-57 - Deletar os rewards quando morrer
-58 - Resetar o life do boss ao morrer
-59 - Fazer a setinha do hud indicar a direção corretamente (um triangulo tem 3 pontas e não uma só)
+57*- Deletar os rewards quando morrer (Harlei)
+58*- Resetar o life do boss ao morrer (Harlei)
 60 - Background do menu principal
 61 - Ensinar o usuário a jogar
-62 - Eliminar o "montain walk" onde o medrash sai escalando montanhas menos ingremes
 63 - Som dos inimigos
 64 - Mudar o som do medrash na agua
-65 - Colocar todos os Input.Get em um só lugar
 66 - Urso subindo no medrash
 67 - Medrash e urso atacam ao mesmo tempo
-68 - Rodar o triangulo pelo centro
 69 - Randomizar o tempo de parar do urso
 70 - Spawn do bacon no centro do character controler
 71 - Jogo trava depois de certo tempo aberto
 72 - Lixo de audio no inicio da fase
-73 - Pontuação
 74 - Mudar a fonte do checkpoint
 75 - Dano de energia faz aparecer a animação de dano
-76 - Botão para mudar a camera
  
-
 In discussion:
-In Discussion 18- Camera apontar para o inimigo proximo
 In Discussion 7- Colisor na Camera
-
+In Discussion 18- Camera apontar para o inimigo proximo
+In Discussion 76 - Botão para mudar a camera
 
 Solved:
 Solved 1- Musica no Menu
@@ -55,6 +68,7 @@ Solved 22- Tigre dentro da caixa FinalBoss nao da certo porque o Tigre fica defo
 Solved 23- Medrash se machuca ao cair muito facilmente.
 Solved 24- Colocar limites invisiveis ao redor do terreno
 Solved 25 (parte 1)- Deixar o terreno bonito
+Solved 25 (parte 2)- Deixar a água realista
 Solved 25 (parte 3)- Colocar cabanas
 Solved 25 (parte 4)- Colocar variedade de árvores
 Solved 25 (parte 5)- Colocar o Gardain
@@ -65,6 +79,7 @@ Solved 25 (parte 9)- Arrumar bifurcação do rio
 Solved 26- Medrash está morrendo ao acaso ao caminhar pelo cenário
 Solved 27- Medrash ainda consegue subir em cima dos inimigos se conseguir cair em cima de um
 Solved 28- A sensibilidade de perda de vida do Medrash ao cair ficou muito baixa após as correções
+Solved 30- A velocidade de corrida do Medrash esta um pouco elevada. Se sair correndo igual louco até o final da
 Solved 39- Os inimigos conseguem subir em cima da cabeça do Medrash hahahaha
 fase é possível atravessar ela toda em 3 min (gdd consta 4-6 pra ela)
 Solved 31- Há código replicado para procurar o inimigo mais próximo
@@ -90,3 +105,8 @@ Solved 52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rap
 Solved 53 - Medrash consegue atravessar o checkpoint subindo as montanhas no começo.
 Solved 54 - Musica some ao entrar na batalha final.
 Solved 56 - Atacar o tigre enquanto não pode ser atacado e cancelar o próximo momento de descanso
+Solved 59 - Fazer a setinha do hud indicar a direção corretamente (um triangulo tem 3 pontas e não uma só)
+Solved 62 - Eliminar o "mountain walk" onde o medrash sai escalando montanhas menos ingremes
+Solved 65 - Colocar todos os Input.Get em um só lugar
+Solved 68 - Rodar o triangulo pelo centro
+Solved 73 - Pontuação

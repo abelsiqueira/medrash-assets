@@ -28,7 +28,6 @@ public abstract class Entity : MonoBehaviour {
 	public float energyValue = 0.0f;
 	public float lifeValue = 0.0f;
 	public GameObject dieExplosion;
-	public GameObject Prefab;
 	protected int scoreValue;
 	
 	protected CharacterController controller;
