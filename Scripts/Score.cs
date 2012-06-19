@@ -28,14 +28,15 @@ public class Score : MonoBehaviour {
 	
 	void OnGUI()
 	{
-		GUI.Box(new Rect(left-5, top, 150, 45), "");
+		GUI.Box(new Rect(left-5, top, 150, 60), "");
 		
 		GUIStyle myStyle = new GUIStyle();
 		myStyle.fontSize = 40;
 		myStyle.fontStyle = FontStyle.Bold;
+		myStyle.alignment = TextAnchor.MiddleRight;
 		
 		myStyle.normal.textColor = Color.white;
 		
-		GUI.TextField(new Rect(left, top, 150, 60),"" + scoreValue, myStyle);
+		GUI.TextField(new Rect(left, top, 140, 60),"" + scoreValue, myStyle);
 	}
 }
