@@ -38,6 +38,7 @@ public class Alligator : Entity {
 		canReceiveDamage = true;
 		
 		EntityStart();
+		scoreValue = 100;
 	}
 	
 	public IEnumerator UpdateGeneric() {

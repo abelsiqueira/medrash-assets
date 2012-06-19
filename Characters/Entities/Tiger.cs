@@ -48,6 +48,7 @@ public class Tiger : Entity {
 		attackingTime = (int) (attackAnimation.length*10.0f/atkSpeed);
 		
 		EntityStart();
+		scoreValue = 500;
 	}
 	
 	public IEnumerator UpdateTiger() {
