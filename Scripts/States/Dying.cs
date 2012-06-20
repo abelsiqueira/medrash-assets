@@ -32,6 +32,7 @@ public class Dying : State {
 			GameObject.Instantiate(context.dieExplosion, context.transform.position, context.transform.rotation);
 		if (context.reward)
 			GameObject.Instantiate(context.reward, context.transform.position, context.transform.rotation);
+		context.AddScoreToMedrash();
 		GameObject.Destroy(context.gameObject);
 	}
 }

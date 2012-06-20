@@ -7,6 +7,7 @@ public class MainCharacter : MonoBehaviour
 {
 	public Terrain terrain;
 	public GameObject dmgBox;
+	private Score myScore;
 	private bool hasTorch;
 	private Scene scene;
 	private PrimaryBar primaryBar;
@@ -23,7 +24,6 @@ public class MainCharacter : MonoBehaviour
 	private float lifeLossValue = 0.1f;
 	private float temperatureLossValue = 0.2f;
 	private float torchTimerValue = 10.0f;
-	private float defenseThreshold = 0.5f;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
@@ -64,6 +64,8 @@ public class MainCharacter : MonoBehaviour
 			e.SetMainCharacter(this.gameObject);
 			listOfEnemies.Add(e);
 		}
+		myScore = GetComponent<Score>();
+		myScore.SetScore(0);
 		StartCoroutine(ActivateEnemies());
 	}
 	
@@ -203,16 +205,12 @@ public class MainCharacter : MonoBehaviour
 	{
 		if (lifeStatus - x > 0)
 		{
-			if (!characterController.IsDefending())
+			if (!characterController.IsEvading())
 			{
 				lifeStatus -= x;
-				characterController.ReceiveAttack();
+				if (x != lifeLossValue) characterController.ReceiveAttack();
+				primaryBar.setHealth(100 - lifeStatus);
 			}
-			else
-			{
-				lifeStatus -= x * defenseThreshold;
-			}
-			primaryBar.setHealth(100 - lifeStatus);
 		}
 		else
 		{
@@ -309,10 +307,14 @@ public class MainCharacter : MonoBehaviour
 	
 	public void hasSecondaryBar(bool has)
 	{
-		secondaryBar.HasBar = has;	
+		secondaryBar.HasBar = has;
 	}
 	
 	public List<Entity> GetListOfEnemies () {
 		return listOfEnemies;
+	}
+	
+	public void AddToScore (int points) {
+		myScore.AddToScore (points);
 	}
 }

@@ -16,11 +16,13 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip attackAnimation;
 	public AnimationClip deathAnimation;
 	public AnimationClip receiveAttackAnimation;
-	public AnimationClip defendAnimation;
-	//public AnimationClip interactAnimation;
+	public AnimationClip evadeLeftAnimation;
+	public AnimationClip evadeRightAnimation;
 	
 	private Animation animation;
 	
+	private float evadeLeftAnimationSpeed = 1.0f;
+	private float evadeRightAnimationSpeed = 1.0f;
 	private float walkMaxAnimationSpeed = 0.75f;
 	private float trotMaxAnimationSpeed = 1.0f;
 	private float runMaxAnimationSpeed = 1.2f;
@@ -28,8 +30,6 @@ public class MainCharacterController : MonoBehaviour
 	private float attackAnimationSpeed = 1.4f;
 	private float deathAnimationSpeed = 1.0f;
 	private float receiveAttackAnimationSpeed = 0.75f;
-	private float defendAnimationSpeed = 0.75f;
-	//private float interactAnimationSpeed = 1.0f;	
 	private float baseAttackDuration = 0.8f;
 	
 	enum CharacterState 
@@ -39,10 +39,11 @@ public class MainCharacterController : MonoBehaviour
 		Trotting,
 		Running,
 		Attacking,
-		Defending,
 		Interacting,
 		Dead,
-		ReceivingAttack
+		ReceivingAttack,
+		EvadingLeft,
+		EvadingRight,
 	}
 
 	private MainCharacter mainCharacter;
@@ -90,7 +91,7 @@ public class MainCharacterController : MonoBehaviour
 	private float lastGroundedTime = 0.0f;
 
 	private bool isControllable = true;
-	private bool isDefending = false;
+	private bool evading = false;
 	
 	private float attackCooldownValue = 0.0f;
 	private float fallingDamageMultiplier = 20f;
@@ -144,10 +145,15 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No receive attack animation found. Turning off animations.");
 		}
-		if (!defendAnimation)
+		if (!evadeLeftAnimation)
 		{
 			animation = null;
-			Debug.Log("No defend animation found. Turning off animations.");
+			Debug.Log("No evade to left animation found. Turning off animations.");
+		}
+		if (!evadeRightAnimation)
+		{
+			animation = null;
+			Debug.Log("No evade to right animation found. Turning off animations.");
 		}
 		
 		attackDuration = baseAttackDuration/attackAnimationSpeed;
@@ -308,7 +314,6 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 	
-	// delay entre a execução da animação de ataque e do dano causado
 	IEnumerator DelayAttack(Entity closestEntity)
 	{
 		int i = 0;
@@ -347,35 +352,13 @@ public class MainCharacterController : MonoBehaviour
 			GameObject dmgBox = transform.Find("dmgBox").gameObject;
 			Bounds bounds = closestEntity.GetComponent<CharacterController>().bounds;
 			Bounds medBounds = dmgBox.collider.bounds;
-	
+
 			if (bounds.Intersects(medBounds)) {
-				sounds.PlayAttackAudio(1.0f);
-				closestEntity.DamageLifeStatus(3);
+				closestEntity.DamageLifeStatus(2);
 			}
 		}
 		canMove = true;
 	}
-	
-	private void Defend()
-	{
-		Entity closestEntity = GetClosestEntity();	
-		if (closestEntity)
-		{
-			Vector3 d = closestEntity.transform.position - transform.position;
-			d.y = 0;
-			if (d.magnitude < 5) SetDirection(d);
-		}
-	}
-	
-	/*void DidInteract()
-	{
-		characterState = CharacterState.Interacting;
-		animation[interactAnimation.name].wrapMode = WrapMode.Once;
-		animation[interactAnimation.name].speed = interactAnimationSpeed;
-		animation[interactAnimation.name].layer = 1;
-		animation.CrossFade(interactAnimation.name);
-		mainCharacter.GrabTorch();
-	}*/
 	
 	void DidAttack()
 	{
@@ -387,30 +370,6 @@ public class MainCharacterController : MonoBehaviour
 		animation.CrossFade(attackAnimation.name);
 		StartCoroutine(AttackCooldown());
 	}
-	
-	void DidDefend()
-	{
-		Input.ResetInputAxes();
-		isDefending = true;
-		canMove = false;
-	    characterState = CharacterState.Defending;
-		animation[defendAnimation.name].wrapMode = WrapMode.ClampForever;
-		animation[defendAnimation.name].speed = defendAnimationSpeed;
-		animation[defendAnimation.name].layer = 1;
-		animation.Play(defendAnimation.name);
-	}
-	
-	void DeactivateDefense()
-	{
-		isDefending = false;
-		canMove = true;
-	    characterState = CharacterState.Idle;
-		animation[idleAnimation.name].layer = 1;
-		animation.Play(idleAnimation.name);
-		animation[idleAnimation.name].layer = 0;
-		animation.Play(idleAnimation.name);
-	}
-	
 	
 	public void ReceiveAttack()
 	{
@@ -446,7 +405,56 @@ public class MainCharacterController : MonoBehaviour
 		animation.Play(idleAnimation.name);
 	}
 	
-	private bool keyDown = false;
+	public void DidEvadeLeft()
+	{
+		Input.ResetInputAxes();
+		characterState = CharacterState.EvadingLeft;
+		animation[evadeLeftAnimation.name].wrapMode = WrapMode.Once;
+		animation[evadeLeftAnimation.name].speed = evadeLeftAnimationSpeed;
+		animation[evadeLeftAnimation.name].layer = 1;
+		animation.CrossFade(evadeLeftAnimation.name);
+		StartCoroutine(Evade());
+	}
+	
+	public void DidEvadeRight()
+	{
+		Input.ResetInputAxes();
+		characterState = CharacterState.EvadingRight;
+		animation[evadeRightAnimation.name].wrapMode = WrapMode.Once;
+		animation[evadeRightAnimation.name].speed = evadeRightAnimationSpeed;
+		animation[evadeRightAnimation.name].layer = 1;
+		animation.CrossFade(evadeRightAnimation.name);
+		StartCoroutine(Evade());
+	}
+	
+	IEnumerator Evade()
+	{
+		int i = 0;
+		canMove = false;
+		evading = true;
+		
+		Entity closestEntity = GetClosestEntity();	
+		if (closestEntity)
+		{
+			Vector3 d = closestEntity.transform.position - transform.position;
+			d.y = 0;
+			if (d.magnitude < 5) SetDirection(d);
+		}
+		
+		while (true)
+		{
+			if (i == 0) i++;
+			else
+			{
+				evading = false;
+				canMove = true;
+				break;
+			}
+			yield return new WaitForSeconds(1.0f);
+		}
+	}
+	
+	private bool fire2ButtonDown = false;
 	
 	void Update()
 	{	
@@ -457,6 +465,9 @@ public class MainCharacterController : MonoBehaviour
 		
 		if (mainCharacter.IsAlive() && !pauseMenu.IsPaused())
 		{
+			if (Input.GetButtonDown("Fire2")) fire2ButtonDown = true;
+			if (Input.GetButtonUp("Fire2")) fire2ButtonDown = false;
+			
 			if (Input.GetButtonDown("Fire1"))
 			{
 				if (canAttack)
@@ -465,40 +476,17 @@ public class MainCharacterController : MonoBehaviour
 					DidAttack();
 				}
 			}
-			
-			/*if (Input.GetButtonDown("Fire2"))
-			{
-				DidInteract();
-				if (canLightTorch)
-				{
-					if (IsMoving())
-					{
-						Input.ResetInputAxes();
-					}
-					DidInteract();
-				}	
-			}*/
 						
-			if (Input.GetButtonDown("Fire3")) 
+			if (Input.GetKeyDown(KeyCode.LeftArrow) && fire2ButtonDown) 
 			{
-				if (canAttack)
-				{
-					if (keyDown == false)				
-					{
-						DidDefend();
-						Defend();
-						keyDown = true;
-					}
-				}
+				DidEvadeLeft();
+				fire2ButtonDown = false;
 			}
 			
-			if (Input.GetButtonUp("Fire3")) 
+			if (Input.GetKeyDown(KeyCode.RightArrow) && fire2ButtonDown) 
 			{
-				if (keyDown == true)
-				{
-					DeactivateDefense();
-					keyDown = false;
-				}
+				DidEvadeRight();
+				fire2ButtonDown = false;	
 			}
 
 		}
@@ -674,11 +662,6 @@ public class MainCharacterController : MonoBehaviour
 		runSpeed = rs;
 	}
 	
-	public bool IsDefending()
-	{
-		return isDefending;
-	}
-	
 	public bool FollowEnemy() {
 		return followEnemy;
 	}
@@ -690,5 +673,11 @@ public class MainCharacterController : MonoBehaviour
 	public void StopFollowingEnemy() {
 		followEnemy = false;
 	}
+	
+	public bool IsEvading()
+	{
+		return evading;
+	}
+	
 }
 	
