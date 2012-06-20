@@ -24,7 +24,6 @@ public class MainCharacter : MonoBehaviour
 	private float lifeLossValue = 0.1f;
 	private float temperatureLossValue = 0.2f;
 	private float torchTimerValue = 10.0f;
-	private float defenseThreshold = 0.5f;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
@@ -208,15 +207,8 @@ public class MainCharacter : MonoBehaviour
 		{
 			if (!characterController.IsEvading())
 			{
-				if (!characterController.IsDefending())
-				{	
-					lifeStatus -= x;
-					characterController.ReceiveAttack();
-				}
-				else
-				{
-					lifeStatus -= x * defenseThreshold;
-				}
+				lifeStatus -= x;
+				if (x != lifeLossValue) characterController.ReceiveAttack();
 				primaryBar.setHealth(100 - lifeStatus);
 			}
 		}
