@@ -1,8 +1,6 @@
 ﻿* = Urgente para 21/06
 
 TODO LIST
-77*- IA do lobo (Abel)
-78*- IA do inimigo humano generico (Abel)
 79 - Som da cachoeira deve estar somente nos arredores dela
 80 - Na agua Medrash nao pode correr, somente andar
 81 - Movimentacao do Medrash na agua com particulas
@@ -110,3 +108,5 @@ Solved 62 - Eliminar o "mountain walk" onde o medrash sai escalando montanhas me
 Solved 65 - Colocar todos os Input.Get em um só lugar
 Solved 68 - Rodar o triangulo pelo centro
 Solved 73 - Pontuação
+Solved 77*- IA do lobo (Abel)
+Solved 78*- IA do inimigo humano generico (Abel)
