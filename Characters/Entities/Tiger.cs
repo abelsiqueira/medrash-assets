@@ -78,6 +78,12 @@ public class Tiger : Entity {
 				AttackedVerifications();
 				break;
 			}
+			
+			if(medrash.GetComponent<MainCharacter>().IsAlive() != true)
+			{
+				life = 9;
+			}
+			
 			yield return new WaitForSeconds(0.1f);
 		}
 	}

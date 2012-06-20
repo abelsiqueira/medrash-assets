@@ -32,7 +32,7 @@ public class FoodController : MonoBehaviour
 				medrash.GetComponent<MainCharacter>().IncreaseEnergyStatus(lifeValue);
 				Dispose();
 				break;
-			} else if (foodTimer >= foodDuration) {
+			} else if ((foodTimer >= foodDuration) || (medrash.GetComponent<MainCharacter>().IsAlive() != true)) {
 				Dispose();
 				break;
 			}
