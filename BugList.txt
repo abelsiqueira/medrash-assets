@@ -14,9 +14,8 @@ TODO LIST
  87.2- Abrir as passagens ao acabar
  87.3- Um ou dois tigres?
 88 - Mudar a posicao do Checkpoint (canto inferior direito)
-89 - Tirar ataque especial (ou mudar pra outra tecla)
 90 - Colocar um combo
-91 - Mudar ataque de A+up de volta para apenas A
+
 
 Unsolved: 
 37 - Melhorar tigre (Harlei)
@@ -35,7 +34,7 @@ Unsolved:
 71 - Jogo trava depois de certo tempo aberto
 72 - Lixo de audio no inicio da fase
 74 - Mudar a fonte do checkpoint
-75 - Dano de energia faz aparecer a animação de dano
+
  
 In discussion:
 In Discussion 7- Colisor na Camera
@@ -110,3 +109,6 @@ Solved 68 - Rodar o triangulo pelo centro
 Solved 73 - Pontuação
 Solved 77*- IA do lobo (Abel)
 Solved 78*- IA do inimigo humano generico (Abel)
+Solved 75 - Dano de energia faz aparecer a animação de dano
+Solved 91 - Mudar ataque de A+up de volta para apenas A
+Solved 89 - Tirar ataque especial (ou mudar pra outra tecla)
