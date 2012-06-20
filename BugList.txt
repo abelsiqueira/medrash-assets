@@ -21,8 +21,8 @@ Unsolved:
 37 - Melhorar tigre (Harlei)
 39 - Jacaré (Thiago)
 55 - Altura da camera (somente) na batalha final.
-57*- Deletar os rewards quando morrer (Harlei)
-58*- Resetar o life do boss ao morrer (Harlei)
+Solved 57*- Deletar os rewards quando morrer (Harlei)
+Solved 58*- Resetar o life do boss ao morrer (Harlei)
 60 - Background do menu principal
 61 - Ensinar o usuário a jogar
 63 - Som dos inimigos
