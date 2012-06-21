@@ -10,7 +10,7 @@ public class Bear : Entity {
 	private int countdownAttack = 0, attackDuration = 8;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int defenseDuration = 30, defenseTimer = 0;
-	private int countdownAttacked = 0, attackedTime = 7;
+	private int countdownAttacked = 0, attackedTime = 6;
 	
 	private float probabilityToDefend = 0.0f;
 	
@@ -29,6 +29,7 @@ public class Bear : Entity {
 		damageInstant = (int) (damageInstant/aux);
 		attackDuration = (int) (attackDuration/aux);
 		attackCooldown = (int) (attackCooldown/aux);
+		animation[attackedAnimation.name].speed = 1.3f;
 		
 		life = 6;
 		damage = 15;
@@ -38,6 +39,7 @@ public class Bear : Entity {
 		closeRadius = 20.0f;
 		farRadius = 40.0f;
 		canReceiveDamage = true;
+		idlePatrolChangeTime += (int)(20*Random.value - 10);
 		
 		EntityStart();
 		scoreValue = 50;
@@ -215,7 +217,8 @@ public class Bear : Entity {
 	private void AttackedVerifications () {
 		countdownAttacked++;
 		if (countdownAttacked > attackedTime) {
-			fsm.ChangeState(Pursue.Instance());
+			fsm.RevertState();
+			//fsm.ChangeState(Pursue.Instance());
 			countdownAttacked = 0;
 		}
 	}

@@ -7,12 +7,14 @@ public class FlameController : MonoBehaviour
 	private MainCharacterController controller;
 	private float minDist = 2.0f;
 	private float flameDamage = 0.5f;
+	private float flameVolume = 0.05f;
 	
 	void Start ()
 	{
 		medrash = GameObject.FindGameObjectWithTag("Player");
 		controller = medrash.GetComponent<MainCharacterController>();
 		StartCoroutine(FlameUpdate());
+		GetComponent<AudioSource>().volume = flameVolume;
 	}
 	
 	IEnumerator FlameUpdate ()

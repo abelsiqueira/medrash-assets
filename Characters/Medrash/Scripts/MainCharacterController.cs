@@ -65,7 +65,9 @@ public class MainCharacterController : MonoBehaviour
 	private float speedSmoothing = 10.0f;
 	private float rotateSpeed = 500.0f;
 	private float trotAfterSeconds = 3.0f;
-	
+
+	private float runVolume = 0.6f;
+	private float walkVolume = 0.3f;
 	private bool isOnWater = false;
 	public bool canRun = true;
 	public bool canAttack = true;
@@ -75,6 +77,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	private float groundedTimeout = 0.25f;
 
+	private float medrashAttackRadius = 7.0f;
 	private float lockCameraTimer = 0.0f;
 
 	private Vector3 moveDirection = Vector3.zero;
@@ -180,11 +183,11 @@ public class MainCharacterController : MonoBehaviour
 		{
 			
 			if (characterState == CharacterState.Running) {
-				volume = 0.5f;
+				volume = runVolume;
 				stepTime = 0.44f/animation[runAnimation.name].speed;
 			}
 			else {
-				volume = 0.2f;
+				volume = walkVolume;
 				stepTime = 0.5f/animation[walkAnimation.name].speed;
 			}
 			
@@ -314,7 +317,7 @@ public class MainCharacterController : MonoBehaviour
 			canMove = false;
 			Vector3 d = closestEntity.transform.position - transform.position;
 			d.y = 0;
-			if (d.magnitude < 5) SetDirection(d);
+			if (d.magnitude < medrashAttackRadius) SetDirection(d);
 			StartCoroutine(DelayAttack(closestEntity));
 		}
 	}

@@ -9,7 +9,7 @@ public class HumanEnemy : Entity {
 	private int attackCooldown = 15, attackTimer = 0;
 	private int countdownAttack = 0, attackDuration = 8;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
-	private int countdownAttacked = 0, attackedTime = 7;
+	private int countdownAttacked = 0, attackedTime = 3;
 	
 	private float probabilityToDefend = 0.0f;
 	
@@ -23,15 +23,16 @@ public class HumanEnemy : Entity {
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		
-		float aux = 1.3f;
+		float aux = 1.4f;
 		animation[attackAnimation.name].speed = aux;
 		damageInstant = (int) (damageInstant/aux);
 		attackDuration = (int) (attackDuration/aux);
 		attackCooldown = (int) (attackCooldown/aux);
+		animation[attackedAnimation.name].speed = 1.0f;
 		
 		life = 6;
 		damage = 15;
-		baseSpeed = 9.0f;
+		baseSpeed = 12.0f;
 		speed = baseSpeed;
 		attackRadius = 3.0f;
 		closeRadius = 20.0f;
@@ -197,7 +198,8 @@ public class HumanEnemy : Entity {
 	private void AttackedVerifications () {
 		countdownAttacked++;
 		if (countdownAttacked > attackedTime) {
-			fsm.ChangeState(Pursue.Instance());
+			fsm.RevertState();
+			//fsm.ChangeState(Pursue.Instance());
 			countdownAttacked = 0;
 		}
 	}
