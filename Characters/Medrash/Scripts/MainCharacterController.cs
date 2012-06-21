@@ -65,7 +65,8 @@ public class MainCharacterController : MonoBehaviour
 	private float speedSmoothing = 10.0f;
 	private float rotateSpeed = 500.0f;
 	private float trotAfterSeconds = 3.0f;
-
+	
+	private bool isOnWater = false;
 	public bool canRun = true;
 	public bool canAttack = true;
 	public bool canMove = true;
@@ -207,6 +208,9 @@ public class MainCharacterController : MonoBehaviour
 		
 		float v = Input.GetAxisRaw("Vertical");
 	    float h = Input.GetAxisRaw("Horizontal");
+		
+		if (isOnWater)
+			canRun = false;
 
 		if (v < -0.2f) movingBack = true;
 		else movingBack = false;
@@ -679,5 +683,12 @@ public class MainCharacterController : MonoBehaviour
 		return evading;
 	}
 	
+	public void OnWater() {
+		isOnWater = true;
+	}
+	
+	public void OffWater() {
+		isOnWater = false;
+	}
 }
 	
