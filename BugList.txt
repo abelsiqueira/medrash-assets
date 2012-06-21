@@ -14,7 +14,11 @@ TODO LIST
  87.3- Um ou dois tigres?
 88 - Mudar a posicao do Checkpoint (canto inferior direito)
 90 - Colocar um combo
-
+91 - Sangue
+92 - Ajustar tamanhos dos inimigos
+93 - Ajustar velocidade do Medrash e dos inimigos
+94 - Ajustar raios dos inimigos
+95 - Colocar todos os sons
 
 Unsolved: 
 37 - Melhorar tigre (Harlei)
@@ -30,7 +34,6 @@ Unsolved:
 71 - Jogo trava depois de certo tempo aberto
 72 - Lixo de audio no inicio da fase
 74 - Mudar a fonte do checkpoint
-
  
 In discussion:
 In Discussion 7- Colisor na Camera
