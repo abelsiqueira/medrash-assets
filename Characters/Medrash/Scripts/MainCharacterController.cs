@@ -189,7 +189,8 @@ public class MainCharacterController : MonoBehaviour
 			}
 			
 			if (isMoving && IsGrounded())
-				sounds.PlayStepAudio(volume);
+				if (!isOnWater)sounds.PlayStepAudio(volume);
+				else sounds.PlayWaterStepAudio(volume);
 			
 			yield return new WaitForSeconds(stepTime);
 		}

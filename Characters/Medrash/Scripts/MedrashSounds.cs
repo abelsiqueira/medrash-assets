@@ -6,6 +6,7 @@ public class MedrashSounds : MonoBehaviour {
 	public AudioClip attackAudio;
 	public AudioClip receiveDamageAudio;
 	public AudioClip stepAudio;
+	public AudioClip waterStepAudio;
 	private float volume;
 	private bool canPlayReceiveDamageAudio = true;
 
@@ -45,6 +46,14 @@ public class MedrashSounds : MonoBehaviour {
 		audio.Play();
 	}
 	
+	public void PlayWaterStepAudio(float volume)
+	{
+		this.volume = volume;
+		audio.volume = volume;
+		audio.clip = waterStepAudio;
+		audio.Play();
+	}
+	
 	public void PlayReceiveDamageAudio(float volume)
 	{
 		if (canPlayReceiveDamageAudio)
@@ -56,5 +65,6 @@ public class MedrashSounds : MonoBehaviour {
 			StartCoroutine(ReceiveDamageAudioCooldown());
 		}
 	}
-
+	
+	
 }
