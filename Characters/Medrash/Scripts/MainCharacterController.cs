@@ -651,8 +651,9 @@ public class MainCharacterController : MonoBehaviour
 			{
 				Vector3 d = closestEntity.transform.position - transform.position;
 				Vector3 position = closestEntity.transform.position;	
+				float radius = GetComponent<CharacterController>().radius + closestEntity.GetComponent<CharacterController>().radius;
 				d.y = 0;				
-				if (d.magnitude < 1.5f) closestEntity.transform.position = new Vector3(position.x + 8.0f, position.y + 4.0f, position.z);
+				if (d.magnitude < radius) closestEntity.transform.position = new Vector3(position.x + 8.0f, position.y + 4.0f, position.z);
 			}
 			yield return new WaitForSeconds(0.1f);
 		}
