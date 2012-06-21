@@ -2,7 +2,6 @@
 
 TODO LIST
 79 - Som da cachoeira deve estar somente nos arredores dela
-80 - Na agua Medrash nao pode correr, somente andar
 81 - Movimentacao do Medrash na agua com particulas
 82 - IA do jacare
 83 - IA do Balazar
@@ -21,8 +20,6 @@ Unsolved:
 37 - Melhorar tigre (Harlei)
 39 - Jacaré (Thiago)
 55 - Altura da camera (somente) na batalha final.
-Solved 57*- Deletar os rewards quando morrer (Harlei)
-Solved 58*- Resetar o life do boss ao morrer (Harlei)
 60 - Background do menu principal
 61 - Ensinar o usuário a jogar
 63 - Som dos inimigos
@@ -102,13 +99,16 @@ Solved 52 - Medrash anda com a defesa levantada: Aperte o botão de ataque e rap
 Solved 53 - Medrash consegue atravessar o checkpoint subindo as montanhas no começo.
 Solved 54 - Musica some ao entrar na batalha final.
 Solved 56 - Atacar o tigre enquanto não pode ser atacado e cancelar o próximo momento de descanso
+Solved 57*- Deletar os rewards quando morrer (Harlei)
+Solved 58*- Resetar o life do boss ao morrer (Harlei)
 Solved 59 - Fazer a setinha do hud indicar a direção corretamente (um triangulo tem 3 pontas e não uma só)
 Solved 62 - Eliminar o "mountain walk" onde o medrash sai escalando montanhas menos ingremes
 Solved 65 - Colocar todos os Input.Get em um só lugar
 Solved 68 - Rodar o triangulo pelo centro
 Solved 73 - Pontuação
+Solved 75 - Dano de energia faz aparecer a animação de dano
 Solved 77*- IA do lobo (Abel)
 Solved 78*- IA do inimigo humano generico (Abel)
-Solved 75 - Dano de energia faz aparecer a animação de dano
-Solved 91 - Mudar ataque de A+up de volta para apenas A
+Solved 80 - Na agua Medrash nao pode correr, somente andar
 Solved 89 - Tirar ataque especial (ou mudar pra outra tecla)
+Solved 91 - Mudar ataque de A+up de volta para apenas A
