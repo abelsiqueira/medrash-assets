@@ -23,7 +23,6 @@ Unsolved:
 60 - Background do menu principal
 61 - Ensinar o usuário a jogar
 63 - Som dos inimigos
-64 - Mudar o som do medrash na agua
 66 - Urso subindo no medrash
 67 - Medrash e urso atacam ao mesmo tempo
 69 - Randomizar o tempo de parar do urso
@@ -112,3 +111,4 @@ Solved 78*- IA do inimigo humano generico (Abel)
 Solved 80 - Na agua Medrash nao pode correr, somente andar
 Solved 89 - Tirar ataque especial (ou mudar pra outra tecla)
 Solved 91 - Mudar ataque de A+up de volta para apenas A
+Solved 64 - Mudar o som do medrash na agua
