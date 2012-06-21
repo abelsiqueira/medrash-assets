@@ -221,6 +221,8 @@ public abstract class Entity : MonoBehaviour {
 	}
 	
 	public Vector3 GetMedrashPosition () {
+		if (medrash == null)
+			medrash = GameObject.FindGameObjectWithTag("Player");
 		return medrash.transform.position;
 	}
 	
