@@ -24,6 +24,7 @@ public abstract class Entity : MonoBehaviour {
 
 	protected GameObject medrash;
 	protected GameObject dmgBox;
+	public GameObject blood;
 	public GameObject reward;
 	public float energyValue = 0.0f;
 	public float lifeValue = 0.0f;

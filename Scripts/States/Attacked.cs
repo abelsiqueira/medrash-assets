@@ -19,6 +19,8 @@ public class Attacked : State {
 	
 	public override void Enter (Entity context) {
 		context.SetSpeed(0.0f);
+		if (context.blood)
+			GameObject.Instantiate(context.blood, context.transform.position + Vector3.up*1.5f, context.transform.rotation);
 	}
 		
 	public override void Execute (Entity context) {
