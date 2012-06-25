@@ -5,9 +5,9 @@ using System.Collections;
 public class Bear : Entity {
 	
 	private int dyingDuration = 10, dyingTimer = 0;
-	private int damageInstant = 7, damageTimer = 0;
-	private int attackCooldown = 15, attackTimer = 0;
-	private int countdownAttack = 0, attackDuration = 8;
+	private int damageInstant = 6, damageTimer = 0;
+	private int attackCooldown = 20, attackTimer = 0;
+	private int countdownAttack = 0, attackDuration = 6;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int defenseDuration = 30, defenseTimer = 0;
 	private int countdownAttacked = 0, attackedTime = 6;
@@ -33,9 +33,9 @@ public class Bear : Entity {
 		
 		life = 6;
 		damage = 15;
-		baseSpeed = 9.0f;
+		baseSpeed = 8.0f;
 		speed = baseSpeed;
-		attackRadius = 5.0f;
+		attackRadius = 3.0f;
 		closeRadius = 20.0f;
 		farRadius = 40.0f;
 		canReceiveDamage = true;
