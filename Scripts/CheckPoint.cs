@@ -41,8 +41,8 @@ public class CheckPoint : MonoBehaviour {
 	void OnGUI()
 	{
 		if (Time.time - startTime >= 5.0)
-				return;
-		GUI.Label(new Rect(Screen.width - image.width, 0, image.width, image.height), image);
+			return;;
+		GUI.Label(new Rect(Screen.width - image.width, Screen.height - image.height, image.width, image.height), image);
 		
 	}
 }
