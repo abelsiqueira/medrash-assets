@@ -23,9 +23,9 @@ public class MainCharacterController : MonoBehaviour
 	
 	private float evadeLeftAnimationSpeed = 1.0f;
 	private float evadeRightAnimationSpeed = 1.0f;
-	private float walkMaxAnimationSpeed = 0.75f;
+	private float walkMaxAnimationSpeed = 0.5f;
 	private float trotMaxAnimationSpeed = 1.0f;
-	private float runMaxAnimationSpeed = 1.2f;
+	private float runMaxAnimationSpeed = 1.0f;
 	private float landAnimationSpeed = 1.0f;
 	private float attackAnimationSpeed = 1.4f;
 	private float deathAnimationSpeed = 1.0f;
@@ -57,9 +57,9 @@ public class MainCharacterController : MonoBehaviour
 	// The following variables were made private to tweak easier and
 	// share the tweaking by git. These values were copied from the
 	// inspector at date May 23rd, 23h13.
-	private float walkSpeed = 5.0f;
-	private float trotSpeed = 4.0f;
-	private float runSpeed = 15.0f;
+	private float walkSpeed = 2.0f;
+	private float trotSpeed = 3.0f;
+	private float runSpeed = 7.0f;
 	private float inAirControlAcceleration = 10.0f;
 	private float gravity = 20.0f;
 	private float speedSmoothing = 10.0f;
@@ -520,7 +520,7 @@ public class MainCharacterController : MonoBehaviour
 				{
 					animation[runAnimation.name].wrapMode = WrapMode.Loop;
 					//animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, runMaxAnimationSpeed);
-					animation[runAnimation.name].speed = runSpeed/15.0f;
+					animation[runAnimation.name].speed = runSpeed/7.0f;
 					animation.CrossFade(runAnimation.name);	
 				}
 				else if(characterState == CharacterState.Trotting) 
