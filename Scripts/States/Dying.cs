@@ -20,7 +20,8 @@ public class Dying : State {
 		context.SetSpeed(0.0f);
 		context.MakeInvunerable();
 		context.SetDyingAnimation();
-		Debug.Log(context.CanBeAttacked());
+		if (context.blood)
+			GameObject.Instantiate(context.blood, context.transform.position + Vector3.up*1.5f, context.transform.rotation);
 	}
 	
 	public override void Execute (Entity context) {
