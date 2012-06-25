@@ -5,9 +5,9 @@ using System.Collections;
 public class HumanEnemy : Entity {
 	
 	private int dyingDuration = 10, dyingTimer = 0;
-	private int damageInstant = 7, damageTimer = 0;
+	private int damageInstant = 5, damageTimer = 0;
 	private int attackCooldown = 15, attackTimer = 0;
-	private int countdownAttack = 0, attackDuration = 8;
+	private int countdownAttack = 0, attackDuration = 6;
 	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int countdownAttacked = 0, attackedTime = 3;
 	
@@ -29,14 +29,15 @@ public class HumanEnemy : Entity {
 		attackDuration = (int) (attackDuration/aux);
 		attackCooldown = (int) (attackCooldown/aux);
 		animation[attackedAnimation.name].speed = 1.0f;
+		animation[runAnimation.name].speed = 0.7f;
 		
 		life = 6;
-		damage = 15;
-		baseSpeed = 12.0f;
+		damage = 10;
+		baseSpeed = 7.0f;
 		speed = baseSpeed;
-		attackRadius = 3.0f;
-		closeRadius = 20.0f;
-		farRadius = 40.0f;
+		attackRadius = 2.0f;
+		closeRadius = 15.0f;
+		farRadius = 20.0f;
 		canReceiveDamage = true;
 		
 		EntityStart();
