@@ -27,7 +27,7 @@ public class MainCharacterController : MonoBehaviour
 	private float trotMaxAnimationSpeed = 1.0f;
 	private float runMaxAnimationSpeed = 1.0f;
 	private float landAnimationSpeed = 1.0f;
-	private float attackAnimationSpeed = 1.4f;
+	private float attackAnimationSpeed = 1.6f;
 	private float deathAnimationSpeed = 1.0f;
 	private float receiveAttackAnimationSpeed = 0.75f;
 	private float baseAttackDuration = 0.8f;

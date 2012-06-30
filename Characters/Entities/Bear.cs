@@ -33,10 +33,10 @@ public class Bear : Entity {
 		
 		life = 6;
 		damage = 15;
-		baseSpeed = 8.0f;
+		baseSpeed = 7.0f;
 		speed = baseSpeed;
 		attackRadius = 3.0f;
-		closeRadius = 20.0f;
+		closeRadius = 15.0f;
 		farRadius = 40.0f;
 		canReceiveDamage = true;
 		idlePatrolChangeTime += (int)(20*Random.value - 10);
