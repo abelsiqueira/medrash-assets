@@ -11,11 +11,10 @@
  87.2- Abrir as passagens ao acabar
  87.3- Um ou dois tigres?
 90 - Colocar um combo
-Solved 91 - Sangue
+95 - Colocar todos os sons
 96 - Ajustar tamanho do Jacare
 97 - Ajustar velocidade do Jacare
 98 - Ajustar raio do Jacare
-95 - Colocar todos os sons
 
 Unsolved: 
 37 - Melhorar tigre (Harlei)
@@ -113,6 +112,7 @@ Solved 80 - Na agua Medrash nao pode correr, somente andar
 Solved 88 - Mudar a posicao do Checkpoint (canto inferior direito)
 Solved 89 - Tirar ataque especial (ou mudar pra outra tecla)
 Solved 91 - Mudar ataque de A+up de volta para apenas A
+Solved 91 - Sangue
 Solved 92 - Ajustar tamanhos dos inimigos (jacare em outro topico)
 Solved 93 - Ajustar velocidade do Medrash e dos inimigos (jacare em outro topico)
 Solved 94 - Ajustar raios dos inimigos

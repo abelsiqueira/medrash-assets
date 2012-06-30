@@ -30,7 +30,7 @@ public class MainCharacterController : MonoBehaviour
 	private float attackAnimationSpeed = 1.6f;
 	private float deathAnimationSpeed = 1.0f;
 	private float receiveAttackAnimationSpeed = 0.75f;
-	private float baseAttackDuration = 0.8f;
+	private float baseAttackDuration = 0.7f;
 	
 	enum CharacterState 
 	{
@@ -162,7 +162,7 @@ public class MainCharacterController : MonoBehaviour
 		
 		attackDuration = baseAttackDuration/attackAnimationSpeed;
 		delayAttackValue = attackDuration;
-		attackCooldownValue = delayAttackValue*1.3f;
+		attackCooldownValue = delayAttackValue*1.5f;
 		runSpeed = runSpeed*runMaxAnimationSpeed;
 		trotSpeed = trotSpeed*trotMaxAnimationSpeed;
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
