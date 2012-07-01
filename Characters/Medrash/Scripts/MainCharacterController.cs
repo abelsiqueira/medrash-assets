@@ -29,8 +29,11 @@ public class MainCharacterController : MonoBehaviour
 	private float landAnimationSpeed = 1.0f;
 	private float attackAnimationSpeed = 1.6f;
 	private float deathAnimationSpeed = 1.0f;
-	private float receiveAttackAnimationSpeed = 0.75f;
+	private float receiveAttackAnimationSpeed = 1.5f;
 	private float baseAttackDuration = 0.7f;
+	
+	private Waypoint closestWaypoint;
+	private GameObject runningEnemy;
 	
 	enum CharacterState 
 	{
@@ -112,6 +115,7 @@ public class MainCharacterController : MonoBehaviour
 	void Awake()
 	{
 		sounds = GetComponent<MedrashSounds>();
+		runningEnemy = GameObject.FindGameObjectWithTag("Fugitive");
 		pauseMenu = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseMenu>();
 		moveDirection = transform.TransformDirection(Vector3.forward);
 		mainCharacter = GetComponent<MainCharacter>();
@@ -695,5 +699,18 @@ public class MainCharacterController : MonoBehaviour
 	public void OffWater() {
 		isOnWater = false;
 	}
-}
 	
+	public void SetClosestWaypoint (Waypoint wp) {
+		closestWaypoint = wp;	
+	}
+	
+	public float GetDistanceFromSora () {
+		if (closestWaypoint) {
+			if (!closestWaypoint.runningEnemy)
+				return (runningEnemy.transform.position - transform.position).magnitude;
+			return closestWaypoint.GetDistance() + (closestWaypoint.transform.position - transform.position).magnitude;
+		} else
+			return (runningEnemy.transform.position - transform.position).magnitude;
+	}
+			
+}
