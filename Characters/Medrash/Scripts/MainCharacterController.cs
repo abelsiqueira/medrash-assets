@@ -13,24 +13,32 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip idleAnimation;
 	public AnimationClip walkAnimation;
 	public AnimationClip runAnimation;
-	public AnimationClip attackAnimation;
 	public AnimationClip deathAnimation;
 	public AnimationClip receiveAttackAnimation;
 	public AnimationClip evadeLeftAnimation;
+	public AnimationClip evadeBackAnimation;
 	public AnimationClip evadeRightAnimation;
+	public AnimationClip attack1Animation;
+	public AnimationClip attack12Animation;
+	public AnimationClip attack123Animation;
+	public AnimationClip danceAnimation;
 	
 	private Animation animation;
 	
 	private float evadeLeftAnimationSpeed = 1.0f;
 	private float evadeRightAnimationSpeed = 1.0f;
+	private float evadeBackAnimationSpeed = 1.0f;
 	private float walkMaxAnimationSpeed = 0.5f;
 	private float trotMaxAnimationSpeed = 1.0f;
 	private float runMaxAnimationSpeed = 1.0f;
 	private float landAnimationSpeed = 1.0f;
-	private float attackAnimationSpeed = 1.6f;
+	private float attack1AnimationSpeed = 1.5f;
+	private float attack12AnimationSpeed = 1.5f;
+	private float attack123AnimationSpeed = 1.5f;
 	private float deathAnimationSpeed = 1.0f;
 	private float receiveAttackAnimationSpeed = 1.5f;
 	private float baseAttackDuration = 0.7f;
+	private float danceAnimationSpeed = 1.0f;
 	
 	private Waypoint closestWaypoint;
 	private GameObject runningEnemy;
@@ -47,6 +55,8 @@ public class MainCharacterController : MonoBehaviour
 		ReceivingAttack,
 		EvadingLeft,
 		EvadingRight,
+		EvadingBack,
+		Dancing
 	}
 
 	private MainCharacter mainCharacter;
@@ -115,7 +125,7 @@ public class MainCharacterController : MonoBehaviour
 	void Awake()
 	{
 		sounds = GetComponent<MedrashSounds>();
-		runningEnemy = GameObject.FindGameObjectWithTag("Fugitive");
+		//runningEnemy = GameObject.FindGameObjectWithTag("Fugitive");
 		pauseMenu = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseMenu>();
 		moveDirection = transform.TransformDirection(Vector3.forward);
 		mainCharacter = GetComponent<MainCharacter>();
@@ -138,10 +148,20 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No run animation found. Turning off animations.");
 		}
-		if (!attackAnimation)
+		if (!attack1Animation)
 		{
 			animation = null;
 			Debug.Log("No attack animation found. Turning off animations.");
+		}
+		if (!attack12Animation)
+		{
+			animation = null;
+			Debug.Log("No attack12 animation found. Turning off animations.");
+		}
+		if (!attack123Animation)
+		{
+			animation = null;
+			Debug.Log("No attack123 animation found. Turning off animations.");
 		}
 		if (!deathAnimation)
 		{
@@ -156,15 +176,25 @@ public class MainCharacterController : MonoBehaviour
 		if (!evadeLeftAnimation)
 		{
 			animation = null;
-			Debug.Log("No evade to left animation found. Turning off animations.");
+			Debug.Log("No evade left animation found. Turning off animations.");
 		}
 		if (!evadeRightAnimation)
 		{
 			animation = null;
-			Debug.Log("No evade to right animation found. Turning off animations.");
+			Debug.Log("No evade right animation found. Turning off animations.");
+		}
+		if (!evadeBackAnimation)
+		{
+			animation = null;
+			Debug.Log("No evade back animation found. Turning off animations");
+		}
+		if (!danceAnimation)
+		{
+			animation = null;
+			Debug.Log("No dance animation found. Turning off animations");
 		}
 		
-		attackDuration = baseAttackDuration/attackAnimationSpeed;
+		attackDuration = baseAttackDuration/attack1AnimationSpeed;
 		delayAttackValue = attackDuration;
 		attackCooldownValue = delayAttackValue*1.5f;
 		runSpeed = runSpeed*runMaxAnimationSpeed;
@@ -172,7 +202,7 @@ public class MainCharacterController : MonoBehaviour
 		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
 		
 		StartCoroutine(FixPositionRelativeToEntities());
-		
+		StartCoroutine(ComboVerification());
 	}
 	
 	void Start () {
@@ -372,15 +402,49 @@ public class MainCharacterController : MonoBehaviour
 		canMove = true;
 	}
 	
-	void DidAttack()
+	void DidAttack1()
 	{
 		Input.ResetInputAxes();
 		characterState = CharacterState.Attacking;
-		animation[attackAnimation.name].wrapMode = WrapMode.Once;
-		animation[attackAnimation.name].speed = attackAnimationSpeed;
-		animation[attackAnimation.name].layer = 1;
-		animation.CrossFade(attackAnimation.name);
+		animation[attack1Animation.name].wrapMode = WrapMode.Once;
+		animation[attack1Animation.name].speed = attack1AnimationSpeed;
+		animation[attack1Animation.name].layer = 1;
+		animation.CrossFade(attack1Animation.name);
 		StartCoroutine(AttackCooldown());
+	}
+	
+	void DidAttack12()
+	{
+		Input.ResetInputAxes();
+		characterState = CharacterState.Attacking;
+		animation[attack12Animation.name].wrapMode = WrapMode.Once;
+		animation[attack12Animation.name].speed = attack12AnimationSpeed;
+		animation[attack12Animation.name].layer = 1;
+		animation.CrossFade(attack12Animation.name);
+		StartCoroutine(AttackCooldown());
+	}
+	
+	void DidAttack123()
+	{
+		Input.ResetInputAxes();
+		characterState = CharacterState.Attacking;
+		animation[attack123Animation.name].wrapMode = WrapMode.Once;
+		animation[attack123Animation.name].speed = attack123AnimationSpeed;
+		animation[attack123Animation.name].layer = 1;
+		animation.CrossFade(attack123Animation.name);
+		StartCoroutine(AttackCooldown());
+	}
+	
+	void DidDance()
+	{
+		Input.ResetInputAxes();
+		canMove = false;
+		characterState = CharacterState.Dancing;
+		animation[danceAnimation.name].wrapMode = WrapMode.Once;
+		animation[danceAnimation.name].speed = danceAnimationSpeed;
+		animation[danceAnimation.name].layer = 1;
+		animation.CrossFade(danceAnimation.name);
+		canMove = true;
 	}
 	
 	public void ReceiveAttack()
@@ -439,6 +503,17 @@ public class MainCharacterController : MonoBehaviour
 		StartCoroutine(Evade());
 	}
 	
+	public void DidEvadeBack()
+	{
+		Input.ResetInputAxes();
+		characterState = CharacterState.EvadingBack;
+		animation[evadeBackAnimation.name].wrapMode = WrapMode.Once;
+		animation[evadeBackAnimation.name].speed = evadeBackAnimationSpeed;
+		animation[evadeBackAnimation.name].layer = 1;
+		animation.CrossFade(evadeBackAnimation.name);
+		StartCoroutine(Evade());
+	}
+	
 	IEnumerator Evade()
 	{
 		int i = 0;
@@ -466,7 +541,37 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 	
+	IEnumerator ComboVerification()
+	{
+		while(true)
+		{
+			if (n == 1) 
+			{
+				n = 0;
+				TryToAttack();
+				DidAttack1();
+			}
+			else if(n == 2) 
+			{
+				n = 0;
+				TryToAttack();
+				DidAttack12();
+			}
+			else if(n == 3) 
+			{
+				n = 0;
+				TryToAttack();
+				DidAttack123();
+			}
+			yield return new WaitForSeconds(0.5f);
+		}
+		
+	}
+	
 	private bool fire2ButtonDown = false;
+	private bool leftCtrlKeyDown = false;
+	
+	int n = 0;
 	
 	void Update()
 	{	
@@ -475,20 +580,23 @@ public class MainCharacterController : MonoBehaviour
 			Input.ResetInputAxes();
 		}
 		
+		
 		if (mainCharacter.IsAlive() && !pauseMenu.IsPaused())
 		{
 			if (Input.GetButtonDown("Fire2")) fire2ButtonDown = true;
 			if (Input.GetButtonUp("Fire2")) fire2ButtonDown = false;
+			if (Input.GetKeyDown(KeyCode.LeftControl)) leftCtrlKeyDown = true;
+			if (Input.GetKeyUp(KeyCode.LeftControl)) leftCtrlKeyDown = false;
 			
 			if (Input.GetButtonDown("Fire1"))
 			{
 				if (canAttack)
 				{
-					TryToAttack();
-					DidAttack();
+					if (n >= 0 && n < 3)
+					n++;
 				}
 			}
-						
+								
 			if (Input.GetKeyDown(KeyCode.LeftArrow) && fire2ButtonDown) 
 			{
 				DidEvadeLeft();
@@ -499,6 +607,18 @@ public class MainCharacterController : MonoBehaviour
 			{
 				DidEvadeRight();
 				fire2ButtonDown = false;	
+			}
+			
+			if (Input.GetKeyDown(KeyCode.DownArrow) && fire2ButtonDown)
+			{
+				DidEvadeBack();
+				fire2ButtonDown = false;
+			}
+			
+			if (Input.GetKeyDown(KeyCode.Space) && leftCtrlKeyDown)
+			{
+				DidDance();
+				leftCtrlKeyDown = false;
 			}
 
 		}
@@ -704,13 +824,13 @@ public class MainCharacterController : MonoBehaviour
 		closestWaypoint = wp;	
 	}
 	
-	public float GetDistanceFromSora () {
+	/*public float GetDistanceFromSora () {
 		if (closestWaypoint) {
 			if (!closestWaypoint.runningEnemy)
 				return (runningEnemy.transform.position - transform.position).magnitude;
 			return closestWaypoint.GetDistance() + (closestWaypoint.transform.position - transform.position).magnitude;
 		} else
 			return (runningEnemy.transform.position - transform.position).magnitude;
-	}
+	}*/
 			
 }

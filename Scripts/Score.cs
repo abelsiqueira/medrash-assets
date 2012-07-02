@@ -40,7 +40,7 @@ public class Score : MonoBehaviour {
 		GUI.TextField(new Rect(left, top, 140, 60),"" + scoreValue, myStyle);
 		
 		//Remover depois por favor
-		float dist = GetComponent<MainCharacterController>().GetDistanceFromSora();
-		GUI.TextField(new Rect(Screen.width/2, 10, 100, 100),"" + dist);
+		//float dist = GetComponent<MainCharacterController>().GetDistanceFromSora();
+//		GUI.TextField(new Rect(Screen.width/2, 10, 100, 100),"" + dist);
 	}
 }
