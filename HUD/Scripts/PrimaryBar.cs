@@ -13,6 +13,7 @@ public class PrimaryBar : MonoBehaviour {
     public int maxHealth = 100;
 	
 	public Texture2D heart;
+	public Texture2D effect;
 	
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,7 @@ public class PrimaryBar : MonoBehaviour {
         foreground = new Texture2D(1, 1, TextureFormat.RGB24, false);
 			
         background.SetPixel(0, 0, Color.green);
-        foreground.SetPixel(0, 0, Color.white);
+        foreground.SetPixel(0, 0, Color.black);
  		
 		health = 0;
 		
@@ -73,5 +74,7 @@ public class PrimaryBar : MonoBehaviour {
         }
         GUI.EndGroup();
 		GUI.DrawTexture(new Rect(10,17, 25, 25), heart);
+		
+		GUI.DrawTexture(new Rect(10, 53, box.width, box.height), effect);
 	}
 }
