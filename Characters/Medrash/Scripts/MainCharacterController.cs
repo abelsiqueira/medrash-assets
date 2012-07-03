@@ -13,7 +13,8 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip idleAnimation;
 	public AnimationClip walkAnimation;
 	public AnimationClip runAnimation;
-	public AnimationClip deathAnimation;
+	public AnimationClip death1Animation;
+	public AnimationClip death2Animation;
 	public AnimationClip receiveAttackAnimation;
 	public AnimationClip evadeLeftAnimation;
 	public AnimationClip evadeBackAnimation;
@@ -37,7 +38,8 @@ public class MainCharacterController : MonoBehaviour
 	private float attack1AnimationSpeed = 1.5f;
 	private float attack12AnimationSpeed = 1.5f;
 	private float attack123AnimationSpeed = 1.5f;
-	private float deathAnimationSpeed = 1.0f;
+	private float death1AnimationSpeed = 1.0f;
+	private float death2AnimationSpeed = 1.0f;
 	private float receiveAttackAnimationSpeed = 1.5f;
 	private float baseAttackDuration = 0.7f;
 	private float danceAnimationSpeed = 1.0f;
@@ -162,10 +164,15 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No attack123 animation found. Turning off animations.");
 		}
-		if (!deathAnimation)
+		if (!death1Animation)
 		{
 			animation = null;
-			Debug.Log("No death animation found. Turning off animations.");
+			Debug.Log("No death 1 animation found. Turning off animations.");
+		}
+		if (!death2Animation)
+		{
+			animation = null;
+			Debug.Log("No death 2 animation found. Turning off animations.");
 		}
 		if (!receiveAttackAnimation)
 		{
@@ -243,7 +250,7 @@ public class MainCharacterController : MonoBehaviour
 	{
 		Transform cameraTransform = Camera.main.transform;
 		bool grounded = IsGrounded();
-	
+		
 		Vector3 forward= cameraTransform.TransformDirection(Vector3.forward);
 		forward.y = 0;
 		forward = forward.normalized;
@@ -466,10 +473,27 @@ public class MainCharacterController : MonoBehaviour
 		canMove = false;
 		Input.ResetInputAxes();
 		characterState = CharacterState.Dead;
-		animation[deathAnimation.name].wrapMode = WrapMode.ClampForever;
-		animation[deathAnimation.name].speed = deathAnimationSpeed;
-		animation[deathAnimation.name].layer = 1;
-		animation.Play(deathAnimation.name);
+		PlayRandomDeathAnimation();
+	}
+	
+	private void PlayRandomDeathAnimation()
+	{
+		System.Random random = new System.Random();
+		int i = random.Next(0, 2);
+		if (i == 0)
+		{
+			animation[death1Animation.name].wrapMode = WrapMode.ClampForever;
+			animation[death1Animation.name].speed = death1AnimationSpeed;
+			animation[death1Animation.name].layer = 1;
+			animation.Play(death1Animation.name);
+		}
+		else
+		{
+			animation[death2Animation.name].wrapMode = WrapMode.ClampForever;
+			animation[death2Animation.name].speed = death2AnimationSpeed;
+			animation[death2Animation.name].layer = 1;
+			animation.Play(death2Animation.name);
+		}
 	}
 	
 	public void PutAlive()

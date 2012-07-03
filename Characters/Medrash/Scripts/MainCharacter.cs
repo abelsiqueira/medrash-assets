@@ -214,10 +214,13 @@ public class MainCharacter : MonoBehaviour
 		}
 		else
 		{
-			lifeStatus = 0;
-			primaryBar.setHealth(100);
-			characterController.ForceDeath();
-			//Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
+			if (lifeStatus != 0)
+			{
+				lifeStatus = 0;
+				primaryBar.setHealth(100);
+				characterController.ForceDeath();
+				//Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
+			}			
 		}
 	}
 	
