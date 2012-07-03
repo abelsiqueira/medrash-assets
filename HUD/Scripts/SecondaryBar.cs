@@ -7,7 +7,9 @@ public class SecondaryBar : MonoBehaviour {
  
     private Texture2D background;
     private Texture2D foreground;
- 
+ 	
+	public Texture2D effect;
+	
 	private bool hasBar = true;
 	
     public float status;
@@ -42,7 +44,7 @@ public class SecondaryBar : MonoBehaviour {
 	        foreground = new Texture2D(1, 1, TextureFormat.RGB24, false);
  
         	background.SetPixel(0, 0, Color.green);
-        	foreground.SetPixel(0, 0, Color.white);
+        	foreground.SetPixel(0, 0, Color.black);
  		
 			status = 0;
 		
@@ -111,6 +113,8 @@ public class SecondaryBar : MonoBehaviour {
 				
 				GUI.DrawTexture(new Rect(45,17, 25, 25), lightning);
 			}
+			
+			GUI.DrawTexture(new Rect(45, 53, box.width, box.height), effect);
 		}
 	}
 }
