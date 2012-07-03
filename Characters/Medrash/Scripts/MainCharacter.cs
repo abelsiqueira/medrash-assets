@@ -113,7 +113,6 @@ public class MainCharacter : MonoBehaviour
 				if (i != 0)
 				{
 					i = 0;
-				
 				}
 			}
 			if (energyStatus >= 20 && energyStatus < 50)
