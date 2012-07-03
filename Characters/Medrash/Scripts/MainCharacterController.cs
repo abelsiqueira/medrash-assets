@@ -22,9 +22,11 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip attack12Animation;
 	public AnimationClip attack123Animation;
 	public AnimationClip danceAnimation;
+	public AnimationClip fightStanceAnimation;
 	
 	private Animation animation;
 	
+	private float fightStanceAnimationSpeed = 1.0f;
 	private float evadeLeftAnimationSpeed = 1.0f;
 	private float evadeRightAnimationSpeed = 1.0f;
 	private float evadeBackAnimationSpeed = 1.0f;
@@ -192,6 +194,11 @@ public class MainCharacterController : MonoBehaviour
 		{
 			animation = null;
 			Debug.Log("No dance animation found. Turning off animations");
+		}
+		if (!fightStanceAnimation)
+		{
+			animation = null;
+			Debug.Log("No fight stance animation found. Turning off animations.");
 		}
 		
 		attackDuration = baseAttackDuration/attack1AnimationSpeed;
@@ -636,7 +643,14 @@ public class MainCharacterController : MonoBehaviour
 		{
 			if(controller.velocity.sqrMagnitude < 0.25f) 
 			{
-				animation.CrossFade(idleAnimation.name);
+				Entity closestEntity = GetClosestEntity();	
+				if (closestEntity)
+				{	
+					Vector3 d = closestEntity.transform.position - transform.position;
+					d.y = 0;
+					if (d.magnitude < 15) animation.CrossFade(fightStanceAnimation.name);
+					else animation.CrossFade(idleAnimation.name);	
+				}
 			}
 			else 
 			{
