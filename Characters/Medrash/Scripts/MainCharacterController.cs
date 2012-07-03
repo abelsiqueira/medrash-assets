@@ -23,16 +23,16 @@ public class MainCharacterController : MonoBehaviour
 	public AnimationClip attack123Animation;
 	public AnimationClip danceAnimation;
 	public AnimationClip fightStanceAnimation;
+	public AnimationClip runFastAnimation;
 	
 	private Animation animation;
 	
-	private float fightStanceAnimationSpeed = 1.0f;
 	private float evadeLeftAnimationSpeed = 1.0f;
 	private float evadeRightAnimationSpeed = 1.0f;
 	private float evadeBackAnimationSpeed = 1.0f;
-	private float walkMaxAnimationSpeed = 0.5f;
-	private float trotMaxAnimationSpeed = 1.0f;
-	private float runMaxAnimationSpeed = 1.0f;
+	private float walkAnimationSpeed = 1.0f;
+	private float runAnimationSpeed = 1.0f;
+	private float runFastAnimationSpeed = 1.0f;
 	private float landAnimationSpeed = 1.0f;
 	private float attack1AnimationSpeed = 1.5f;
 	private float attack12AnimationSpeed = 1.5f;
@@ -49,7 +49,6 @@ public class MainCharacterController : MonoBehaviour
 	{
 		Idle,
 		Walking,
-		Trotting,
 		Running,
 		Attacking,
 		Interacting,
@@ -72,14 +71,12 @@ public class MainCharacterController : MonoBehaviour
 	// The following variables were made private to tweak easier and
 	// share the tweaking by git. These values were copied from the
 	// inspector at date May 23rd, 23h13.
-	private float walkSpeed = 2.0f;
-	private float trotSpeed = 3.0f;
+	private float walkSpeed = 4.0f;
 	private float runSpeed = 7.0f;
 	private float inAirControlAcceleration = 10.0f;
 	private float gravity = 20.0f;
 	private float speedSmoothing = 10.0f;
 	private float rotateSpeed = 500.0f;
-	private float trotAfterSeconds = 3.0f;
 
 	private float runVolume = 0.6f;
 	private float walkVolume = 0.3f;
@@ -200,13 +197,15 @@ public class MainCharacterController : MonoBehaviour
 			animation = null;
 			Debug.Log("No fight stance animation found. Turning off animations.");
 		}
+		if (!runFastAnimation)
+		{
+			animation = null;
+			Debug.Log("No run fast animation found. Turning off animations.");
+		}
 		
 		attackDuration = baseAttackDuration/attack1AnimationSpeed;
 		delayAttackValue = attackDuration;
-		attackCooldownValue = delayAttackValue*1.5f;
-		runSpeed = runSpeed*runMaxAnimationSpeed;
-		trotSpeed = trotSpeed*trotMaxAnimationSpeed;
-		walkSpeed = walkSpeed*walkMaxAnimationSpeed;
+		attackCooldownValue = delayAttackValue*1.5f;	
 		
 		StartCoroutine(FixPositionRelativeToEntities());
 		StartCoroutine(ComboVerification());
@@ -313,11 +312,6 @@ public class MainCharacterController : MonoBehaviour
 				targetSpeed *= runSpeed;
 				characterState = CharacterState.Running;
 			}
-			else if (Time.time - trotAfterSeconds > walkTimeStart)
-			{
-				targetSpeed *= trotSpeed;
-				characterState = CharacterState.Trotting;
-			}	
 			else
 			{
 				targetSpeed *= walkSpeed;
@@ -590,6 +584,12 @@ public class MainCharacterController : MonoBehaviour
 		
 		if (mainCharacter.IsAlive() && !pauseMenu.IsPaused())
 		{
+			if (Input.GetKeyDown(KeyCode.M))
+			{
+				mainCharacter.IncreaseLifeStatus(100.0f);
+				mainCharacter.IncreaseEnergyStatus(100.0f);
+			}
+			
 			if (Input.GetButtonDown("Fire2")) fire2ButtonDown = true;
 			if (Input.GetButtonUp("Fire2")) fire2ButtonDown = false;
 			if (Input.GetKeyDown(KeyCode.LeftControl)) leftCtrlKeyDown = true;
@@ -656,21 +656,25 @@ public class MainCharacterController : MonoBehaviour
 			{
 				if(characterState == CharacterState.Running)
 				{
-					animation[runAnimation.name].wrapMode = WrapMode.Loop;
-					//animation[runAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, runMaxAnimationSpeed);
-					animation[runAnimation.name].speed = runSpeed/7.0f;
-					animation.CrossFade(runAnimation.name);	
+					float energyStatus = mainCharacter.GetEnergyStatus();
+					if (energyStatus <= 100.0f && energyStatus > 50.0f)
+					{	
+						animation[runFastAnimation.name].wrapMode = WrapMode.Loop;
+						animation[runFastAnimation.name].speed = runFastAnimationSpeed;
+						animation.CrossFade(runFastAnimation.name);	
+					}
+					else if (energyStatus <= 50.0f && energyStatus > 20.0f)
+					{
+						animation[runAnimation.name].wrapMode = WrapMode.Loop;
+						animation[runAnimation.name].speed = runAnimationSpeed;
+						animation.CrossFade(runAnimation.name);	
+					}
 				}
-				else if(characterState == CharacterState.Trotting) 
+				else 
 				{
 					animation[walkAnimation.name].wrapMode = WrapMode.Loop;
-					animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, trotMaxAnimationSpeed);
-					animation.CrossFade(walkAnimation.name);	
-				}
-				else if(characterState == CharacterState.Walking) 
-				{
-					animation[walkAnimation.name].wrapMode = WrapMode.Loop;
-					animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, walkMaxAnimationSpeed);
+					//animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, walkMaxAnimationSpeed);
+					animation[walkAnimation.name].speed = walkAnimationSpeed;
 					animation.CrossFade(walkAnimation.name);	
 				}
 			}
