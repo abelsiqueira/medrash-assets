@@ -18,27 +18,32 @@ public class Alligator : Entity {
 	}
 	
 	void Start () {
+		
+		
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
-		StartCoroutine(fsm.UpdateFSM());
-		StartCoroutine(UpdateGeneric());
 		
 		startPositionX = transform.position.x;
 		startPositionZ = transform.position.z;
 		returnPlace.x = startPositionX;
 		returnPlace.z = startPositionZ;
 		
-		life = 3;
+		life = 10;
+		maxLife = life;
 		damage = 20;
 		baseSpeed = 2.0f;
 		speed = baseSpeed;
-		attackRadius = 1.0f;
-		closeRadius = 3.0f;
-		farRadius = 6.0f;
+		attackRadius = 3.0f;
+		closeRadius = 6.0f;
+		farRadius = 10.0f;
 		canReceiveDamage = true;
 		
 		EntityStart();
+		
 		scoreValue = 100;
+		
+		StartCoroutine(fsm.UpdateFSM());
+		StartCoroutine(UpdateGeneric());
 	}
 	
 	public IEnumerator UpdateGeneric() {
@@ -129,7 +134,7 @@ public class Alligator : Entity {
 		float distToBase = Mathf.Sqrt(x*x + z*z);
 		float dist = DistanceToMainCharacter();
 		
-		if (distToBase < 1.0f) {
+		if (distToBase < attackRadius) {
 			fsm.ChangeState(Idle.Instance());
 		} else if (dist < closeRadius) {
 			fsm.ChangeState(Pursue.Instance());
