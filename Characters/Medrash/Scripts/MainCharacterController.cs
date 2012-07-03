@@ -12,6 +12,7 @@ public class MainCharacterController : MonoBehaviour
 
 	public AnimationClip idleAnimation;
 	public AnimationClip walkAnimation;
+	public AnimationClip walkSlowAnimation;
 	public AnimationClip runAnimation;
 	public AnimationClip death1Animation;
 	public AnimationClip death2Animation;
@@ -32,6 +33,7 @@ public class MainCharacterController : MonoBehaviour
 	private float evadeRightAnimationSpeed = 1.0f;
 	private float evadeBackAnimationSpeed = 1.0f;
 	private float walkAnimationSpeed = 1.0f;
+	private float walkSlowAnimationSpeed = 1.0f;
 	private float runAnimationSpeed = 1.0f;
 	private float runFastAnimationSpeed = 1.0f;
 	private float landAnimationSpeed = 1.0f;
@@ -101,8 +103,8 @@ public class MainCharacterController : MonoBehaviour
 
 	private CollisionFlags collisionFlags; 
 
-	private bool movingBack= false;
-	private bool isMoving= false;
+	private bool movingBack = false;
+	private bool isMoving = false;
 	private float walkTimeStart = 0.0f;
 	private Vector3 inAirVelocity= Vector3.zero;
 
@@ -143,6 +145,11 @@ public class MainCharacterController : MonoBehaviour
 		{
 			animation = null;
 			Debug.Log("No walk animation found. Turning off animations.");
+		}
+		if(!walkSlowAnimation) 
+		{
+			animation = null;
+			Debug.Log("No walk slow animation found. Turning off animations.");
 		}
 		if(!runAnimation) 
 		{
@@ -607,13 +614,7 @@ public class MainCharacterController : MonoBehaviour
 		
 		
 		if (mainCharacter.IsAlive() && !pauseMenu.IsPaused())
-		{
-			if (Input.GetKeyDown(KeyCode.M))
-			{
-				mainCharacter.IncreaseLifeStatus(100.0f);
-				mainCharacter.IncreaseEnergyStatus(100.0f);
-			}
-			
+		{	
 			if (Input.GetButtonDown("Fire2")) fire2ButtonDown = true;
 			if (Input.GetButtonUp("Fire2")) fire2ButtonDown = false;
 			if (Input.GetKeyDown(KeyCode.LeftControl)) leftCtrlKeyDown = true;
@@ -678,28 +679,36 @@ public class MainCharacterController : MonoBehaviour
 			}
 			else 
 			{
-				if(characterState == CharacterState.Running)
+				if (isOnWater)
 				{
-					float energyStatus = mainCharacter.GetEnergyStatus();
-					if (energyStatus <= 100.0f && energyStatus > 50.0f)
-					{	
-						animation[runFastAnimation.name].wrapMode = WrapMode.Loop;
-						animation[runFastAnimation.name].speed = runFastAnimationSpeed;
-						animation.CrossFade(runFastAnimation.name);	
-					}
-					else if (energyStatus <= 50.0f && energyStatus > 20.0f)
-					{
-						animation[runAnimation.name].wrapMode = WrapMode.Loop;
-						animation[runAnimation.name].speed = runAnimationSpeed;
-						animation.CrossFade(runAnimation.name);	
-					}
+					animation[walkSlowAnimation.name].wrapMode = WrapMode.Loop;
+					animation[walkSlowAnimation.name].speed = walkSlowAnimationSpeed;
+					animation.CrossFade(walkSlowAnimation.name);	
 				}
-				else 
+				else
 				{
-					animation[walkAnimation.name].wrapMode = WrapMode.Loop;
-					//animation[walkAnimation.name].speed = Mathf.Clamp(controller.velocity.magnitude, 0.0f, walkMaxAnimationSpeed);
-					animation[walkAnimation.name].speed = walkAnimationSpeed;
-					animation.CrossFade(walkAnimation.name);	
+					if(characterState == CharacterState.Running)
+					{	
+						float energyStatus = mainCharacter.GetEnergyStatus();
+						if (energyStatus <= 100.0f && energyStatus > 50.0f)
+						{	
+							animation[runFastAnimation.name].wrapMode = WrapMode.Loop;
+							animation[runFastAnimation.name].speed = runFastAnimationSpeed;
+							animation.CrossFade(runFastAnimation.name);	
+						}
+						else if (energyStatus <= 50.0f && energyStatus > 20.0f)
+						{
+							animation[runAnimation.name].wrapMode = WrapMode.Loop;
+							animation[runAnimation.name].speed = runAnimationSpeed;
+							animation.CrossFade(runAnimation.name);	
+						}
+					}
+					else 
+					{
+						animation[walkAnimation.name].wrapMode = WrapMode.Loop;
+						animation[walkAnimation.name].speed = walkAnimationSpeed;
+						animation.CrossFade(walkAnimation.name);	
+					}
 				}
 			}
 		}

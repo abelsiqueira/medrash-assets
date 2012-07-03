@@ -20,7 +20,7 @@ public class MainCharacter : MonoBehaviour
 	private float positionX;
 	private float positionZ;
 	
-	private float energyLossValue = 0.5f;
+	private float energyLossValue = 0.1f;
 	private float lifeLossValue = 0.1f;
 	private float temperatureLossValue = 0.2f;
 	private float torchTimerValue = 10.0f;
@@ -113,7 +113,6 @@ public class MainCharacter : MonoBehaviour
 				if (i != 0)
 				{
 					i = 0;
-				
 				}
 			}
 			if (energyStatus >= 20 && energyStatus < 50)
