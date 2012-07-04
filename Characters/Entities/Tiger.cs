@@ -34,15 +34,15 @@ public class Tiger : Entity {
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateTiger());
 		
-		life = 9;
+		life = 2;
 		criticalValue = life/3.0f;
 		damage = 15;
-		baseSpeed = 23.0f;
+		baseSpeed = 18.0f;
 		animation[runAnimation.name].speed = baseSpeed*0.08f;
 		speed = baseSpeed;
-		attackRadius = 6.0f;
-		closeRadius = 30.0f;
-		farRadius = 45.0f;
+		attackRadius = 4.0f;
+		closeRadius = 15.0f;
+		farRadius = 30.0f;
 		float atkSpeed = 2.0f;
 		animation[attackAnimation.name].speed = 2.0f;
 		attackingTime = (int) (attackAnimation.length*10.0f/atkSpeed);

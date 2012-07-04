@@ -83,7 +83,7 @@ public class MainCharacter : MonoBehaviour
 			foreach (Entity e in listOfEnemies) {
 				if (!e)
 					continue;
-				if (e.DistanceToMainCharacter() < 100.0f)
+				if (e.DistanceToMainCharacter() < 40.0f)
 					e.enabled = true;
 			}
 			yield return new WaitForSeconds(0.1f);

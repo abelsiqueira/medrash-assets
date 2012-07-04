@@ -128,7 +128,7 @@ public class MainCharacterController : MonoBehaviour
 	void Awake()
 	{
 		sounds = GetComponent<MedrashSounds>();
-		//runningEnemy = GameObject.FindGameObjectWithTag("Fugitive");
+		runningEnemy = GameObject.FindGameObjectWithTag("Fugitive");
 		pauseMenu = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseMenu>();
 		moveDirection = transform.TransformDirection(Vector3.forward);
 		mainCharacter = GetComponent<MainCharacter>();
@@ -875,13 +875,13 @@ public class MainCharacterController : MonoBehaviour
 		closestWaypoint = wp;	
 	}
 	
-	/*public float GetDistanceFromSora () {
+	public float GetDistanceFromSora () {
 		if (closestWaypoint) {
 			if (!closestWaypoint.runningEnemy)
 				return (runningEnemy.transform.position - transform.position).magnitude;
 			return closestWaypoint.GetDistance() + (closestWaypoint.transform.position - transform.position).magnitude;
 		} else
 			return (runningEnemy.transform.position - transform.position).magnitude;
-	}*/
+	}
 			
 }

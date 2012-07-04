@@ -6,8 +6,8 @@ using System.Collections;
 [RequireComponent (typeof (Animation))]
 public class Fugitive : MonoBehaviour {
 	
-	public List<Waypoint> waypoints;
-	private float speed = 7.0f;
+	public Waypoint waypoint;
+	private float speed = 5.0f;
 	private CharacterController myController;
 	
 	// Use this for initialization
@@ -20,13 +20,13 @@ public class Fugitive : MonoBehaviour {
 	void Update () {
 		animation.Play();
 		
-		if (waypoints.Count == 0)
+		if (!waypoint)
 			return;
 		
-		Vector3 direction = waypoints[0].transform.position - transform.position;
+		Vector3 direction = waypoint.transform.position - transform.position;
 		direction.y = 0;
 		if (direction.magnitude < 2.0f) {
-			waypoints.RemoveAt(0);
+			waypoint = waypoint.next;
 			return;
 		}
 		direction = direction.normalized;
