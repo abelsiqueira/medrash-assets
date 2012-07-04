@@ -2,14 +2,14 @@ using UnityEngine;
 using System.Collections;
 
 public class MainMenu : MonoBehaviour {
-	
+
 	private int numItem = 2;
 	private enum item{
 		continuar,
 		sair
 	};
-	private string[] itemString = {"novo jogo", "sair"};
-	
+	private string[] itemString = {"Novo jogo", "Sair"};
+
 	private item selItem;
 	public Texture background;
 	public Font font;
@@ -17,23 +17,23 @@ public class MainMenu : MonoBehaviour {
 	public Color UnSelected;
 	public int optionSize;
 	private GUIStyle Style;
-	
+
 	void Start()
 	{
 		Style = new GUIStyle();
 		Style.font = font;
 		Style.alignment = TextAnchor.MiddleCenter;
-		if (Selected.a == 0.0) Selected = new Color(0.388f, 0.078f, 0.063f, 1.000f);
+		if (Selected.a == 0.0) Selected = new Color(255f, 241f, 0.0f, 1.000f);
 		if (UnSelected.a == 0.0) UnSelected = new Color(0.459f, 0.365f, 0.255f, 1.000f);
 		selItem = item.continuar;
 		Screen.showCursor = false;
 		if (optionSize <= 0)
 			optionSize = Screen.height/(numItem+5);
 		Style.fontSize = (int)(optionSize*0.7);
-		
-			
+
+
 	}
-	
+
 	void OnGUI()
 	{
 
@@ -53,27 +53,27 @@ public class MainMenu : MonoBehaviour {
 			double factor = ((double)backHeight)/((double)background.height);
 			backWidth = (int)(factor*(double)background.height);
 		}
-		
-		GUI.Label(new Rect(0, 0, backWidth, backHeight), background);
-		int posIni = Screen.height/2 - numItem*optionSize/2 + (int)(backHeight*0.05); 
-		
 
-		
+		//GUI.Label(new Rect(0, 0, backWidth, backHeight), background);
+		int posIni = Screen.height/2 - numItem*optionSize/2 + (int)(backHeight*0.05); 
+
+
+
 		for (int i = 0; i < numItem; i++)
 		{
 			if ((int)selItem == i)
 				Style.normal.textColor = Selected;
 			else 
 				Style.normal.textColor = UnSelected;
-			GUI.Label(new Rect(0, posIni + optionSize*i, backWidth, optionSize), itemString[i], Style);
+			GUI.Label(new Rect(Screen.width / 2 - 70, ((Screen.height / 2)-90) + optionSize*i, 500, 200), itemString[i], Style);
 		}
 
-		
-		
-	
+
+
+
 	}
-	
-	
+
+
 	void LateUpdate()
 	{
 		if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -92,7 +92,7 @@ public class MainMenu : MonoBehaviour {
 			switch (selItem)
 			{
 				case item.continuar:
-					Application.LoadLevel("Stage 1");
+					Application.LoadLevel(1);
 					break;
 				case item.sair:
 					Application.Quit();
