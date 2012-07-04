@@ -37,12 +37,12 @@ public class Tiger : Entity {
 		life = 2;
 		criticalValue = life/3.0f;
 		damage = 15;
-		baseSpeed = 18.0f;
+		baseSpeed = 15.0f;
 		animation[runAnimation.name].speed = baseSpeed*0.08f;
 		speed = baseSpeed;
 		attackRadius = 4.0f;
-		closeRadius = 15.0f;
-		farRadius = 30.0f;
+		closeRadius = 5.0f;
+		farRadius = 10.0f;
 		float atkSpeed = 2.0f;
 		animation[attackAnimation.name].speed = 2.0f;
 		attackingTime = (int) (attackAnimation.length*10.0f/atkSpeed);
