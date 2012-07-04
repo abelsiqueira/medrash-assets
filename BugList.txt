@@ -1,16 +1,9 @@
 ﻿TODO LIST
 79 - Som da cachoeira deve estar somente nos arredores dela
 81 - Movimentacao do Medrash na agua com particulas
-82 - IA do jacare
 83 - IA do Balazar
 84 - Pedra e Tora (Thiago)
 85 - A rota dos inimigos (Thiago e Tiago)
-86 - Colocar paredes invisivel no cenario
-87 - Batalha do Tigre
- 87.1- Fechar as passagens ao comecar
- 87.2- Abrir as passagens ao acabar
- 87.3- Um ou dois tigres?
-90 - Colocar um combo
 95 - Colocar todos os sons
 96 - Ajustar tamanho do Jacare
 97 - Ajustar velocidade do Jacare
@@ -18,15 +11,12 @@
 
 Unsolved: 
 37 - Melhorar tigre (Harlei)
-39 - Jacaré (Thiago)
 55 - Altura da camera (somente) na batalha final.
 60 - Background do menu principal
 61 - Ensinar o usuário a jogar
 63 - Som dos inimigos
 66 - Urso subindo no medrash
 67 - Medrash e urso atacam ao mesmo tempo
-69 - Randomizar o tempo de parar do urso
-70 - Spawn do bacon no centro do character controler
 71 - Jogo trava depois de certo tempo aberto
 72 - Lixo de audio no inicio da fase
 74 - Mudar a fonte do checkpoint
@@ -80,6 +70,7 @@ Solved 33- Ocorrencia de ponteiro nulo para o urso algumas vezes após sua morte
 Solved 34- A beronha do Medrash considerava somente o tigre como entidade mais próxima
 Solved 35- Arrumar a morte e respectiva animação
 Solved 36- Receber dano (Tiago)
+Solved 39 - Jacaré (Thiago)
 Solved 38- Urso (Abel)
 Solved 40- Trocar barreira de jogo (fazer por distância)
 Solved 41- Colocar sons novos (Thiago)
@@ -104,13 +95,22 @@ Solved 62 - Eliminar o "mountain walk" onde o medrash sai escalando montanhas me
 Solved 64 - Mudar o som do medrash na agua
 Solved 65 - Colocar todos os Input.Get em um só lugar
 Solved 68 - Rodar o triangulo pelo centro
+Solved 69 - Randomizar o tempo de parar do urso
+Solved 70 - Spawn do bacon no centro do character controler (Now it is a turkey leg, and it looks good where it is)
 Solved 73 - Pontuação
 Solved 75 - Dano de energia faz aparecer a animação de dano
 Solved 77 - IA do lobo (Abel)
 Solved 78 - IA do inimigo humano generico (Abel)
 Solved 80 - Na agua Medrash nao pode correr, somente andar
+Solved 82 - IA do jacare
+Solved 86 - Colocar paredes invisivel no cenario
+Solved 87 - Batalha do Tigre
+ Solved 87.1- Fechar as passagens ao comecar
+ Solved 87.2- Abrir as passagens ao acabar
+ Solved 87.3- Um ou dois tigres? (Um)
 Solved 88 - Mudar a posicao do Checkpoint (canto inferior direito)
 Solved 89 - Tirar ataque especial (ou mudar pra outra tecla)
+Solved 90 - Colocar um combo
 Solved 91 - Mudar ataque de A+up de volta para apenas A
 Solved 91 - Sangue
 Solved 92 - Ajustar tamanhos dos inimigos (jacare em outro topico)
