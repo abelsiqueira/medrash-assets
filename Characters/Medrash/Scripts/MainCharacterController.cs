@@ -551,7 +551,22 @@ public class MainCharacterController : MonoBehaviour
 		animation[receiveAttackAnimation.name].layer = 1;
 		animation.Play(receiveAttackAnimation.name);
 		sounds.PlayReceiveDamageAudio(1.0f);
-		canMove = true;
+		StartCoroutine(UnlockMovement(receiveAttackAnimationSpeed));
+	}
+	
+	IEnumerator UnlockMovement(float time)
+	{
+		int i = 0;
+		while (true)
+		{
+			if (i != 0)
+			{
+				canMove = true;
+				break;
+			}
+			else i++;
+			yield return new WaitForSeconds(time);
+		}
 	}
 	
 	public void ForceDeath()

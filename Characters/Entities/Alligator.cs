@@ -50,7 +50,6 @@ public class Alligator : Entity {
 	
 	public IEnumerator UpdateGeneric() {
 		while (true) {
-			Debug.Log(fsm.GetCurrentState());
 			switch(fsm.GetCurrentState()) {
 			case State.states.enIdle:
 				IdleVerifications();
