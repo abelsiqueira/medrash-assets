@@ -34,7 +34,7 @@ public class Tiger : Entity {
 		StartCoroutine(fsm.UpdateFSM());
 		StartCoroutine(UpdateTiger());
 		
-		life = 2;
+		life = 10;
 		criticalValue = life/3.0f;
 		damage = 15;
 		baseSpeed = 15.0f;
