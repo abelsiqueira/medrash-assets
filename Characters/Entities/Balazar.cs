@@ -2,58 +2,59 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof (CharacterController))]
-public class Alligator : Entity {
+public class Balazar : Entity {
 	
-	private int dyingDuration = 2, dyingTimer = 0;
-	private int damageInstant = 10, damageTimer = 0;
-	private int attackCooldown = 20, attackTimer = 0;
+	private int dyingDuration = 10, dyingTimer = 0;
+	private int damageInstant = 5, damageTimer = 0;
+	private int attackCooldown = 15, attackTimer = 0;
 	private int countdownAttack = 0, attackDuration = 6;
+	private int idlePatrolChangeTime = 30, idlePatrolChangeTimer = 0;
 	private int countdownAttacked = 0, attackedTime = 3;
 	
-	bool needToAttack = false;
+	private float probabilityToDefend = 0.0f;
 	
-	private float startPositionX;
-	private float startPositionZ;
+	bool needToAttack = false;
 	
 	public void Awake () {
 		fsm = new FSM(this);
 	}
 	
 	void Start () {
-		
-		
 		fsm.SetCurrentState (Idle.Instance());
 		controller = GetComponent<CharacterController>();
 		
-		startPositionX = transform.position.x;
-		startPositionZ = transform.position.z;
-		returnPlace.x = startPositionX;
-		returnPlace.z = startPositionZ;
+		float aux = 1.4f;
+		animation[attackAnimation.name].speed = aux;
+		damageInstant = (int) (damageInstant/aux);
+		attackDuration = (int) (attackDuration/aux);
+		attackCooldown = (int) (attackCooldown/aux);
+		animation[attackedAnimation.name].speed = 1.0f;
+		animation[runAnimation.name].speed = 0.7f;
 		
-		life = 10;
-		maxLife = life;
-		damage = 20;
-		baseSpeed = 2.0f;
+		life = 6;
+		damage = 10;
+		baseSpeed = 7.0f;
 		speed = baseSpeed;
-		attackRadius = 5.0f;
-		closeRadius = 10.0f;
-		farRadius = 30.0f;
+		attackRadius = 2.0f;
+		closeRadius = 15.0f;
+		farRadius = 20.0f;
 		canReceiveDamage = true;
 		
 		EntityStart();
-		
-		scoreValue = 100;
+		scoreValue = 50;
 		
 		StartCoroutine(fsm.UpdateFSM());
-		StartCoroutine(UpdateGeneric());
+		StartCoroutine(UpdateBalazar());
 	}
 	
-	public IEnumerator UpdateGeneric() {
+	public IEnumerator UpdateBalazar() {
 		while (true) {
-			Debug.Log(fsm.GetCurrentState());
 			switch(fsm.GetCurrentState()) {
 			case State.states.enIdle:
 				IdleVerifications();
+				break;
+			case State.states.enPatrol:
+				PatrolVerifications();
 				break;
 			case State.states.enPursue:
 				PursueVerifications();
@@ -63,9 +64,6 @@ public class Alligator : Entity {
 				break;
 			case State.states.enDying:
 				DyingVerifications();
-				break;
-			case State.states.enReturnToHome:
-				ReturnToHomeVerifications();
 				break;
 			case State.states.enAttacked:
 				AttackedVerifications();
@@ -80,11 +78,15 @@ public class Alligator : Entity {
 	
 	private void IdleVerifications () {
 		canReceiveDamage = true;
+		idlePatrolChangeTimer++;
 		if (countdownAttack > 0)
 			countdownAttack--;
 		float dist = DistanceToMainCharacter();
 		if (dist < closeRadius) {
 			fsm.ChangeState(Pursue.Instance());
+		} else if (idlePatrolChangeTimer >= idlePatrolChangeTime) {
+			fsm.ChangeState(Patrol.Instance());
+			idlePatrolChangeTimer = 0;
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
@@ -95,12 +97,28 @@ public class Alligator : Entity {
 
 	}
 	
+	private void PatrolVerifications () {
+		canReceiveDamage = true;
+		idlePatrolChangeTimer++;
+		if (countdownAttack > 0)
+			countdownAttack--;
+		float dist = DistanceToMainCharacter();
+		if (dist < closeRadius) {
+			fsm.ChangeState(Pursue.Instance());
+		} else if (idlePatrolChangeTimer >= idlePatrolChangeTime) {
+			fsm.ChangeState(Idle.Instance());
+			idlePatrolChangeTimer = 0;
+		} else if (receivedDamage) {
+			if (life <= 0)
+				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
+			receivedDamage = false;
+		}
+	}
+	
 	private void PursueVerifications () {
 		canReceiveDamage = true;
-		float x = returnPlace.x - transform.position.x;
-		float z = returnPlace.z - transform.position.z;
-		float distToBase = Mathf.Sqrt(x*x + z*z);
-		
 		if (countdownAttack > 0)
 			countdownAttack--;
 		float dist = DistanceToMainCharacter();		
@@ -112,8 +130,28 @@ public class Alligator : Entity {
 			} else {
 				fsm.ChangeState(Wait.Instance());
 			}
-		} else if (dist > farRadius || distToBase > farRadius) {
-			fsm.ChangeState(ReturnToHome.Instance());
+		} else if (dist > farRadius) {
+			fsm.ChangeState(Patrol.Instance());
+		} else if (receivedDamage) {
+			if (life <= 0)
+				fsm.ChangeState(Dying.Instance());
+			else
+				fsm.ChangeState(Attacked.Instance());
+			receivedDamage = false;
+		}
+	}
+	
+	private void WaitVerifications () {
+		canReceiveDamage = true;
+		if (countdownAttack > 0)
+			countdownAttack--;
+		float dist = DistanceToMainCharacter();
+		if (countdownAttack == 0) {
+			needToAttack = true;
+			countdownAttack = attackCooldown;
+			fsm.ChangeState(Attack.Instance());
+		} else if (dist > attackRadius) {
+			fsm.ChangeState(Pursue.Instance());
 		} else if (receivedDamage) {
 			if (life <= 0)
 				fsm.ChangeState(Dying.Instance());
@@ -157,41 +195,7 @@ public class Alligator : Entity {
 			fsm.ChangeState(Idle.Instance());
 		}
 	}
-	
-	private void ReturnToHomeVerifications()
-	{
-		float x = returnPlace.x - transform.position.x;
-		float z = returnPlace.z - transform.position.z;
-		float distToBase = Mathf.Sqrt(x*x + z*z);
-		float dist = DistanceToMainCharacter();
 		
-		if (distToBase < attackRadius) {
-			fsm.ChangeState(Idle.Instance());
-		} else if (dist < closeRadius) {
-			fsm.ChangeState(Pursue.Instance());
-		}
-	}
-	
-	private void WaitVerifications () {
-		canReceiveDamage = true;
-		if (countdownAttack > 0)
-			countdownAttack--;
-		float dist = DistanceToMainCharacter();
-		if (countdownAttack < 0) {
-			needToAttack = true;
-			countdownAttack = attackCooldown;
-			fsm.ChangeState(Attack.Instance());
-		} else if (dist > attackRadius) {
-			fsm.ChangeState(Pursue.Instance());
-		} else if (receivedDamage) {
-			if (life <= 0)
-				fsm.ChangeState(Dying.Instance());
-			else
-				fsm.ChangeState(Attacked.Instance());
-			receivedDamage = false;
-		}
-	}
-	
 	private void AttackedVerifications () {
 		countdownAttacked++;
 		if (countdownAttacked > attackedTime) {

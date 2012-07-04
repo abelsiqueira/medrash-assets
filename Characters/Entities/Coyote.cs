@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof (CharacterController))]
-public class Wolf : Entity {
+public class Coyote : Entity {
 	
 	private int dyingDuration = 10, dyingTimer = 0;
 	private int damageInstant = 7, damageTimer = 0;
@@ -42,10 +42,10 @@ public class Wolf : Entity {
 		scoreValue = 50;
 		
 		StartCoroutine(fsm.UpdateFSM());
-		StartCoroutine(UpdateWolf());
+		StartCoroutine(UpdateCoyote());
 	}
 	
-	public IEnumerator UpdateWolf() {
+	public IEnumerator UpdateCoyote() {
 		while (true) {
 			switch(fsm.GetCurrentState()) {
 			case State.states.enIdle:
