@@ -458,7 +458,6 @@ public class MainCharacterController : MonoBehaviour
 		Entity closestEntity = GetClosestEntity();	
 		if (closestEntity)
 		{
-			canMove = false;
 			Vector3 d = closestEntity.transform.position - transform.position;
 			d.y = 0;
 			if (d.magnitude < medrashAttackRadius) SetDirection(d);
@@ -483,7 +482,11 @@ public class MainCharacterController : MonoBehaviour
 		float n = 0;
 		while (true)
 		{
-			if (n == 12) break;
+			if (n == 12) 
+			{
+				canMove = true;
+				break;
+			}
 			else 
 			{	
 				n++;
@@ -612,6 +615,7 @@ public class MainCharacterController : MonoBehaviour
 	public void DidEvadeLeft()
 	{
 		Input.ResetInputAxes();
+		canMove = false;
 		characterState = CharacterState.EvadingLeft;
 		animation[evadeLeftAnimation.name].wrapMode = WrapMode.Once;
 		animation[evadeLeftAnimation.name].speed = evadeLeftAnimationSpeed;
@@ -623,6 +627,7 @@ public class MainCharacterController : MonoBehaviour
 	public void DidEvadeRight()
 	{
 		Input.ResetInputAxes();
+		canMove = false;
 		characterState = CharacterState.EvadingRight;
 		animation[evadeRightAnimation.name].wrapMode = WrapMode.Once;
 		animation[evadeRightAnimation.name].speed = evadeRightAnimationSpeed;
@@ -634,6 +639,7 @@ public class MainCharacterController : MonoBehaviour
 	public void DidEvadeBack()
 	{
 		Input.ResetInputAxes();
+		canMove = false;
 		characterState = CharacterState.EvadingBack;
 		animation[evadeBackAnimation.name].wrapMode = WrapMode.Once;
 		animation[evadeBackAnimation.name].speed = evadeBackAnimationSpeed;
