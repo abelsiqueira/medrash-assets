@@ -31,8 +31,8 @@ public class MainCharacterController : MonoBehaviour
 	
 	private Animation animation;
 	
-	private float evadeLeftAnimationSpeed = 1.0f;
-	private float evadeRightAnimationSpeed = 1.0f;
+	private float evadeLeftAnimationSpeed = 1.5f;
+	private float evadeRightAnimationSpeed = 1.5f;
 	private float evadeBackAnimationSpeed = 1.0f;
 	private float walkAnimationSpeed = 1.0f;
 	private float walkSlowAnimationSpeed = 1.0f;
@@ -44,7 +44,7 @@ public class MainCharacterController : MonoBehaviour
 	private float attack123AnimationSpeed = 1.5f;
 	private float death1AnimationSpeed = 1.0f;
 	private float death2AnimationSpeed = 1.0f;
-	private float receiveAttackAnimationSpeed = 1.5f;
+	private float receiveAttackAnimationSpeed = 1.0f;
 	private float baseAttackDuration = 0.7f;
 	private float danceAnimationSpeed = 1.0f;
 	private float idle1AnimationSpeed = 1.0f;
@@ -453,6 +453,46 @@ public class MainCharacterController : MonoBehaviour
 		canMove = true;
 	}
 	
+	IEnumerator Evade(String direction)
+	{
+		Entity closestEntity = GetClosestEntity();	
+		if (closestEntity)
+		{
+			canMove = false;
+			Vector3 d = closestEntity.transform.position - transform.position;
+			d.y = 0;
+			if (d.magnitude < medrashAttackRadius) SetDirection(d);
+		}
+		CharacterController controller = GetComponent<CharacterController>();
+		Vector3 movement = new Vector3();
+		if (direction.Equals("right") || direction.Equals("left"))
+		{
+			movement = this.transform.right;
+			if (direction.Equals("left"))
+			{
+				movement.x = (-1) * movement.x;
+				movement.z = (-1) * movement.z;
+			}	
+		}
+		else if (direction.Equals("back"))
+		{
+			movement = this.transform.forward;
+			movement.x = (-1) * movement.x;
+			movement.z = (-1) * movement.z;
+		}
+		float n = 0;
+		while (true)
+		{
+			if (n == 12) break;
+			else 
+			{	
+				n++;
+				controller.SimpleMove(movement * 5f);
+			}
+			yield return new WaitForSeconds(0.01f);
+		}
+	}
+	
 	void DidAttack1()
 	{
 		Input.ResetInputAxes();
@@ -577,7 +617,7 @@ public class MainCharacterController : MonoBehaviour
 		animation[evadeLeftAnimation.name].speed = evadeLeftAnimationSpeed;
 		animation[evadeLeftAnimation.name].layer = 1;
 		animation.CrossFade(evadeLeftAnimation.name);
-		StartCoroutine(Evade());
+		StartCoroutine(Evade("left"));
 	}
 	
 	public void DidEvadeRight()
@@ -588,7 +628,7 @@ public class MainCharacterController : MonoBehaviour
 		animation[evadeRightAnimation.name].speed = evadeRightAnimationSpeed;
 		animation[evadeRightAnimation.name].layer = 1;
 		animation.CrossFade(evadeRightAnimation.name);
-		StartCoroutine(Evade());
+		StartCoroutine(Evade("right"));
 	}
 	
 	public void DidEvadeBack()
@@ -599,34 +639,7 @@ public class MainCharacterController : MonoBehaviour
 		animation[evadeBackAnimation.name].speed = evadeBackAnimationSpeed;
 		animation[evadeBackAnimation.name].layer = 1;
 		animation.CrossFade(evadeBackAnimation.name);
-		StartCoroutine(Evade());
-	}
-	
-	IEnumerator Evade()
-	{
-		int i = 0;
-		canMove = false;
-		evading = true;
-		
-		Entity closestEntity = GetClosestEntity();	
-		if (closestEntity)
-		{
-			Vector3 d = closestEntity.transform.position - transform.position;
-			d.y = 0;
-			if (d.magnitude < 5) SetDirection(d);
-		}
-		
-		while (true)
-		{
-			if (i == 0) i++;
-			else
-			{
-				evading = false;
-				canMove = true;
-				break;
-			}
-			yield return new WaitForSeconds(1.0f);
-		}
+		StartCoroutine(Evade("back"));
 	}
 	
 	IEnumerator ComboVerification()
@@ -917,12 +930,7 @@ public class MainCharacterController : MonoBehaviour
 	public void StopFollowingEnemy() {
 		followEnemy = false;
 	}
-	
-	public bool IsEvading()
-	{
-		return evading;
-	}
-	
+
 	public void OnWater() {
 		isOnWater = true;
 	}

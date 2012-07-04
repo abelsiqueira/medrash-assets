@@ -9,7 +9,6 @@ public class MainCharacter : MonoBehaviour
 	public GameObject dmgBox;
 	private Score myScore;
 	private bool hasTorch;
-	private Scene scene;
 	private PrimaryBar primaryBar;
 	private SecondaryBar secondaryBar;
 	private MainCharacterController characterController;
@@ -22,42 +21,18 @@ public class MainCharacter : MonoBehaviour
 	
 	private float energyLossValue = 0.1f;
 	private float lifeLossValue = 0.1f;
-	private float temperatureLossValue = 0.2f;
-	private float torchTimerValue = 10.0f;
 	
 	private List<Entity> listOfEnemies = new List<Entity>();
-	
-	public enum Scene
-	{
-		Scene01, 
-		Scene02, 
-		Scene03
-	}
 	
 	void Start ()
 	{
 		Time.timeScale = 1;
-		scene = Scene.Scene01;	
 		primaryBar = GetComponent<PrimaryBar>();
 		secondaryBar = GetComponent<SecondaryBar>();
 		characterController = GetComponent<MainCharacterController>();
-		if (scene.Equals(Scene.Scene01))
-		{
-			secondaryBar.HasBar = true;
-			secondaryBar.setopcao(2);
-			StartCoroutine(CheckCharacterPhysicalCondition());	
-		}
-		else if (scene.Equals(Scene.Scene02))
-		{
-			GrabTorch();
-			secondaryBar.HasBar = true;
-			secondaryBar.setopcao(1);
-			StartCoroutine(CheckCharacterBodyTemperature());	
-		}
-		else
-		{
-			secondaryBar.HasBar = false;
-		}
+		secondaryBar.HasBar = true;
+		secondaryBar.setopcao(2);
+		StartCoroutine(CheckCharacterPhysicalCondition());	
 		object[] obj = GameObject.FindObjectsOfType(typeof(Entity));
 		foreach (object o in obj) {
 			Entity e = (Entity) o;
@@ -161,55 +136,14 @@ public class MainCharacter : MonoBehaviour
 			yield return new WaitForSeconds(0.1f);
 		}
 	}
-
-	IEnumerator CheckCharacterBodyTemperature()
-	{
-		while(true)
-		{
-			if (!hasTorch)
-			{
-				DamageTemperatureStatus(temperatureLossValue);
-			}	
-			if (temperatureStatus == 0)
-			{
-				DamageLifeStatus(lifeLossValue);
-			}
-			yield return new WaitForSeconds(0.1f);
-		}
-	}
-	
-	IEnumerator TorchTimer()
-	{
-		int i = 0;
-		float n = 100 - temperatureStatus;
-		float j = n / 30;
-		while (true)
-		{
-			if (i < torchTimerValue)
-			{
-				i++;
-				IncreaseTemperatureStatus(j += n / 30);
-				yield return new WaitForSeconds(1.0f);
-			}
-			else
-			{
-				hasTorch = false;
-				temperatureStatus = 100.0f;
-				break;
-			}
-		}
-	}
 	
 	public void DamageLifeStatus(float x)
 	{
 		if (lifeStatus - x > 0)
 		{
-			if (!characterController.IsEvading())
-			{
-				lifeStatus -= x;
-				if (x != lifeLossValue) characterController.ReceiveAttack();
-				primaryBar.setHealth(100 - lifeStatus);
-			}
+			lifeStatus -= x;
+			if (x != lifeLossValue) characterController.ReceiveAttack();
+			primaryBar.setHealth(100 - lifeStatus);
 		}
 		else
 		{
@@ -234,20 +168,6 @@ public class MainCharacter : MonoBehaviour
 		else
 		{
 			energyStatus = 0;
-			secondaryBar.setStatus(100);
-		}
-	}
-	
-	void DamageTemperatureStatus(float x)
-	{
-		if (temperatureStatus - x > 0)
-		{
-			temperatureStatus -= x;
-			secondaryBar.setStatus (100 - temperatureStatus);
-		}
-		else
-		{
-			temperatureStatus = 0;
 			secondaryBar.setStatus(100);
 		}
 	}
@@ -278,26 +198,6 @@ public class MainCharacter : MonoBehaviour
 			energyStatus += x;
 			secondaryBar.setStatus(100 - energyStatus);
 		}	
-	}
-	
-	void IncreaseTemperatureStatus(float x)
-	{
-		if (temperatureStatus + x > 100)
-		{
-			temperatureStatus = 100;
-			secondaryBar.setStatus(0);
-		}
-		else 
-		{
-			temperatureStatus += x;
-			secondaryBar.setStatus(100 - temperatureStatus);
-		}
-	}
-	
-	public void GrabTorch()
-	{
-		hasTorch = true;
-		StartCoroutine(TorchTimer());
 	}
 	
 	public bool IsAlive()
