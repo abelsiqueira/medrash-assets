@@ -11,7 +11,7 @@ public class DistanceBar : MonoBehaviour {
 	public Texture2D medrash;
 	public Texture2D sora;
 	
-	Rect box = new Rect((Screen.width / 2) - 200, Screen.height - (Screen.height - 10), 400, 50);
+	Rect box = new Rect(Screen.width - 500, Screen.height - (Screen.height - 10), 480, 60);
 	
 	// Use this for initialization
 	void Start () {
@@ -47,12 +47,12 @@ public class DistanceBar : MonoBehaviour {
 	{
 		GUI.BeginGroup(box);
         {
-			GUI.DrawTexture(new Rect(0, 10, 400, 10), mainBar);
-			GUI.DrawTexture(new Rect((distance*400/100)-5, 0, 40, 40), sora);
+			GUI.DrawTexture(new Rect(40, 20, 400, 10), mainBar);
+			GUI.DrawTexture(new Rect((distance*400/100)+5, 0, 60, 60), sora);
 			//GUI.DrawTexture(new Rect((distance*400/100)-5, 0, 10, 40), pivot); 
 		}
 		GUI.EndGroup();
 		
-		GUI.DrawTexture(new Rect((Screen.width / 2) - 245, Screen.height - (Screen.height - 10), 40, 40), medrash);
+		GUI.DrawTexture(new Rect(Screen.width - 495, 10, 60, 60), medrash);
 	}
 }
