@@ -238,7 +238,7 @@ public class MainCharacterController : MonoBehaviour
 		
 		StartCoroutine(FixPositionRelativeToEntities());
 		StartCoroutine(ComboVerification());
-		StartCoroutine(ChangeIdleActivity());
+		//StartCoroutine(ChangeIdleActivity());
 	}
 	
 	void Start () {
@@ -246,7 +246,7 @@ public class MainCharacterController : MonoBehaviour
 		StartCoroutine(StepSound());
 	}
 	
-	IEnumerator ChangeIdleActivity()
+	/*IEnumerator ChangeIdleActivity()
 	{
 		int n = 0;
 		while(true)
@@ -264,7 +264,7 @@ public class MainCharacterController : MonoBehaviour
 			
 			yield return new WaitForSeconds(0.5f);
 		}
-	}
+	}*/
 	
 	IEnumerator StepSound()
 	{
@@ -539,7 +539,7 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 	
-	private void PlayRandomIdleAnimation()
+	/*private void PlayRandomIdleAnimation()
 	{
 		System.Random random = new System.Random();
 		int i = random.Next(0, 2);
@@ -557,7 +557,7 @@ public class MainCharacterController : MonoBehaviour
 			animation[idle3Animation.name].layer = 1;
 			animation.Play(idle3Animation.name);
 		}
-	}
+	}*/
 	
 	public void PutAlive()
 	{
