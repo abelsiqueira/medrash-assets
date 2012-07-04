@@ -10,7 +10,9 @@ using System.Collections;
 public class MainCharacterController : MonoBehaviour 
 {
 
-	public AnimationClip idleAnimation;
+	public AnimationClip idle1Animation;
+	//public AnimationClip idle2Animation;
+	//public AnimationClip idle3Animation;
 	public AnimationClip walkAnimation;
 	public AnimationClip walkSlowAnimation;
 	public AnimationClip runAnimation;
@@ -45,6 +47,9 @@ public class MainCharacterController : MonoBehaviour
 	private float receiveAttackAnimationSpeed = 1.5f;
 	private float baseAttackDuration = 0.7f;
 	private float danceAnimationSpeed = 1.0f;
+	private float idle1AnimationSpeed = 1.0f;
+	//private float idle2AnimationSpeed = 1.0f;
+	//private float idle3AnimationSpeed = 1.0f;
 	
 	private Waypoint closestWaypoint;
 	private GameObject runningEnemy;
@@ -136,11 +141,21 @@ public class MainCharacterController : MonoBehaviour
 		
 		if(!animation) Debug.Log("The character you would like to control doesn't have animations. Moving her might look weird.");
 	
-		if(!idleAnimation) 
+		if(!idle1Animation) 
 		{
 			animation = null;
-			Debug.Log("No idle animation found. Turning off animations.");
+			Debug.Log("No idle 1 animation found. Turning off animations.");
 		}
+		/*if(!idle2Animation) 
+		{
+			animation = null;
+			Debug.Log("No idle 2 animation found. Turning off animations.");
+		}
+		if(!idle3Animation) 
+		{
+			animation = null;
+			Debug.Log("No idle 3 animation found. Turning off animations.");
+		}*/
 		if(!walkAnimation) 
 		{
 			animation = null;
@@ -223,12 +238,33 @@ public class MainCharacterController : MonoBehaviour
 		
 		StartCoroutine(FixPositionRelativeToEntities());
 		StartCoroutine(ComboVerification());
+		//StartCoroutine(ChangeIdleActivity());
 	}
 	
 	void Start () {
 		fallStartLevel = 0;
 		StartCoroutine(StepSound());
 	}
+	
+	/*IEnumerator ChangeIdleActivity()
+	{
+		int n = 0;
+		while(true)
+		{
+			if (!IsMoving())
+			{
+				n++;
+				if (n == 30) 
+				{
+					PlayRandomIdleAnimation();
+					n = 0;
+				}
+			}
+			else n = 0;
+			
+			yield return new WaitForSeconds(0.5f);
+		}
+	}*/
 	
 	IEnumerator StepSound()
 	{
@@ -503,14 +539,34 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 	
+	/*private void PlayRandomIdleAnimation()
+	{
+		System.Random random = new System.Random();
+		int i = random.Next(0, 2);
+		if (i == 0)
+		{
+			//animation[idle2Animation.name].wrapMode = WrapMode.Once;
+			//animation[idle2Animation.name].speed = idle2AnimationSpeed;
+			//animation[idle2Animation.name].layer = 1;
+			animation.Play(idle2Animation.name);
+		}
+		else
+		{
+			//animation[idle3Animation.name].wrapMode = WrapMode.Once;
+			//animation[idle3Animation.name].speed = idle3AnimationSpeed;
+			//animation[idle3Animation.name].layer = 1;
+			animation.Play(idle3Animation.name);
+		}
+	}*/
+	
 	public void PutAlive()
 	{
 		canMove = true;
 		characterState = CharacterState.Idle;
-		animation[idleAnimation.name].layer = 1;
-		animation.Play(idleAnimation.name);
-		animation[idleAnimation.name].layer = 0;
-		animation.Play(idleAnimation.name);
+		animation[idle1Animation.name].layer = 1;
+		animation.Play(idle1Animation.name);
+		animation[idle1Animation.name].layer = 0;
+		animation.Play(idle1Animation.name);
 	}
 	
 	public void DidEvadeLeft()
@@ -577,23 +633,27 @@ public class MainCharacterController : MonoBehaviour
 	{
 		while(true)
 		{
-			if (n == 1) 
+			if (n != 0)
 			{
-				n = 0;
-				TryToAttack();
-				DidAttack1();
-			}
-			else if(n == 2) 
-			{
-				n = 0;
-				TryToAttack();
-				DidAttack12();
-			}
-			else if(n == 3) 
-			{
-				n = 0;
-				TryToAttack();
-				DidAttack123();
+				animation.Play(fightStanceAnimation.name);
+				if (n == 1) 
+				{
+					n = 0;
+					TryToAttack();
+					DidAttack1();
+				}
+				else if(n == 2) 
+				{
+					n = 0;
+					TryToAttack();
+					DidAttack12();
+				}
+				else if(n == 3) 
+				{
+					n = 0;
+					TryToAttack();
+					DidAttack123();
+				}
 			}
 			yield return new WaitForSeconds(0.5f);
 		}
@@ -674,7 +734,7 @@ public class MainCharacterController : MonoBehaviour
 					Vector3 d = closestEntity.transform.position - transform.position;
 					d.y = 0;
 					if (d.magnitude < 15) animation.CrossFade(fightStanceAnimation.name);
-					else animation.CrossFade(idleAnimation.name);	
+					else animation.CrossFade(idle1Animation.name);	
 				}
 			}
 			else 
