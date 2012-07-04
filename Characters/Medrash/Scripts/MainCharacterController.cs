@@ -545,16 +545,16 @@ public class MainCharacterController : MonoBehaviour
 		int i = random.Next(0, 2);
 		if (i == 0)
 		{
-			//animation[idle2Animation.name].wrapMode = WrapMode.Once;
-			//animation[idle2Animation.name].speed = idle2AnimationSpeed;
-			//animation[idle2Animation.name].layer = 1;
+			animation[idle2Animation.name].wrapMode = WrapMode.Once;
+			animation[idle2Animation.name].speed = idle2AnimationSpeed;
+			animation[idle2Animation.name].layer = 1;
 			animation.Play(idle2Animation.name);
 		}
 		else
 		{
-			//animation[idle3Animation.name].wrapMode = WrapMode.Once;
-			//animation[idle3Animation.name].speed = idle3AnimationSpeed;
-			//animation[idle3Animation.name].layer = 1;
+			animation[idle3Animation.name].wrapMode = WrapMode.Once;
+			animation[idle3Animation.name].speed = idle3AnimationSpeed;
+			animation[idle3Animation.name].layer = 1;
 			animation.Play(idle3Animation.name);
 		}
 	}*/
