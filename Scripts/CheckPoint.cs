@@ -27,8 +27,8 @@ public class CheckPoint : MonoBehaviour {
 	
 	public void Load()
 	{
-		for (int i = 0; i < regions.Length; i++)
-			regions[i].GetComponent<RegionBox>().Restart();
+		//for (int i = 0; i < regions.Length; i++)
+		//	regions[i].GetComponent<RegionBox>().Restart();
 		
 		GameObject medrash = GameObject.FindGameObjectWithTag("Player");
 		medrash.GetComponent<MainCharacter>().IncreaseLifeStatus(1000);

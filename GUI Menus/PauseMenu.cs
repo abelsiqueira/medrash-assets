@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour {
 	{
 		if (death)
 		{
-			Camera.mainCamera.GetComponent<Sound>().isDead(false);
+			//Camera.mainCamera.GetComponent<Sound>().isDead(false);
 			GameObject.FindGameObjectWithTag("Player").GetComponent<CheckPoint>().Load();
 			GameObject.FindGameObjectWithTag("Player").GetComponent<MainCharacterController>().ForceIdle();
 		}
@@ -65,7 +65,7 @@ public class PauseMenu : MonoBehaviour {
 			death = true;
 			if (CallTime == 0.0f)
 				CallTime = Time.time + 1.0f;
-			Camera.mainCamera.GetComponent<Sound>().isDead(true);
+			//Camera.mainCamera.GetComponent<Sound>().isDead(true);
 		}
 		
 	}
