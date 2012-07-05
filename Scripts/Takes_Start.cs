@@ -34,7 +34,7 @@ public class Takes_Start : MonoBehaviour {
 			GUI.DrawTexture(new Rect((Screen.width / 2)-512, (Screen.height/2) - 384, 1024, 768), take03);
 			break;
 			case Take.Take04:
-			Application.LoadLevel("Menu");
+			Application.LoadLevel(1);
 			break;
 			
 		}

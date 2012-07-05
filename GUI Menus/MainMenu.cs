@@ -3,12 +3,14 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
-	private int numItem = 2;
+	private int numItem = 4;
 	private enum item{
 		continuar,
+		autores,
+		creditos,
 		sair
 	};
-	private string[] itemString = {"Novo jogo", "Sair"};
+	private string[] itemString = {"Novo jogo", "Autores", "Creditos", "Sair"};
 
 	private item selItem;
 	public Texture background;
@@ -24,7 +26,7 @@ public class MainMenu : MonoBehaviour {
 		Style.font = font;
 		Style.alignment = TextAnchor.MiddleCenter;
 		if (Selected.a == 0.0) Selected = new Color(255f, 241f, 0.0f, 1.000f);
-		if (UnSelected.a == 0.0) UnSelected = new Color(0.459f, 0.365f, 0.255f, 1.000f);
+		if (UnSelected.a == 0.0) UnSelected = new Color(0.500f, 0.643f, 0.500f, 1.000f);
 		selItem = item.continuar;
 		Screen.showCursor = false;
 		if (optionSize <= 0)
@@ -65,7 +67,7 @@ public class MainMenu : MonoBehaviour {
 				Style.normal.textColor = Selected;
 			else 
 				Style.normal.textColor = UnSelected;
-			GUI.Label(new Rect(Screen.width / 2 - 70, ((Screen.height / 2)-90) + optionSize*i, 500, 200), itemString[i], Style);
+			GUI.Label(new Rect(Screen.width / 2 - 70, ((Screen.height / 2)-200) + optionSize*i, 500, 200), itemString[i], Style);
 		}
 
 
@@ -92,8 +94,13 @@ public class MainMenu : MonoBehaviour {
 			switch (selItem)
 			{
 				case item.continuar:
-					//Application.LoadLevel("Intro");
-					Application.LoadLevel("As Cronicas de Medrash");
+					Application.LoadLevel(2);
+					break;
+				case item.autores:
+					Application.LoadLevel(4);
+					break;
+				case item.creditos:
+					Application.LoadLevel(5);
 					break;
 				case item.sair:
 					Application.Quit();
