@@ -49,7 +49,6 @@ public class DistanceBar : MonoBehaviour {
 	
 	void OnGUI()
 	{
-		Debug.Log(distance);
 		GUI.BeginGroup(box);
         {
 			GUI.DrawTexture(new Rect(left, top, 370, 10), mainBar);
