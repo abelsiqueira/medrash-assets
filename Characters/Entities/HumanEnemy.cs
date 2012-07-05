@@ -31,7 +31,7 @@ public class HumanEnemy : Entity {
 		animation[attackedAnimation.name].speed = 1.0f;
 		animation[runAnimation.name].speed = 0.7f;
 		
-		life = 6;
+		life = 4;
 		damage = 10;
 		baseSpeed = 7.0f;
 		speed = baseSpeed;

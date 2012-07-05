@@ -92,7 +92,8 @@ public class MainMenu : MonoBehaviour {
 			switch (selItem)
 			{
 				case item.continuar:
-					Application.LoadLevel("Intro");
+					//Application.LoadLevel("Intro");
+					Application.LoadLevel("As Cronicas de Medrash");
 					break;
 				case item.sair:
 					Application.Quit();

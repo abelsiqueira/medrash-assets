@@ -7,13 +7,22 @@ using System.Collections;
 public class Fugitive : MonoBehaviour {
 	
 	public Waypoint waypoint;
-	private float speed = 5.0f;
+	private float speed = 4.5f;
 	private CharacterController myController;
+	private Vector3 initialPosition;
+	private Waypoint initialWaypoint;
 	
 	// Use this for initialization
 	void Start () {
 		animation.Play();
 		myController = GetComponent<CharacterController>();
+		initialPosition = transform.position;
+		initialWaypoint = waypoint;
+	}
+	
+	public void Reset () {
+		transform.position = initialPosition;
+		waypoint = initialWaypoint;
 	}
 	
 	// Update is called once per frame
