@@ -93,7 +93,6 @@ public class MainCharacterController : MonoBehaviour
 	public bool canRun = true;
 	public bool canAttack = true;
 	public bool canMove = true;
-	private bool canLightTorch = false;
 	private bool falling = false;
 	
 	private float groundedTimeout = 0.25f;
@@ -116,7 +115,8 @@ public class MainCharacterController : MonoBehaviour
 	private float lastGroundedTime = 0.0f;
 
 	private bool isControllable = true;
-	private bool evading = false;
+	private bool isDamnIdle = false;
+	private bool idleCounterPaused = false;
 	
 	private float attackCooldownValue = 0.0f;
 	private float fallingDamageMultiplier = 20f;
@@ -238,7 +238,7 @@ public class MainCharacterController : MonoBehaviour
 		
 		StartCoroutine(FixPositionRelativeToEntities());
 		StartCoroutine(ComboVerification());
-		//StartCoroutine(ChangeIdleActivity());
+		StartCoroutine(ChangeIdleActivity());
 	}
 	
 	void Start () {
@@ -246,25 +246,24 @@ public class MainCharacterController : MonoBehaviour
 		StartCoroutine(StepSound());
 	}
 	
-	/*IEnumerator ChangeIdleActivity()
+	IEnumerator ChangeIdleActivity()
 	{
 		int n = 0;
 		while(true)
 		{
-			if (!IsMoving())
+			if (!IsMoving() && idleCounterPaused == false)
 			{
 				n++;
 				if (n == 30) 
 				{
-					PlayRandomIdleAnimation();
 					n = 0;
+					PlayRandomIdleAnimation();
 				}
 			}
 			else n = 0;
-			
 			yield return new WaitForSeconds(0.5f);
 		}
-	}*/
+	}
 	
 	IEnumerator StepSound()
 	{
@@ -532,13 +531,14 @@ public class MainCharacterController : MonoBehaviour
 	void DidDance()
 	{
 		Input.ResetInputAxes();
+		sounds.PlayChaChaChaAudio(1.0f);
 		canMove = false;
 		characterState = CharacterState.Dancing;
 		animation[danceAnimation.name].wrapMode = WrapMode.Once;
 		animation[danceAnimation.name].speed = danceAnimationSpeed;
 		animation[danceAnimation.name].layer = 1;
 		animation.CrossFade(danceAnimation.name);
-		canMove = true;
+		StartCoroutine(UnlockMovement(55.0f));
 	}
 	
 	public void ReceiveAttack()
@@ -562,6 +562,22 @@ public class MainCharacterController : MonoBehaviour
 			if (i != 0)
 			{
 				canMove = true;
+				break;
+			}
+			else i++;
+			yield return new WaitForSeconds(time);
+		}
+	}
+	
+	IEnumerator DelayIdleCounter(float time)
+	{
+		int i = 0;
+		idleCounterPaused = true;
+		while (true)
+		{
+			if (i != 0)
+			{
+				idleCounterPaused = false;
 				break;
 			}
 			else i++;
@@ -597,8 +613,9 @@ public class MainCharacterController : MonoBehaviour
 		}
 	}
 	
-	/*private void PlayRandomIdleAnimation()
+	private void PlayRandomIdleAnimation()
 	{
+		isDamnIdle = true;
 		System.Random random = new System.Random();
 		int i = random.Next(0, 2);
 		if (i == 0)
@@ -607,6 +624,7 @@ public class MainCharacterController : MonoBehaviour
 			animation[idle2Animation.name].speed = idle2AnimationSpeed;
 			animation[idle2Animation.name].layer = 1;
 			animation.Play(idle2Animation.name);
+			StartCoroutine(DelayIdleCounter(idle2Animation.length));
 		}
 		else
 		{
@@ -614,10 +632,11 @@ public class MainCharacterController : MonoBehaviour
 			animation[idle3Animation.name].speed = idle3AnimationSpeed;
 			animation[idle3Animation.name].layer = 1;
 			animation.Play(idle3Animation.name);
+			StartCoroutine(DelayIdleCounter(idle3Animation.length));
 		}
-	}*/
+	}
 	
-	public void PutAlive()
+	public void ForceIdle()
 	{
 		canMove = true;
 		characterState = CharacterState.Idle;
@@ -706,9 +725,8 @@ public class MainCharacterController : MonoBehaviour
 			Input.ResetInputAxes();
 		}
 		
-		
 		if (mainCharacter.IsAlive() && !pauseMenu.IsPaused())
-		{	
+		{
 			if (Input.GetButtonDown("Fire2")) fire2ButtonDown = true;
 			if (Input.GetButtonUp("Fire2")) fire2ButtonDown = false;
 			if (Input.GetKeyDown(KeyCode.LeftControl)) leftCtrlKeyDown = true;
@@ -749,6 +767,12 @@ public class MainCharacterController : MonoBehaviour
 
 		}
 			
+		if (IsMoving() && isDamnIdle)
+		{
+			ForceIdle();
+			isDamnIdle = false;
+		}
+		
 		UpdateSmoothedMovementDirection();
 	
 		ApplyGravity();
@@ -875,12 +899,7 @@ public class MainCharacterController : MonoBehaviour
 	{
 		gameObject.tag = "Player";
 	}
-	
-	public void CanLightTorch(bool cond)
-	{
-		canLightTorch = cond;
-	}
-	
+		
 	public Entity GetClosestEntity()
 	{
 		List<Entity> listOfEnemies;

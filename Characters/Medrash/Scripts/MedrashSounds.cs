@@ -7,6 +7,7 @@ public class MedrashSounds : MonoBehaviour {
 	public AudioClip receiveDamageAudio;
 	public AudioClip stepAudio;
 	public AudioClip waterStepAudio;
+	public AudioClip chaChaChaAudio;
 	private float volume;
 	private bool canPlayReceiveDamageAudio = true;
 
@@ -51,6 +52,14 @@ public class MedrashSounds : MonoBehaviour {
 		this.volume = volume;
 		audio.volume = volume;
 		audio.clip = waterStepAudio;
+		audio.Play();
+	}
+	
+	public void PlayChaChaChaAudio(float volume)
+	{
+		this.volume = volume;
+		audio.volume = volume;
+		audio.clip = chaChaChaAudio;
 		audio.Play();
 	}
 	

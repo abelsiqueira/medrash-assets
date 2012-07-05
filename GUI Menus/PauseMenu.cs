@@ -52,7 +52,7 @@ public class PauseMenu : MonoBehaviour {
 		{
 			Camera.mainCamera.GetComponent<Sound>().isDead(false);
 			GameObject.FindGameObjectWithTag("Player").GetComponent<CheckPoint>().Load();
-			GameObject.FindGameObjectWithTag("Player").GetComponent<MainCharacterController>().PutAlive();
+			GameObject.FindGameObjectWithTag("Player").GetComponent<MainCharacterController>().ForceIdle();
 		}
 		Time.timeScale = 1;
 		active = false;
