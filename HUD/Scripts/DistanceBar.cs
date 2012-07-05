@@ -15,8 +15,8 @@ public class DistanceBar : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		top = Screen.height - (Screen.height - 10);
-		left = Screen.width / 2;
+		top = 20;
+		left = 0;
 		
 		mainBar = new Texture2D(1, 1, TextureFormat.RGB24, false);
 		mainBar.SetPixel(0, 0, Color.green);
@@ -30,7 +30,7 @@ public class DistanceBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		distance = GetComponent<MainCharacterController>().GetDistanceFromSora();
 	}
 	
 	public void set_distance(float distance)
@@ -47,12 +47,12 @@ public class DistanceBar : MonoBehaviour {
 	{
 		GUI.BeginGroup(box);
         {
-			GUI.DrawTexture(new Rect(40, 20, 400, 10), mainBar);
-			GUI.DrawTexture(new Rect((distance*400/100)+5, 0, 60, 60), sora);
-			//GUI.DrawTexture(new Rect((distance*400/100)-5, 0, 10, 40), pivot); 
+			GUI.DrawTexture(new Rect(left, top, 400, 10), mainBar);
+			GUI.DrawTexture(new Rect(left + distance*3, 0, 60, 60), sora);
+			GUI.DrawTexture(new Rect(left, 0, 60, 60), medrash);
 		}
 		GUI.EndGroup();
 		
-		GUI.DrawTexture(new Rect(Screen.width - 495, 10, 60, 60), medrash);
+		
 	}
 }
