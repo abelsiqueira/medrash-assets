@@ -7,7 +7,7 @@ using System.Collections;
 public class Fugitive : MonoBehaviour {
 	
 	public Waypoint waypoint;
-	private float speed = 4.5f;
+	private float speed = 5.5f;
 	private CharacterController myController;
 	private Vector3 initialPosition;
 	private Waypoint initialWaypoint;
@@ -29,8 +29,10 @@ public class Fugitive : MonoBehaviour {
 	void Update () {
 		animation.Play();
 		
-		if (!waypoint)
+		if (!waypoint) {
+			Destroy(this.gameObject);
 			return;
+		}
 		
 		Vector3 direction = waypoint.transform.position - transform.position;
 		direction.y = 0;
