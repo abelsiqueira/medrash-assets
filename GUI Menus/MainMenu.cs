@@ -92,7 +92,7 @@ public class MainMenu : MonoBehaviour {
 			switch (selItem)
 			{
 				case item.continuar:
-					Application.LoadLevel(1);
+					Application.LoadLevel("Intro");
 					break;
 				case item.sair:
 					Application.Quit();
