@@ -139,7 +139,7 @@ public class PauseMenu : MonoBehaviour {
 						UnPauseGame();
 						break;
 					case item.voltar:
-						Application.LoadLevel("MainMenu");
+						Application.LoadLevel("Menu");
 						break;
 					case item.sair:
 						Application.Quit();

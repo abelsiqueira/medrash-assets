@@ -152,7 +152,7 @@ public class MainCharacter : MonoBehaviour
 				lifeStatus = 0;
 				primaryBar.setHealth(100);
 				characterController.ForceDeath();
-				//Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
+				Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
 			}			
 		}
 	}
