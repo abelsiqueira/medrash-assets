@@ -33,9 +33,9 @@ public class Coyote : Entity {
 		damage = 15;
 		baseSpeed = 9.0f;
 		speed = baseSpeed;
-		attackRadius = 5.0f;
-		closeRadius = 20.0f;
-		farRadius = 40.0f;
+		attackRadius = 3.0f;
+		closeRadius = 10.0f;
+		farRadius = 15.0f;
 		canReceiveDamage = true;
 		
 		EntityStart();
