@@ -22,6 +22,8 @@ public class MainCharacter : MonoBehaviour
 	private float energyLossValue = 0.1f;
 	private float lifeLossValue = 0.1f;
 	
+	private float minDistanceFromSora = 100.0f;
+	
 	private List<Entity> listOfEnemies = new List<Entity>();
 	
 	void Start ()
@@ -74,6 +76,12 @@ public class MainCharacter : MonoBehaviour
 		int i = 0;
 		while(true)
 		{
+			if (characterController.GetDistanceFromSora() > minDistanceFromSora) {
+				lifeStatus = 0;
+				primaryBar.setHealth(100);
+				characterController.ForceDeath();
+				Camera.mainCamera.GetComponent<PauseMenu>().CallMenu("Death");
+			}
 			walkSpeed = characterController.GetWalkSpeed();
 			runSpeed  = characterController.GetRunSpeed();
 			
