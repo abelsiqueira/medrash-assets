@@ -52,8 +52,8 @@ public class DistanceBar : MonoBehaviour {
 		Debug.Log(distance);
 		GUI.BeginGroup(box);
         {
-			GUI.DrawTexture(new Rect(left, top, 300, 10), mainBar);
-			GUI.DrawTexture(new Rect(left + 300, top, 100, 10), dangerBar);
+			GUI.DrawTexture(new Rect(left, top, 370, 10), mainBar);
+			GUI.DrawTexture(new Rect(left + 300, top, 70, 10), dangerBar);
 			GUI.DrawTexture(new Rect(left + distance*3, 0, 60, 60), sora);
 			GUI.DrawTexture(new Rect(left, 0, 60, 60), medrash);
 		}
