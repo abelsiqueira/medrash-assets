@@ -7,7 +7,7 @@ using System.Collections;
 public class Fugitive : MonoBehaviour {
 	
 	public Waypoint waypoint;
-	private float speed = 5.5f;
+	private float speed = 5.0f;
 	private CharacterController myController;
 	private Vector3 initialPosition;
 	private Waypoint initialWaypoint;
